@@ -1,0 +1,11 @@
+{
+  "name": "rachet",
+  "version": "1.0.0",
+  "description": "Web application for user who wants to communicate between them and by groups",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Martin Bedoya",
+  "license": "ISC"
+}
