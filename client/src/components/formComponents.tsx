@@ -1,4 +1,5 @@
-const React = require('react');
+const React = require('react'),
+ReactDOM = require('react-dom');
 
 export const FormInput = () => {
     return (
