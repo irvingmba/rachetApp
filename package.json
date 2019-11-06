@@ -13,9 +13,13 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "express": "^4.17.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "@types/node": "^12.12.6"
   }
 }
