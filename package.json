@@ -6,9 +6,9 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --watch",
-    "start": "webpack-dev-server --open",
-    "build-dev": "npx webpack --config webpack.development.config.js"
+    "dev-watch": "webpack --config webpack.development.config.js --watch",
+    "dev-start": "webpack-dev-server --config webpack.development.config.js --open",
+    "dev-build": "webpack --config webpack.development.config.js"
   },
   "author": {
     "name": "Martin Bedoya",
