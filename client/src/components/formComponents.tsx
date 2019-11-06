@@ -1,3 +1,5 @@
+const React = require('react');
+
 export const FormInput = () => {
     return (
         <input
