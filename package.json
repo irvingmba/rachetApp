@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
     "start": "webpack-dev-server --open",
-    "build": "webpack"
+    "build-dev": "npx webpack --config webpack.development.config.js"
   },
   "author": {
     "name": "Martin Bedoya",
@@ -16,11 +16,14 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
     "clean-webpack-plugin": "^3.0.0",
     "express": "^4.17.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "ts-loader": "^6.2.1",
+    "typescript": "^3.7.2",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"

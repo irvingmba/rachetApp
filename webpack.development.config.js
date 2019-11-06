@@ -25,6 +25,6 @@ module.exports = {
     },
     output: {
         filename: 'bundle.js',
-        path: './client/build/',
+        path: path.resolve(__dirname,"./client/build/"),
     },
 };
