@@ -1,10 +1,10 @@
-import React,{Props} from 'react';
+import React from 'react';
 import { TinputProps } from '../types/formTypes';
 
 export const FormInput:React.FunctionComponent<TinputProps> = (props:TinputProps) => {
     return (
         <label>
-            Name:
+            {props.inputLabel}
             <input
                 type={props.inputType}
                 name={props.inputName}
