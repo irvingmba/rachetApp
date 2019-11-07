@@ -5,4 +5,6 @@ export type TinputProps =  {
     inputLabel?:string;
     inputType?:string;
     inputName?:string;
+    inputValue?:string;
+    inputRequired?:string;
 };

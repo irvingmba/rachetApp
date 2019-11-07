@@ -1,4 +1,3 @@
-// import { FormInput } from './components/formComponents';
 import { Registry } from './composedBlocks/registryBlock';
 import React from 'react';
 import ReactDOM from 'react-dom';

@@ -8,6 +8,7 @@ export const FormInput:React.FunctionComponent<TinputProps> = (props:TinputProps
             <input
                 type={props.inputType}
                 name={props.inputName}
+                value={props.inputValue}
             />
         </label>
     );
