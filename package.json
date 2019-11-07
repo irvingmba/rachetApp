@@ -33,6 +33,9 @@
   "dependencies": {
     "@types/node": "^12.12.6",
     "bootstrap": "^4.3.1",
-    "react-bootstrap": "^1.0.0-beta.14"
+    "react-bootstrap": "^1.0.0-beta.14",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.4",
+    "redux-saga": "^1.1.3"
   }
 }
