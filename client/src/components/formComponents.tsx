@@ -1,12 +1,13 @@
-const React = require('react');
+import React,{Props} from 'react';
+import { TinputProps } from '../types/formTypes';
 
-export const FormInput = () => {
+export const FormInput:React.FunctionComponent<TinputProps> = (props:TinputProps) => {
     return (
         <label>
             Name:
             <input
-                type="text"
-                name="demo"
+                type={props.inputType}
+                name={props.inputName}
             />
         </label>
     );

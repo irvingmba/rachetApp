@@ -1,8 +1,9 @@
-const { FormInput } = require('./components/formComponents'),
-React = require('react'),
-ReactDOM = require('react-dom');
+// import { FormInput } from './components/formComponents';
+import { Registry } from './composedBlocks/registryBlock';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 const box:HTMLDivElement = document.getElementById('content') as HTMLDivElement;
 ReactDOM.render(
-    <FormInput />, box
+    <Registry />, box
 );
