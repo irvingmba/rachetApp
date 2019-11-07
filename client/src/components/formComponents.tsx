@@ -9,6 +9,8 @@ export const FormInput:React.FunctionComponent<TinputProps> = (props:TinputProps
                 type={props.inputType}
                 name={props.inputName}
                 value={props.inputValue}
+                onClick={props.inputOnClick}
+                onChange={props.inputOnChange}
             />
         </label>
     );
