@@ -17,7 +17,9 @@ export interface TSubmitProps {
     value?: string;
 };
 export interface IsetObject {
-    data: Object;
+    data: {
+        [propName:string]: string;
+    };
     setData: React.Dispatch<React.SetStateAction<{}>>;
 };
 

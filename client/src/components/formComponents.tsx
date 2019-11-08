@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { TinputProps, TSubmitProps, IsetObject } from '../types/formTypes';
 
 export const FormInput:React.FunctionComponent<TinputProps> = (props:TinputProps) => {
-    const [value, setValue] = useState(props.inputValue||'');
     const {data, setData} = props.formData as IsetObject;
     const inputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-        
+        setData({...data, [props.inputName as string]:event.target.value});
     };
     return (
         <label>
@@ -13,7 +12,7 @@ export const FormInput:React.FunctionComponent<TinputProps> = (props:TinputProps
             <input
                 type={props.inputType}
                 name={props.inputName}
-                value={value}
+                value={data.inputName}
                 onChange={inputChange}
                 required
             />
