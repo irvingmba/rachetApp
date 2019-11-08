@@ -1,4 +1,5 @@
 import {  FunctionComponent } from 'react';
+import { string } from 'prop-types';
 
 export interface TinputProps {
     children?: FunctionComponent;
@@ -9,10 +10,15 @@ export interface TinputProps {
     inputRequired?: boolean;
     inputOnClick?: TreactOnClick;
     inputOnChange?: TreactOnChange;
+    formData?: IsetObject;
 };
 export interface TSubmitProps {
     name?: string;
     value?: string;
+};
+export interface IsetObject {
+    data: Object;
+    setData: React.Dispatch<React.SetStateAction<{}>>;
 };
 
 export type TreactOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>void;

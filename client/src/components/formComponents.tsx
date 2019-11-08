@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { TinputProps, TSubmitProps } from '../types/formTypes';
+import { TinputProps, TSubmitProps, IsetObject } from '../types/formTypes';
 
 export const FormInput:React.FunctionComponent<TinputProps> = (props:TinputProps) => {
     const [value, setValue] = useState(props.inputValue||'');
+    const {data, setData} = props.formData as IsetObject;
     const inputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-        setValue(event.target.value);
+        
     };
     return (
         <label>
