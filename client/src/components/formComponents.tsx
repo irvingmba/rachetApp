@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TinputProps } from '../types/formTypes';
 
-const useInpValue = (originalValue:string) => {
+const useInpValue = (originalValue: string) => {
     const [value, setValue] = useState(originalValue);
     return {
         value,
@@ -11,7 +11,7 @@ const useInpValue = (originalValue:string) => {
 };
 
 export const FormInput:React.FunctionComponent<TinputProps> = (props:TinputProps) => {
-    const {value, setValue, inpChange} = useInpValue(props.inputValue);
+    const {value, setValue, inpChange} = useInpValue(props.inputValue as string);
     return (
         <label>
             {props.inputLabel}
