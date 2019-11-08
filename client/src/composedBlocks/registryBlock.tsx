@@ -1,6 +1,6 @@
 import { FormInput, FormSubmit } from '../components/formComponents';
 import React,{ useState } from 'react';
-
+import axios from 'axios';
 
 export const Registry:React.FunctionComponent = () => {
     const [data,setData] = useState({});
@@ -9,6 +9,9 @@ export const Registry:React.FunctionComponent = () => {
     function handleSubmit(event:React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const {Name, Nickname, Birthday, Email, Password}:{[prop:string]:string} = data;
+        axios.post('/',{Name})
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error));
     };
 
     return (
