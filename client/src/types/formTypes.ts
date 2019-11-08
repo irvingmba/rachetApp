@@ -7,8 +7,9 @@ export interface TinputProps {
     inputName?: string;
     inputValue?: string;
     inputRequired?: string;
-    inputOnClick?: TreactEvent;
-    inputOnChange?: TreactEvent;
+    inputOnClick?: TreactOnClick;
+    inputOnChange?: TreactOnChange;
 };
 
-type TreactEvent = (event: React.SyntheticEvent) =>void;
+export type TreactOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>void;
+export type TreactOnClick = (event: React.MouseEvent<HTMLInputElement,MouseEvent>) => void;
