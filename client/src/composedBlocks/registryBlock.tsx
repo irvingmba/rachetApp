@@ -2,8 +2,8 @@ import { FormInput } from '../components/formComponents';
 import React from 'react';
 
 function inputEvent(event:React.ChangeEvent<HTMLInputElement>) {
-    const test:string = event.target.value;
-    console.log(test);
+    const test = event.target;
+    console.log(test.value);
 };
 
 
