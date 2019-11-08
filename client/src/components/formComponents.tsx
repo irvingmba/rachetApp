@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TinputProps } from '../types/formTypes';
+import { TinputProps, TSubmitProps } from '../types/formTypes';
 
 export const FormInput:React.FunctionComponent<TinputProps> = (props:TinputProps) => {
     const [value, setValue] = useState(props.inputValue||'');
@@ -14,7 +14,18 @@ export const FormInput:React.FunctionComponent<TinputProps> = (props:TinputProps
                 name={props.inputName}
                 value={value}
                 onChange={inputChange}
+                required
             />
         </label>
+    );
+};
+
+export const FormSubmit:React.FunctionComponent<TSubmitProps> = (props:TSubmitProps) => {
+    return (
+        <input 
+            type="submit"
+            name={props.name}
+            value={props.value}
+        />
     );
 };

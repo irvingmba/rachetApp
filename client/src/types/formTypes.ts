@@ -6,9 +6,13 @@ export interface TinputProps {
     inputType?: string;
     inputName?: string;
     inputValue?: string;
-    inputRequired?: string;
+    inputRequired?: boolean;
     inputOnClick?: TreactOnClick;
     inputOnChange?: TreactOnChange;
+};
+export interface TSubmitProps {
+    name?: string;
+    value?: string;
 };
 
 export type TreactOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>void;

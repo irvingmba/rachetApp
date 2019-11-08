@@ -1,23 +1,20 @@
-import { FormInput } from '../components/formComponents';
-import React from 'react';
+import { FormInput, FormSubmit } from '../components/formComponents';
+import React,{ useState } from 'react';
 
-function inputEvent(event:React.ChangeEvent<HTMLInputElement>) {
-    const test = event.target;
-    console.log(test.value);
+function handleSubmit(event:React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
 };
-
-
 
 export const Registry:React.FunctionComponent = () => {
     return (
-        <div>
+        <form onSubmit={handleSubmit}>
             <h1>Registry</h1>
-            <FormInput inputRequired="required" inputLabel="Name:" inputName="Name" inputType="text" inputOnChange={inputEvent} />
-            <FormInput inputRequired="required" inputLabel="Nickname" inputName="Nickname" inputType="text" inputOnChange={inputEvent} />
-            <FormInput inputRequired="required" inputLabel="Birthday" inputName="Birthday" inputType="date" inputOnChange={inputEvent} />
-            <FormInput inputRequired="required" inputLabel="E-mail" inputName="E-mail" inputType="email" inputOnChange={inputEvent} />
-            <FormInput inputRequired="required" inputLabel="Password" inputName="Password" inputType="password" inputOnChange={inputEvent} />
-            <FormInput inputName="Send" inputType="submit" inputValue="Send" />
-        </div>
+            <FormInput inputLabel="Name:" inputName="Name" inputType="text" />
+            <FormInput inputLabel="Nickname" inputName="Nickname" inputType="text" />
+            <FormInput inputLabel="Birthday" inputName="Birthday" inputType="date" />
+            <FormInput inputLabel="E-mail" inputName="E-mail" inputType="email" />
+            <FormInput inputLabel="Password" inputName="Password" inputType="password" />
+            <FormSubmit name="send" value="send" />
+        </form>
     );
 };
