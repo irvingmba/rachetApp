@@ -1,23 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { TinputProps, TSubmitProps, IsetObject } from '../types/formTypes';
+import React, { useState, useEffect, ReactHTML, InputHTMLAttributes } from 'react';
+import { TinputProps, TSubmitProps, IsetObject, IinputProps } from '../types/formTypes';
 
-export const FormInput:React.FunctionComponent<TinputProps> = (props:TinputProps) => {
-    const {data, setData} = props.formData as IsetObject;
+const [value, setValue] = useState('');
+
+export const FormInput = (props:IinputProps) => {
+    const {data, setData} = (props.handlers as IsetObject) || {value, setValue} ;
     const inputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-        setData({...data, [props.inputName as string]:event.target.value});
+        const targetValue=event.target.value;
+        if(!props.handlers) console.log(targetValue);
+        // setData({...data, [props.properties.value as string]:event.target.value});
     };
-    return (
-        <label>
-            {props.inputLabel}
-            <input
-                type={props.inputType}
-                name={props.inputName}
-                value={data.inputName}
-                onChange={inputChange}
-                required
-            />
-        </label>
-    );
+    return 
+        <input 
+        {...props.properties}
+        />
+    ;
 };
 
 export const FormSubmit:React.FunctionComponent<TSubmitProps> = (props:TSubmitProps) => {

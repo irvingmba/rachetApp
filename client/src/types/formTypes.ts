@@ -1,15 +1,23 @@
 import {  FunctionComponent } from 'react';
 import { string } from 'prop-types';
 
+export interface IinputProps {
+    children?: FunctionComponent;
+    properties?: {
+        [propName: string]: string|boolean;
+    };
+    handlers?: IsetObject;
+};
+
 export interface TinputProps {
     children?: FunctionComponent;
-    inputLabel?: string;
-    inputType?: string;
-    inputName?: string;
-    inputValue?: string;
-    inputRequired?: boolean;
-    inputOnClick?: TreactOnClick;
-    inputOnChange?: TreactOnChange;
+    label?: string;
+    type?: string;
+    name?: string;
+    value?: string;
+    required?: boolean;
+    onClick?: TreactOnClick;
+    onChange?: TreactOnChange;
     formData?: IsetObject;
 };
 export interface TSubmitProps {

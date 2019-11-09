@@ -1,6 +1,7 @@
 import { FormInput, FormSubmit } from '../components/formComponents';
 import React,{ useState } from 'react';
 import axios from 'axios';
+import { type } from 'os';
 
 export const Registry:React.FunctionComponent = () => {
     const [data,setData] = useState({});
@@ -17,11 +18,12 @@ export const Registry:React.FunctionComponent = () => {
     return (
         <form onSubmit={handleSubmit}>
             <h1>Registry</h1>
-            <FormInput formData={test} inputLabel="Name:" inputName="Name" inputType="text" />
+            <FormInput />
+            {/* <FormInput formData={test} inputLabel="Name:" inputName="Name" inputType="text" />
             <FormInput formData={{data,setData}} inputLabel="Nickname" inputName="Nickname" inputType="text" />
             <FormInput formData={{data,setData}} inputLabel="Birthday" inputName="Birthday" inputType="date" />
             <FormInput formData={{data,setData}} inputLabel="E-mail" inputName="Email" inputType="email" />
-            <FormInput formData={{data,setData}} inputLabel="Password" inputName="Password" inputType="password" />
+            <FormInput formData={{data,setData}} inputLabel="Password" inputName="Password" inputType="password" /> */}
             <FormSubmit name="send" value="send" />
         </form>
     );
