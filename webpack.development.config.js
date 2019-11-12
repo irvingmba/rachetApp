@@ -9,12 +9,12 @@ module.exports = {
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: 'Output Management',
-            template: './client/public/index.html',
+            template: './client/template/index.html',
         }),
     ],
     devtool: 'inline-source-map',
     devServer: {
-        contentBase: path.resolve(__dirname, "./client/build/"),
+        contentBase: path.resolve(__dirname, "./client/public/"),
         compress: true,
         port: 3000,
     },
@@ -38,6 +38,6 @@ module.exports = {
     },
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname,"./client/build/"),
+        path: path.resolve(__dirname,"./client/public/"),
     },
 };
