@@ -1,39 +1,62 @@
 export const inputElements = [
     {
-        name: "name",
-        type: "text",
-        label: "Name",
-        required: true,
+        features: {
+            label: "Name"
+        },
+        properties: {
+            type: "text",
+            name: "name",
+            required: true
+        },
     },
     {
-        name: "userID",
-        type: "text",
-        label: "UserID",
-        required: true,
+        features: {
+            label: "Nickname"
+        },
+        properties: {
+            type: "text",
+            name: "UserID",
+            required: true
+        },
     },
     {
-        name: "birthday",
-        type: "date",
-        label: "Birthday",
-        required: true,
+        features: {
+            label: "Birthday"
+        },
+        properties: {
+            type: "date",
+            name: "birthday",
+            required: true
+        },
     },
     {
-        name: "email",
-        type: "email",
-        label: "E-mail",
-        required: true,
+        features: {
+            label: "E-mail"
+        },
+        properties: {
+            type: "email",
+            name: "email",
+            required: true
+        },
     },
     {
-        name: "password",
-        type: "password",
-        label: "Password",
-        required: true,
+        features: {
+            label: "Password"
+        },
+        properties: {
+            type: "password",
+            name: "password",
+            required: true
+        },
     },
     {
-        name: "confPassword",
-        type: "password",
-        label: "Confirm password",
-        required: true,
+        features: {
+            label: "Confirm password"
+        },
+        properties: {
+            type: "password",
+            name: "confPassword",
+            required: true
+        },
     },
-]
-;
+];

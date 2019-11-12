@@ -3,22 +3,18 @@ import React,{ useState } from 'react';
 import axios from 'axios';
 
 import { inputElements } from '../pagesConf/registry/variables';
-import { TinputConfig } from '../types/formTypes';
+import { IinputProps, IinputConfig } from '../types/formTypes';
+import { string } from 'prop-types';
 
 export const Registry:React.FunctionComponent = () => {
-    const properties = {
-        name: "Name",
-        type: "text",
-        required: true,
-    };
-    const [data,setData] = useState({
-        [properties.name]:''
-    });
+    const names=getInputNames(inputElements);
+    const nameObject = arrayToObject(names);
+    const [data,setData] = useState({...nameObject});
+    const inputs = mapInputElement(inputElements, [data,setData]);
 
     function handleSubmit(event:React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        const {Name, Nickname, Birthday, Email, Password}:{[prop:string]:string} = data;
-        axios.post('/',{Name})
+        axios.post('/',data)
         .then((response) => console.log(response))
         .catch((error) => console.log(error));
     };
@@ -26,32 +22,45 @@ export const Registry:React.FunctionComponent = () => {
     return (
         <form onSubmit={handleSubmit}>
             <h1>Registry</h1>
-            {/* <FormInput formData={test} inputLabel="Name:" inputName="Name" inputType="text" />
-            <FormInput formData={{data,setData}} inputLabel="Nickname" inputName="Nickname" inputType="text" />
-            <FormInput formData={{data,setData}} inputLabel="Birthday" inputName="Birthday" inputType="date" />
-            <FormInput formData={{data,setData}} inputLabel="E-mail" inputName="Email" inputType="email" />
-            <FormInput formData={{data,setData}} inputLabel="Password" inputName="Password" inputType="password" /> */}
+            {inputs}
             <FormSubmit name="send" value="send" />
         </form>
     );
 };
 
-function mapInputElement(config:TinputConfig) {
-    const elements = config.map((element) => {
-        if(element.label) {
+function mapInputElement(config:IinputConfig[], [state,setState]:[{},React.Dispatch<React.SetStateAction<{}>>]) {
+    const elements = config.map((element,index) => {
+        const properties={...element.properties};
+        if(element.features && element.features.label){
             return (
-                <label>
-                    {element.label}
-                    <FormInput
-                        properties={():=>{
-                            const copy = {...element};
-                            delete copy.label;
-                            return copy;
-                        }}
-                    />
+                <label key={element.features.label+index} >{element.features.label}
+                <FormInput
+                key={element.properties.name+index}
+                handlers={{data:state, setData:setState}}
+                properties={properties}
+                />
                 </label>
             );
         };
-        return 
+        return (
+            <FormInput
+            key={element.properties.name+index}
+            properties={properties}
+            />
+        );
     });
+    return elements;
+};
+
+function getInputNames(inputs:IinputConfig[]){
+    const names = inputs.map((input)=>input.properties.name);
+    return names;
+};
+
+function arrayToObject(array:string[]) {
+    const toObject={};
+    array.map((element)=>{
+        Object.assign(toObject,{[element]:""})
+    });
+    return toObject;
 };

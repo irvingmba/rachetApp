@@ -1,35 +1,16 @@
 import {  FunctionComponent } from 'react';
-import { string } from 'prop-types';
 
+// Interfaces and types for input components
 export interface IinputProps {
-    children?: FunctionComponent;
-    properties: {
-        name:string;
-        [propName: string]: string|boolean;
-    };
+    children?: FunctionComponent|JSX.Element;
+    properties: IinputProperties;
     handlers?: IsetObject;
 };
-
-export type TinputConfig = [
-    {
-        name:string;
-        label?:string;
-        type?:string;
-        required?:boolean;
-    }
-];
-
-// export interface TinputProps {
-//     children?: FunctionComponent;
-//     label?: string;
-//     type?: string;
-//     name?: string;
-//     value?: string;
-//     required?: boolean;
-//     onClick?: TreactOnClick;
-//     onChange?: TreactOnChange;
-//     formData?: IsetObject;
-// };
+export interface IinputProperties {
+    name: string;
+    type: string;
+    required?: boolean;
+};
 export interface TSubmitProps {
     name?: string;
     value?: string;
@@ -39,6 +20,12 @@ export interface IsetObject {
         [propName:string]: string;
     };
     setData: React.Dispatch<React.SetStateAction<{}>>;
+};
+export interface IinputConfig {
+    features?:{
+        label?: string;
+    };
+    properties: IinputProperties;
 };
 
 export type TreactOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>void;
