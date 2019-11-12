@@ -1,11 +1,19 @@
 import { FormInput, FormSubmit } from '../components/formComponents';
 import React,{ useState } from 'react';
 import axios from 'axios';
-import { type } from 'os';
+
+import { inputElements } from '../pagesConf/registry/variables';
+import { TinputConfig } from '../types/formTypes';
 
 export const Registry:React.FunctionComponent = () => {
-    const [data,setData] = useState({});
-    const test = {data, setData};
+    const properties = {
+        name: "Name",
+        type: "text",
+        required: true,
+    };
+    const [data,setData] = useState({
+        [properties.name]:''
+    });
 
     function handleSubmit(event:React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -18,7 +26,6 @@ export const Registry:React.FunctionComponent = () => {
     return (
         <form onSubmit={handleSubmit}>
             <h1>Registry</h1>
-            <FormInput />
             {/* <FormInput formData={test} inputLabel="Name:" inputName="Name" inputType="text" />
             <FormInput formData={{data,setData}} inputLabel="Nickname" inputName="Nickname" inputType="text" />
             <FormInput formData={{data,setData}} inputLabel="Birthday" inputName="Birthday" inputType="date" />
@@ -27,4 +34,24 @@ export const Registry:React.FunctionComponent = () => {
             <FormSubmit name="send" value="send" />
         </form>
     );
+};
+
+function mapInputElement(config:TinputConfig) {
+    const elements = config.map((element) => {
+        if(element.label) {
+            return (
+                <label>
+                    {element.label}
+                    <FormInput
+                        properties={():=>{
+                            const copy = {...element};
+                            delete copy.label;
+                            return copy;
+                        }}
+                    />
+                </label>
+            );
+        };
+        return 
+    });
 };

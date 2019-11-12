@@ -3,23 +3,33 @@ import { string } from 'prop-types';
 
 export interface IinputProps {
     children?: FunctionComponent;
-    properties?: {
+    properties: {
+        name:string;
         [propName: string]: string|boolean;
     };
     handlers?: IsetObject;
 };
 
-export interface TinputProps {
-    children?: FunctionComponent;
-    label?: string;
-    type?: string;
-    name?: string;
-    value?: string;
-    required?: boolean;
-    onClick?: TreactOnClick;
-    onChange?: TreactOnChange;
-    formData?: IsetObject;
-};
+export type TinputConfig = [
+    {
+        name:string;
+        label?:string;
+        type?:string;
+        required?:boolean;
+    }
+];
+
+// export interface TinputProps {
+//     children?: FunctionComponent;
+//     label?: string;
+//     type?: string;
+//     name?: string;
+//     value?: string;
+//     required?: boolean;
+//     onClick?: TreactOnClick;
+//     onChange?: TreactOnChange;
+//     formData?: IsetObject;
+// };
 export interface TSubmitProps {
     name?: string;
     value?: string;

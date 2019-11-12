@@ -1,19 +1,23 @@
 import React, { useState, useEffect, ReactHTML, InputHTMLAttributes } from 'react';
 import { TinputProps, TSubmitProps, IsetObject, IinputProps } from '../types/formTypes';
 
-const [value, setValue] = useState('');
 
 export const FormInput = (props:IinputProps) => {
-    const {data, setData} = (props.handlers as IsetObject) || {value, setValue} ;
+    const [value, setValue] = useState({[props.properties.name]:''});
+    const {data, setData} = (props.handlers as IsetObject) || {data:value, setData:setValue} ;
     const inputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
         const targetValue=event.target.value;
-        if(!props.handlers) console.log(targetValue);
-        // setData({...data, [props.properties.value as string]:event.target.value});
+        setData({
+            ...data,
+            [props.properties.name]:targetValue
+        });
     };
-    return 
+    return (
         <input 
+        onChange={inputChange}
+        value={data[props.properties.name]}
         {...props.properties}
-        />
+        />)
     ;
 };
 
