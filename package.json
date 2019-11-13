@@ -6,9 +6,10 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev-watch": "webpack --config webpack.dev.config.ts --watch",
-    "dev-start": "webpack-dev-server --config webpack.dev.config.ts --open",
-    "dev-build": "webpack --config webpack.dev.config.ts"
+    "devWatch": "webpack --config webpack.dev.config.ts --watch",
+    "devStart": "webpack-dev-server --config webpack.dev.config.ts --open",
+    "devBuild": "webpack --config webpack.dev.config.ts",
+    "devPortal": "ts-node ./server/portal/index.ts"
   },
   "author": {
     "name": "Martin Bedoya",
