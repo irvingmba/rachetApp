@@ -20,9 +20,9 @@ const config:webpack.Configuration = {
         compress: true,
         port: 3000,
         // https: true,
-        // proxy: {
-        //     '/portal': 'http://localhost/8080/',
-        // },
+        proxy: {
+            '/portal': 'http://localhost:8080',
+        },
     },
     module: {
         rules: [

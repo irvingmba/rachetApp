@@ -14,7 +14,7 @@ export const Registry:React.FunctionComponent = () => {
 
     function handleSubmit(event:React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        axios.post('http://localhost:8080/',data)
+        axios.post('/portal',data)
         .then((response) => console.log(response))
         .catch((error) => console.log(error));
     };
