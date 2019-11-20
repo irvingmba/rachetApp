@@ -9,7 +9,7 @@ export interface IinputProps {
 export interface IinputProperties {
     name: string;
     type: string;
-    required?: boolean;
+    required?: boolean|undefined;
 };
 export interface TSubmitProps {
     name?: string;
@@ -22,10 +22,10 @@ export interface IsetObject {
     setData: React.Dispatch<React.SetStateAction<{}>>;
 };
 export interface IinputConfig {
+    properties: IinputProperties;
     features?:{
         label?: string;
     };
-    properties: IinputProperties;
 };
 
 export type TreactOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>void;

@@ -1,4 +1,6 @@
-export const inputElements = [
+import { IinputConfig } from '../../types/formTypes';
+
+export const inputElements:IinputConfig[] = [
     {
         features: {
             label: "Name"
@@ -57,6 +59,12 @@ export const inputElements = [
             type: "password",
             name: "confPassword",
             required: true
+        },
+    },
+    {
+        properties: {
+            name: "send",
+            type: "submit",
         },
     },
 ];

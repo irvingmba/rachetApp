@@ -10,7 +10,7 @@ export const Registry:React.FunctionComponent = () => {
     const names=getInputNames(inputElements);
     const nameObject = arrayToObject(names);
     const [data,setData] = useState({...nameObject});
-    const inputs = mapInputElement(inputElements, [data,setData]);
+    const inputs = mapInputElements(inputElements, [data,setData]);
 
     function handleSubmit(event:React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -23,12 +23,11 @@ export const Registry:React.FunctionComponent = () => {
         <form onSubmit={handleSubmit}>
             <h1>Registry</h1>
             {inputs}
-            <FormSubmit name="send" value="send" />
         </form>
     );
 };
 
-function mapInputElement(config:IinputConfig[], [state,setState]:[{},React.Dispatch<React.SetStateAction<{}>>]) {
+function mapInputElements(config:IinputConfig[], [state,setState]:[{},React.Dispatch<React.SetStateAction<{}>>]) {
     const elements = config.map((element,index) => {
         const properties={...element.properties};
         if(element.features && element.features.label){
