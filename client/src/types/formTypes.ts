@@ -10,9 +10,6 @@ export interface IinputProperties {
     name: string;
     type: string;
     required?: boolean|undefined;
-};
-export interface TSubmitProps {
-    name?: string;
     value?: string;
 };
 export interface IsetObject {
@@ -26,6 +23,11 @@ export interface IinputConfig {
     features?:{
         label?: string;
     };
+};
+export interface Iformprops {
+    title: string;
+    url: string;
+    inputElements: IinputConfig[];
 };
 
 export type TreactOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>void;

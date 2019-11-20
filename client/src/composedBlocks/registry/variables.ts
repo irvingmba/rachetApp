@@ -65,6 +65,7 @@ export const inputElements:IinputConfig[] = [
         properties: {
             name: "send",
             type: "submit",
+            value: "Send",
         },
     },
 ];

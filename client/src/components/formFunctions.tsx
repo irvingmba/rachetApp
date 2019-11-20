@@ -1,31 +1,6 @@
-import { FormInput, FormSubmit } from '../components/formComponents';
-import React,{ useState } from 'react';
-import axios from 'axios';
-
-import { inputElements } from '../pagesConf/registry/variables';
-import { IinputProps, IinputConfig } from '../types/formTypes';
-import { string } from 'prop-types';
-
-export const Registry:React.FunctionComponent = () => {
-    const names=getInputNames(inputElements);
-    const nameObject = arrayToObject(names);
-    const [data,setData] = useState({...nameObject});
-    const inputs = mapInputElements(inputElements, [data,setData]);
-
-    function handleSubmit(event:React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        axios.post('http://localhost:8080/',data)
-        .then((response) => console.log(response))
-        .catch((error) => console.log(error));
-    };
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <h1>Registry</h1>
-            {inputs}
-        </form>
-    );
-};
+import React from 'react';
+import { GenInput } from '../components/formComponents';
+import { IinputConfig } from '../types/formTypes';
 
 function mapInputElements(config:IinputConfig[], [state,setState]:[{},React.Dispatch<React.SetStateAction<{}>>]) {
     const elements = config.map((element,index) => {
@@ -33,7 +8,7 @@ function mapInputElements(config:IinputConfig[], [state,setState]:[{},React.Disp
         if(element.features && element.features.label){
             return (
                 <label key={element.features.label+index} >{element.features.label}
-                <FormInput
+                <GenInput
                 key={element.properties.name+index}
                 handlers={{data:state, setData:setState}}
                 properties={properties}
@@ -42,7 +17,7 @@ function mapInputElements(config:IinputConfig[], [state,setState]:[{},React.Disp
             );
         };
         return (
-            <FormInput
+            <GenInput
             key={element.properties.name+index}
             properties={properties}
             />
@@ -62,4 +37,10 @@ function arrayToObject(array:string[]) {
         Object.assign(toObject,{[element]:""})
     });
     return toObject;
+};
+
+export {
+    mapInputElements,
+    getInputNames,
+    arrayToObject
 };
