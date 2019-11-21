@@ -1,1 +1,0 @@
-const REGISTER_USER:string = "REGISTER_USER", SIGNIN:string = "SIGNIN";

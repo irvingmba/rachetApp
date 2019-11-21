@@ -27,7 +27,12 @@ function mapInputElements(config:IinputConfig[], [state,setState]:[{},React.Disp
 };
 
 function getInputNames(inputs:IinputConfig[]){
-    const names = inputs.map((input)=>input.properties.name);
+    const names:string[] = inputs.reduce<string[]>((acc:string[], input:IinputConfig)=>{
+        if (input.properties.type !== "submit") {
+            return [...acc, input.properties.name];
+        };
+        return acc;
+    },[]);
     return names;
 };
 
