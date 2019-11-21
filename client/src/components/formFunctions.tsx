@@ -1,6 +1,6 @@
 import React from 'react';
 import { GenInput } from '../components/formComponents';
-import { IinputConfig } from '../types/formTypes';
+import { IinputConfig } from '../types/components';
 
 function mapInputElements(config:IinputConfig[], [state,setState]:[{},React.Dispatch<React.SetStateAction<{}>>]) {
     const elements = config.map((element,index) => {

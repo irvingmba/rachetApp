@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { getInputNames, arrayToObject, mapInputElements } from '../components/formFunctions';
-import { IsetObject, IinputProps, IinputConfig, Iformprops } from '../types/formTypes';
+import { IsetObject, IinputProps, IinputConfig, Iformprops } from '../types/components';
 
 /**
  * 

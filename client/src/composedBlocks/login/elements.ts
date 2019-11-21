@@ -1,4 +1,4 @@
-import { IinputConfig } from '../../types/formTypes';
+import { IinputConfig } from '../../types/components';
 
 const inputsLogin:IinputConfig[] = [
     {
