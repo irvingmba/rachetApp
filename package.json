@@ -9,7 +9,7 @@
     "devWatch": "webpack --config webpack.dev.config.ts --watch",
     "devStart": "webpack-dev-server --config webpack.dev.config.ts --open",
     "devBuild": "webpack --config webpack.dev.config.ts",
-    "devPortal": "nodemon --exec 'ts-node' ./server/portal/index.ts"
+    "devPortal": "nodemon --exec 'ts-node' ./userServer/portal/index.ts"
   },
   "author": {
     "name": "Martin Bedoya",
