@@ -1,15 +1,14 @@
 import React from 'react';
 
-import { Login } from '../composedBlocks/login/loginBlock';
-import { Registry } from '../composedBlocks/registry/registryBlock';
+import Registry from '../composedBlocks/registry/registryBlock';
 
-const LoginPage = () => {
+const RegistryPage = () => {
 
     return (
-        <div>
+        <>
             <Registry />
-        </div>
+        </>
     );
 };
 
-export { LoginPage };
+export default RegistryPage;

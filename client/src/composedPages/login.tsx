@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { Login } from '../composedBlocks/login/loginBlock';
+import LoginP from '../composedBlocks/login/loginBlock';
 
 const LoginPage = () => {
 
     return (
-        <div>
-            <Login />
-        </div>
+        <>
+            <LoginP />
+        </>
     );
 };
 
-export { LoginPage };
+export default LoginPage;

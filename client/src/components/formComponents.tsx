@@ -10,7 +10,7 @@ import { IsetObject, IinputProps, IinputConfig, Iformprops } from '../types/comp
  */
 const GenInput = (props:IinputProps) => {
     const [value, setValue] = useState({[props.properties.name]:''});
-    const {data, setData} = (props.handlers as IsetObject) || {data:value, setData:setValue};
+    const {data, setData} = (props.handlers as IsetObject) || {data: value, setData:setValue};
     const modifiers = {};
     const inputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
         const targetValue=event.target.value;
@@ -40,6 +40,7 @@ const GenForm:React.FunctionComponent<Iformprops> = (props:Iformprops) => {
 
     function handleSubmit(event:React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        console.log(props);
         axios.post(props.url,data)
         .then((response) => console.log(response))
         .catch((error) => console.log(error));

@@ -16,4 +16,4 @@ const Registry:React.FunctionComponent = () => {
 
 
 
-export { Registry };
+export default Registry;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux'
 
 import { inputsLogin } from './elements';
 import { GenForm } from '../../components/formComponents';
@@ -13,4 +14,5 @@ const Login:React.FunctionComponent = () => {
     );
 };
 
-export { Login };
+// const LoginP = connect()(Login);
+export default Login;
