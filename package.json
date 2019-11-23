@@ -9,7 +9,7 @@
     "devWatch": "webpack --config webpack.dev.config.ts --watch",
     "devStart": "webpack-dev-server --config webpack.dev.config.ts --open",
     "devBuild": "webpack --config webpack.dev.config.ts",
-    "devPortal": "nodemon --exec 'ts-node' ./userServer/portal/index.ts"
+    "userServer": "nodemon --exec 'ts-node' ./userServer/register/index.ts"
   },
   "author": {
     "name": "Martin Bedoya",
@@ -42,6 +42,7 @@
     "@types/react-redux": "^7.1.5",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
+    "express-validator": "^6.2.0",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-redux": "^7.1.3",
     "react-router-dom": "^5.1.2",
