@@ -3,9 +3,6 @@ import http from 'http';
 import https from 'https';
 import fs from 'fs';
 import path from 'path';
-import { body, check, validationResult } from 'express-validator';
-import graphqlHTTP from 'express-graphql';
-
 
 const app = express();
 const port:string = process.env.PORT || "8080";

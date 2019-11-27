@@ -1,0 +1,11 @@
+# scalar Date
+
+type Query {
+    info: String!
+    user(name:String!):User
+}
+
+type User {
+    id: Int!
+    name: String!
+}
