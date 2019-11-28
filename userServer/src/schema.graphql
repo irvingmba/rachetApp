@@ -1,11 +1,14 @@
-# scalar Date
+scalar Date
+
+type User {
+    id: ID!
+    name: String!
+    nickname: String!
+    birthday: Date!
+    email: String!
+}
 
 type Query {
     info: String!
-    user(name:String!):User
-}
-
-type User {
-    id: Int!
-    name: String!
+    getUser(name: String!): User
 }
