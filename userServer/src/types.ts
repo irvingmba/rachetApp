@@ -2,6 +2,6 @@ export interface SchemUser{
     id: number;
     name: string;
     nickname: string;
-    birthday: Date;
+    birthday: string;
     email: string;
 };

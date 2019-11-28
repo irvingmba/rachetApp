@@ -11,7 +11,6 @@ const typeDefs = './userServer/src/schema.graphql';
 import { data } from './data';
 
 const mocks={
-    Date: ()=>,
     Query: ()=>({
         info: ()=>resolvers.Query.info(),
         getUser: (parent:any,args:any,context:any)=>resolvers.Query.getUser(parent,args,context)
