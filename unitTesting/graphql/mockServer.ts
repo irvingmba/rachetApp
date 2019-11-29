@@ -22,6 +22,10 @@ const mocks={
         birhtday: (parent:any)=>resolvers.User.birthday(parent),
         email: (parent:any)=>resolvers.User.email(parent),
     }),
+    Mutation: ()=>({
+        register: (parent:any,args:any,context:any)=>resolvers.Mutation.register(parent,args,context),
+        login: (parent:any,args:any,context:any)=>resolvers.Mutation.login(parent,args,context),
+    }),
 };
 
 const mockServer = new GraphQLServer({

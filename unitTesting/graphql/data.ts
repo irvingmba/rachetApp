@@ -3,38 +3,43 @@
  */
 export const data=[
     {
-        id: 1,
+        id: "1",
         name: "Homero",
         nickname: "Dad",
         birthday: (new Date("1970-05-30")).toDateString(),
-        email: "homer@springfield.com"
+        email: "homer@springfield.com",
+        password: "asldfjasjdflasjdfls"
     },
     {
-        id: 2,
+        id: "2",
         name: "March",
         nickname: "Mom",
         birthday: (new Date("1973-03-25")).toDateString(),
-        email: "march@springfield.com"
+        email: "march@springfield.com",
+        password: "asldfjasjdflasjdfls"
     },
     {
-        id: 3,
+        id: "3",
         name: "Lisa",
         nickname: "Daughter",
         birthday: (new Date("2000-01-5")).toDateString(),
-        email: "lisa@springfield.com"
+        email: "lisa@springfield.com",
+        password: "asldfjasjdflasjdfls"
     },
     {
-        id: 4,
+        id: "4",
         name: "Bart",
         nickname: "The kid",
         birthday: (new Date("1998-11-17")).toDateString(),
-        email: "bart@springfield.com"
+        email: "bart@springfield.com",
+        password: "asldfjasjdflasjdfls"
     },
     {
-        id: 5,
+        id: "5",
         name: "Maggie",
         nickname: "The baby",
         birthday: (new Date("2005-02-22")).toDateString(),
-        email: "maggie@springfield.com"
+        email: "maggie@springfield.com",
+        password: "asldfjasjdflasjdfls"
     },
 ];

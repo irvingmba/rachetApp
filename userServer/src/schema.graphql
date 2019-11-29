@@ -1,14 +1,26 @@
-scalar Date
-
 type User {
     id: ID!
     name: String!
     nickname: String!
-    birthday: Date!
+    birthday: String!
     email: String!
 }
 
 type Query {
     info: String!
-    getUser(name: String!): User
+    getUser(id: ID!): User
+}
+
+type Mutation {
+    login(
+        user: String!
+        password: String!
+    ): Boolean
+    register(
+        name: String!
+        nickname: String!
+        birthday: String!
+        email: String!
+        password: String!
+    ): ID
 }
