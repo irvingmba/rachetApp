@@ -1,7 +1,9 @@
 /** 
  * Here we are configuring a server to mock the schema and the resolvers
  */
-import { GraphQLServer } from 'graphql-yoga';
+import { GraphQLServer, Options } from 'graphql-yoga';
+import fs from 'fs';
+import path from 'path';
 
 // Modules to be tested from the project
 import { resolvers } from '../../userServer/src/resolvers';
@@ -28,6 +30,14 @@ const mocks={
     }),
 };
 
+// Testing the graphql server configuration
+const options:Options = {
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname,'../../userServer/keys/key.pem')),
+      cert: fs.readFileSync(path.resolve(__dirname,'../../userServer/keys/certificate.pem')),
+    },
+  };
+
 const mockServer = new GraphQLServer({
     typeDefs,
     resolvers,
@@ -35,4 +45,4 @@ const mockServer = new GraphQLServer({
     context: data,
 });
 
-mockServer.start(()=>console.log(`Mocking on port 4000`));
+mockServer.start(options,()=>console.log(`Mocking on port 4000`));

@@ -1,0 +1,7 @@
+Validation errors
+
+Code number     Problem                                             Solution
+code 10:        "String validation failed"                          Verify the string and the validation options
+Code 11         "Invalid date"                                      Verify that the coming date is valid
+Code 12         "Invalid email"                                     The string is not a valid mail, verify it
+Code 13         "Invalid password"                                  Verify the length of the password that was provided

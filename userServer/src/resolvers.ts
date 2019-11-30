@@ -1,4 +1,5 @@
 import { SchemUser, MUser, MLogin } from './types';
+import { validInputString, validInputDate, validInputEmail, validInputPass } from './validation';
 
 export const resolvers = {
   User: {
@@ -8,10 +9,6 @@ export const resolvers = {
     birthday: (parent:SchemUser)=>parent.birthday,
     email: (parent:SchemUser)=>parent.email,
   },
-  // signinUser: {
-  //   user: (parent:{})=>true,
-  //   password: (parent:{})=>true,
-  // },
   Query: {
     info: () => `This is the API of a Hackernews Clone`,
     getUser: (parent:undefined ,args:{id:string},context:SchemUser[])=>{
@@ -22,11 +19,11 @@ export const resolvers = {
     register: (parent:undefined,args:MUser, context:SchemUser[])=>{
       const user:SchemUser = {
         id: (context.length+1).toString(),
-        name: args.name,
-        nickname: args.nickname,
-        birthday: args.birthday,
-        email: args.email,
-        password: args.password
+        name: validInputString(args.name),
+        nickname: validInputString(args.nickname),
+        birthday: validInputDate(args.birthday),
+        email: validInputEmail(args.email),
+        password: validInputPass(args.password),
       };
       context.push(user);
       return user.id;

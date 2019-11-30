@@ -8,19 +8,19 @@ type User {
 
 type Query {
     info: String!
-    getUser(id: ID!): User
+    getUser(id: ID!): User!
 }
 
 type Mutation {
     login(
         user: String!
         password: String!
-    ): Boolean
+    ): Boolean!
     register(
         name: String!
         nickname: String!
         birthday: String!
         email: String!
         password: String!
-    ): ID
+    ): ID!
 }
