@@ -10,7 +10,7 @@
     "devStart": "webpack-dev-server --config webpack.dev.config.ts --open",
     "devBuild": "webpack --config webpack.dev.config.ts",
     "userServer": "nodemon --exec 'ts-node' ./userServer/src/index.ts",
-    "testGraphql": "nodemon --exec 'ts-node' ./unitTesting/graphql/mockServer.ts"
+    "testUserServer": "nodemon --exec 'ts-node' ./unitTesting/graphql/mockServer.ts"
   },
   "author": {
     "name": "Martin Bedoya",

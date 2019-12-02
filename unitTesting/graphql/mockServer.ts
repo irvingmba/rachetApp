@@ -15,14 +15,6 @@ import { data } from './data';
 const mocks={
     Query: ()=>({
         info: ()=>resolvers.Query.info(),
-        getUser: (parent:any,args:any,context:any)=>resolvers.Query.getUser(parent,args,context)
-    }),
-    User: ()=>({
-        id: (parent:any)=>resolvers.User.id(parent),
-        name: (parent:any)=> resolvers.User.name(parent),
-        nickname: (parent:any)=>resolvers.User.nickname(parent),
-        birhtday: (parent:any)=>resolvers.User.birthday(parent),
-        email: (parent:any)=>resolvers.User.email(parent),
     }),
     Mutation: ()=>({
         register: (parent:any,args:any,context:any)=>resolvers.Mutation.register(parent,args,context),

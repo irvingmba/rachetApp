@@ -10,6 +10,6 @@ export const textInputConst:optVInputString = {
 };
 
 export const passInputConst:validator.IsLengthOptions = {
-    min: 5,
-    max: 40
+    min: 7,
+    max: 25
 };
