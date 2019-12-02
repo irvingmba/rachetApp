@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 
 // Modules to be tested from the project
-import { resolvers } from '../../userServer/src/resolvers';
+import { resolvers } from '../../userAccess/src/resolvers';
 const typeDefs = './userServer/src/schema.graphql';
 
 // Testing the resolvers in the mocks
