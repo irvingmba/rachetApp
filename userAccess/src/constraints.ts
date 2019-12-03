@@ -13,3 +13,12 @@ export const passInputConst:validator.IsLengthOptions = {
     min: 7,
     max: 25
 };
+
+export const nicknameInputConst: optVInputString = {
+    inputLanguage: "en-US",
+    stringLength: {
+        min: 5,
+        max: 30
+    },
+    
+};

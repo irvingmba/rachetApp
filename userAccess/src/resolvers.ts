@@ -1,4 +1,4 @@
-import { IntUserInfo, MUser, MLogin } from './types';
+import { IntUserInfo, MUser, MLogin, IntUserAccess } from './types';
 import { validInputString, validInputDate, validInputEmail, validInputPass } from './validation';
 
 export const resolvers = {
@@ -6,20 +6,25 @@ export const resolvers = {
     info: () => `Dark side`,
   },
   Mutation: {
-    register: (parent:undefined,args:MUser, context:IntUserInfo[])=>{
-      const user:IntUserInfo = {
-        id: (context.length+1).toString(),
+    register: (parent:undefined,args:MUser, context:{userInfo: IntUserInfo[],userAccess: IntUserAccess[]})=>{
+      const registerUser:IntUserInfo = {
+        id: (context.userAccess.length+1).toString(),
         name: validInputString(args.name),
-        nickname: validInputString(args.nickname),
         birthday: validInputDate(args.birthday),
         email: validInputEmail(args.email),
-        password: validInputPass(args.password),
       };
-      context.push(user);
-      return user.id;
+      const registerAccess:IntUserAccess = {
+        id: registerUser.id,
+        nickname: validInputString(args.nickname),
+        password: validInputPass(args.password),
+
+      };
+      context.userInfo.push(registerUser),
+      context.userAccess.push(registerAccess);
+      return registerUser.id;
     },
-    login: (parent:undefined,args:MLogin,context:IntUserInfo[])=>{
-      const userFound:boolean=context.some((user)=>{
+    login: (parent:undefined,args:MLogin,context:{userInfo: IntUserInfo[], userAccess: IntUserAccess[]})=>{
+      const userFound:boolean=context.userAccess.some((user)=>{
         if((user.nickname===args.user)&&(user.password===args.password)){
           return true;
         };

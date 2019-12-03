@@ -6,11 +6,11 @@ import fs from 'fs';
 import path from 'path';
 
 // Modules to be tested from the project
-import { resolvers } from '../../userAccess/src/resolvers';
-const typeDefs = './userServer/src/schema.graphql';
+import { resolvers } from '../../../userAccess/src/resolvers';
+const typeDefs = './userAccess/src/schema.graphql';
 
 // Testing the resolvers in the mocks
-import { data } from './data';
+import { UserInfo, access } from './data';
 
 const mocks={
     Query: ()=>({
@@ -25,8 +25,8 @@ const mocks={
 // Testing the graphql server configuration
 const options:Options = {
     https: {
-      key: fs.readFileSync(path.resolve(__dirname,'../../userServer/keys/key.pem')),
-      cert: fs.readFileSync(path.resolve(__dirname,'../../userServer/keys/certificate.pem')),
+      key: fs.readFileSync(path.resolve(__dirname,'../../../userAccess/keys/key.pem')),
+      cert: fs.readFileSync(path.resolve(__dirname,'../../../userAccess/keys/certificate.pem')),
     },
     port: 4001
   };
@@ -35,7 +35,10 @@ const mockServer = new GraphQLServer({
     typeDefs,
     resolvers,
     mocks,
-    context: data,
+    context: {
+        userInfo: UserInfo,
+        userAccess: access
+    },
 });
 
 mockServer.start(options,()=>console.log(`Mocking on port https://localhost:4001`));

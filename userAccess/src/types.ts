@@ -4,9 +4,13 @@ import validator from 'validator';
 export interface IntUserInfo {
     id: string;
     name: string;
-    nickname: string;
     birthday: string;
     email: string;
+};
+
+export interface IntUserAccess {
+    id: string;
+    nickname: string;
     password: string;
 };
 

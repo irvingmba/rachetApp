@@ -1,45 +1,63 @@
 /**
  * I will use this data as a little database to mock the schema and the resolvers of the graphql interface
  */
-export const data=[
+export const UserInfo=[
     {
         id: "1",
         name: "Homero",
-        nickname: "Dad",
         birthday: (new Date("1970-05-30")).toDateString(),
         email: "homer@springfield.com",
-        password: "asldfjasjdflasjdfls"
     },
     {
         id: "2",
         name: "March",
-        nickname: "Mom",
         birthday: (new Date("1973-03-25")).toDateString(),
         email: "march@springfield.com",
-        password: "asldfjasjdflasjdfls"
     },
     {
         id: "3",
         name: "Lisa",
-        nickname: "Daughter",
         birthday: (new Date("2000-01-5")).toDateString(),
         email: "lisa@springfield.com",
-        password: "asldfjasjdflasjdfls"
     },
     {
         id: "4",
         name: "Bart",
-        nickname: "The kid",
         birthday: (new Date("1998-11-17")).toDateString(),
         email: "bart@springfield.com",
-        password: "asldfjasjdflasjdfls"
     },
     {
         id: "5",
         name: "Maggie",
-        nickname: "The baby",
         birthday: (new Date("2005-02-22")).toDateString(),
         email: "maggie@springfield.com",
-        password: "asldfjasjdflasjdfls"
+    },
+];
+
+export const access = [
+    {
+        id: 1,
+        nickname: "Dad",
+        password: "qwertyui",
+    },
+    {
+        id: 2,
+        nickname: "Mom",
+        password: "asdfghjk",
+    },
+    {
+        id: 3,
+        nickname: "Daughter",
+        password: "zxcvbnm,",
+    },
+    {
+        id: 4,
+        nickname: "The kid",
+        password: "qazwsxed",
+    },
+    {
+        id: 5,
+        nickname: "The baby",
+        password: "rfvtgbyh",
     },
 ];
