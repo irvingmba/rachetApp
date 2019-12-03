@@ -2,11 +2,11 @@ export interface IntUserInfo {
     id: string;
     name: string;
     birthday: string;
-    email: string;
 };
 export interface IntUserAccess {
     id: string;
     nickname: string;
+    email: string;
     password: string;
 };
 export interface IntContactInfo {
@@ -20,5 +20,11 @@ export interface IntUser {
     name: string;
     nickname: string;
     birthday: string;
+    email: string;
+};
+
+export interface IntPublicFace {
+    id: string;
+    nickname: string;
     email: string;
 };
