@@ -1,7 +1,7 @@
 import validator from 'validator';
 
 // Interface for complete records
-export interface SchemUser {
+export interface IntUserInfo {
     id: string;
     name: string;
     nickname: string;

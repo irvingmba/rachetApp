@@ -28,6 +28,7 @@ const options:Options = {
       key: fs.readFileSync(path.resolve(__dirname,'../../userServer/keys/key.pem')),
       cert: fs.readFileSync(path.resolve(__dirname,'../../userServer/keys/certificate.pem')),
     },
+    port: 4001
   };
 
 const mockServer = new GraphQLServer({
@@ -37,4 +38,4 @@ const mockServer = new GraphQLServer({
     context: data,
 });
 
-mockServer.start(options,()=>console.log(`Mocking on port 4000`));
+mockServer.start(options,()=>console.log(`Mocking on port https://localhost:4001`));

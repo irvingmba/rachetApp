@@ -15,4 +15,4 @@ const options:Options = {
   },
 };
 
-server.start(options,() => console.log(`Server is running on https://localhost:4000`))
+server.start(options,() => console.log(`User Access Server is running on https://localhost:4000`))

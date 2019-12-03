@@ -1,4 +1,5 @@
 import { GraphQLServer, Options } from 'graphql-yoga';
+import { resolvers } from './resolvers';
 import fs from 'fs';
 import path from 'path';
 
@@ -12,6 +13,7 @@ const options:Options = {
     key: fs.readFileSync(path.resolve(__dirname,'../keys/key.pem')),
     cert: fs.readFileSync(path.resolve(__dirname,'../keys/certificate.pem')),
   },
+  port: 4010,
 };
 
-server.start(options,() => console.log(`Server is running on https://localhost:4000`))
+server.start(options,() => console.log(`User Information Server is running on https://localhost:4010`))

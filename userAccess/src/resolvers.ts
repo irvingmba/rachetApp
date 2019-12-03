@@ -1,4 +1,4 @@
-import { SchemUser, MUser, MLogin } from './types';
+import { IntUserInfo, MUser, MLogin } from './types';
 import { validInputString, validInputDate, validInputEmail, validInputPass } from './validation';
 
 export const resolvers = {
@@ -6,8 +6,8 @@ export const resolvers = {
     info: () => `Dark side`,
   },
   Mutation: {
-    register: (parent:undefined,args:MUser, context:SchemUser[])=>{
-      const user:SchemUser = {
+    register: (parent:undefined,args:MUser, context:IntUserInfo[])=>{
+      const user:IntUserInfo = {
         id: (context.length+1).toString(),
         name: validInputString(args.name),
         nickname: validInputString(args.nickname),
@@ -18,7 +18,7 @@ export const resolvers = {
       context.push(user);
       return user.id;
     },
-    login: (parent:undefined,args:MLogin,context:SchemUser[])=>{
+    login: (parent:undefined,args:MLogin,context:IntUserInfo[])=>{
       const userFound:boolean=context.some((user)=>{
         if((user.nickname===args.user)&&(user.password===args.password)){
           return true;
