@@ -9,6 +9,11 @@ export interface IntUserAccess {
     nickname: string;
     password: string;
 };
+export interface IntContactInfo {
+    id: string;
+    contacts: string[];
+    conversations: string[];
+};
 
 export interface IntUser {
     id: string;

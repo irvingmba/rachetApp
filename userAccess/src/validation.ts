@@ -1,12 +1,12 @@
 import validator from 'validator';
 import { optVInputString } from './types';
-import { passInputConst } from './constraints';
+import { passInputConst, textInputConst, nicknameInputConst } from './constraints';
 
-export function validInputString(text: string, options?: optVInputString) {
+export function validInputString(text: string) {
     try {
         if(
-            validator.isAlpha(text,options ? options.inputLanguage : undefined) &&
-            validator.isLength(text,options ? options.stringLength : undefined)
+            validator.isAlpha(text,textInputConst.inputLanguage) &&
+            validator.isLength(text,textInputConst.stringLength)
         ){
             text=validator.trim(text);
         }else {
@@ -50,4 +50,15 @@ export function validInputPass(password: string) {
         return password;
     };
     throw "Code 13: Invalid password";
+};
+
+export function validInputNickname(nickname: string) {
+    if (
+        validator.isAlpha(nickname,nicknameInputConst.inputLanguage) &&
+        validator.isLength(nickname, nicknameInputConst.stringLength) &&
+        !(/[\s]/.test(nickname))
+    ) {
+        return nickname;
+    };
+    throw "Code 14: Invalid nickname";
 };

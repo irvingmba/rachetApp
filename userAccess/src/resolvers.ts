@@ -1,5 +1,5 @@
 import { IntUserInfo, MUser, MLogin, IntUserAccess } from './types';
-import { validInputString, validInputDate, validInputEmail, validInputPass } from './validation';
+import { validInputString, validInputDate, validInputEmail, validInputPass, validInputNickname } from './validation';
 
 export const resolvers = {
   Query: {
@@ -15,7 +15,7 @@ export const resolvers = {
       };
       const registerAccess:IntUserAccess = {
         id: registerUser.id,
-        nickname: validInputString(args.nickname),
+        nickname: validInputNickname(args.nickname),
         password: validInputPass(args.password),
 
       };

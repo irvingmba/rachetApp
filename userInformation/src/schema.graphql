@@ -1,3 +1,9 @@
+type publicFace {
+    id: ID!
+    nickname: String!
+    email: String!
+}
+
 type User {
     id: ID!
     name: String!
@@ -9,4 +15,15 @@ type User {
 type Query {
     info: String!
     getOwnProfile: User!
+    getContacts: [publicFace!]
+    getContactInfo(id: ID!): User!
+}
+
+type Mutation {
+    addContact(
+        id: ID
+        nickname: String
+        email: String
+    ): Boolean!
+    delContact(id: ID!): Boolean!
 }

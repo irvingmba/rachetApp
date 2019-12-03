@@ -70,7 +70,7 @@ export const contactInfo = [
         contacts: [
             2, 3
         ],
-        conversation: [
+        conversations: [
             100, 101, 102
         ],
     },
