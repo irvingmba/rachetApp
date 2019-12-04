@@ -1,4 +1,5 @@
 import { IntUserInfo, IntUserAccess, IntUser, IntContactInfo, IntPublicFace } from './types';
+import { validNickname, validEmail } from './validation';
 
 export const resolvers = {
   Query: {
@@ -58,6 +59,8 @@ export const resolvers = {
       throw "Code 20: Invalid user";
     },
     delUser: (parent: undefined, args:IntPublicFace, context: {userInfo: IntUserInfo[], userAccess: IntUserAccess[], contactInfo: IntContactInfo[]}) => {
+      args.nickname = validNickname(args.nickname);
+      args.email = validEmail(args.email);
       const contact = context.userAccess.find((user) => args.id ? user.id == args.id: args.nickname ? user.nickname == args.nickname : args.email ? user.email == args.email : null),
       owner = context.contactInfo.find((user) => user.id == "1"),
       exist = owner ? owner.contacts.some((user) =>user == (contact ? contact.id : null)) : null;

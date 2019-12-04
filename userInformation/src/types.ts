@@ -1,3 +1,5 @@
+import validator from "validator";
+
 export interface IntUserInfo {
     id: string;
     name: string;
@@ -27,4 +29,13 @@ export interface IntPublicFace {
     id: string;
     nickname: string;
     email: string;
+};
+
+export interface IntConstText {
+    alpha?: validator.AlphaLocale;
+    length?: validator.IsLengthOptions;
+};
+
+export interface IntConstEmail {
+    
 };

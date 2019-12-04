@@ -34,7 +34,7 @@ export function validInputDate(date: string) {
 
 export function validInputEmail(email:string) {
     try {
-        if(validator.isEmail(email)) {
+        if(validator.isEmail(email) && validator.isLength(email, {min: 5, max: 30})) {
             return validator.trim(email);
         }
         else {

@@ -1,7 +1,17 @@
 Validation errors
-
+ *********************************************************************************************
+User Access Service
 Code number     Problem                                             Solution
 code 10:        "String validation failed"                          Verify the string and the validation options
 Code 11         "Invalid date"                                      Verify that the coming date is valid
 Code 12         "Invalid email"                                     The string is not a valid mail, verify it
 Code 13         "Invalid password"                                  Verify the length of the password that was provided
+
+*********************************************************************************************
+
+User Information Service
+Code number     Problem                                             Solution
+Code 20:        "Invalid user"                                      A user that doesn't exist has been tried to be added, verify the user that you want to add
+Code 21:        "Invalid user"                                      Verify the user that you want to delete, the resolvers can't verify it in the database
+Code 22:        "Invalid nickname"                                  The validation of the nickname failed, check the parameters of the validation function
+Code 23:        "Invalid email"                                     The validation of the email failed, check the parameters of the validation function
