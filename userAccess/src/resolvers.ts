@@ -1,6 +1,6 @@
 import { IntUserInfo, MUser, MLogin, IntUserAccess, typeApproval } from './types';
-import { validInputString, validInputDate, validInputEmail, validInputPass, validInputNickname } from './validation';
-import { encryptPswd, comparePswd } from './encryption';
+import { validInputString, validInputDate, validInputEmail, validInputPass, validInputNickname } from './validation/validation';
+import { encryptPswd, comparePswd } from './Authentication/encryption';
 
 export const resolvers = {
   Approval: {

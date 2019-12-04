@@ -1,5 +1,5 @@
 import validator from 'validator';
-import { optVInputString } from './types';
+import { optVInputString } from '../types';
 import { passInputConst, textInputConst, nicknameInputConst } from './constraints';
 
 export function validInputString(text: string) {

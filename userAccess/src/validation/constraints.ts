@@ -1,4 +1,4 @@
-import { optVInputString } from './types';
+import { optVInputString } from '../types';
 import validator from 'validator';
 
 export const textInputConst:optVInputString = {
