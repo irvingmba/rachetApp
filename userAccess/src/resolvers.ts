@@ -1,7 +1,12 @@
-import { IntUserInfo, MUser, MLogin, IntUserAccess } from './types';
+import { IntUserInfo, MUser, MLogin, IntUserAccess, typeApproval } from './types';
 import { validInputString, validInputDate, validInputEmail, validInputPass, validInputNickname } from './validation';
+import { encryptPswd, comparePswd } from './encryption';
 
 export const resolvers = {
+  Approval: {
+    user: (parent: typeApproval) =>parent.user,
+    password: (parent:typeApproval) => parent.password,
+  },
   Query: {
     info: () => `Dark side`,
   },
@@ -16,7 +21,7 @@ export const resolvers = {
       const registerAccess:IntUserAccess = {
         id: registerUser.id,
         nickname: validInputNickname(args.nickname),
-        password: validInputPass(args.password),
+        password: encryptPswd(validInputPass(args.password)),
 
       };
       context.userInfo.push(registerUser),
@@ -24,11 +29,11 @@ export const resolvers = {
       return registerUser.id;
     },
     login: (parent:undefined,args:MLogin,context:{userInfo: IntUserInfo[], userAccess: IntUserAccess[]})=>{
-      const userFound:boolean=context.userAccess.some((user)=>{
-        if((user.nickname===args.user)&&(user.password===args.password)){
-          return true;
-        };
-        return false;
+      const userFound = context.userAccess.some((user)=>{
+          return {
+            user: user.nickname===args.user,
+            password: comparePswd( user.password, args.password ),
+          };
       });
       return userFound;
     }

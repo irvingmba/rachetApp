@@ -1,3 +1,8 @@
+type Approval {
+    user: Boolean!
+    password: Boolean!
+}
+
 type Query {
     info: String!
 }
@@ -6,7 +11,7 @@ type Mutation {
     login(
         user: String!
         password: String!
-    ): Boolean!
+    ): Approval!
     register(
         name: String!
         nickname: String!

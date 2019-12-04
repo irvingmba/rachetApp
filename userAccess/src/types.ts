@@ -44,3 +44,8 @@ export interface stringError {
     code: number;
     reason: string;
 };
+
+export interface typeApproval {
+    user: boolean;
+    password: boolean;
+};

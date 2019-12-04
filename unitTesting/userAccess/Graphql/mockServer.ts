@@ -13,6 +13,10 @@ const typeDefs = './userAccess/src/schema.graphql';
 import { UserInfo, access } from './data';
 
 const mocks={
+    Approval: () => ({
+        user: () => resolvers.Approval.user,
+        password: () => resolvers.Approval.password,
+    }),
     Query: ()=>({
         info: ()=>resolvers.Query.info(),
     }),

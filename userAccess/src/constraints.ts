@@ -17,7 +17,7 @@ export const passInputConst:validator.IsLengthOptions = {
 export const nicknameInputConst: optVInputString = {
     inputLanguage: "en-US",
     stringLength: {
-        min: 5,
+        min: 3,
         max: 30
     },
     
