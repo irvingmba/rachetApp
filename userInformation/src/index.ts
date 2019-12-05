@@ -14,6 +14,7 @@ const options:Options = {
     cert: fs.readFileSync(path.resolve(__dirname,'../keys/certificate.pem')),
   },
   port: 4010,
+  endpoint: "/gql",
 };
 
 server.start(options,() => console.log(`User Information Server is running on https://localhost:4010`))

@@ -1,4 +1,4 @@
-import { IntConstText } from "./types";
+import { IntConstText } from "../types";
 
 export const constNickname:IntConstText = {
     alpha: "en-US",
