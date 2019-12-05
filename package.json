@@ -9,7 +9,7 @@
     "devWatch": "webpack --config webpack.dev.config.ts --watch",
     "devStart": "webpack-dev-server --config webpack.dev.config.ts --open",
     "devBuild": "webpack --config webpack.dev.config.ts",
-    "userServer": "nodemon --exec 'ts-node' ./userServer/src/index.ts",
+    "userAccess": "nodemon --exec 'ts-node' ./userAccess/src/index.ts",
     "testUserAccess": "nodemon --exec 'ts-node' ./unitTesting/userAccess/Graphql/mockServer.ts",
     "testUserInfo": "nodemon --exec 'ts-node' ./unitTesting/userInformation/Graphql/mockServer.ts"
   },
@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^8.3.5",
     "@types/node": "^12.12.6",
     "@types/react-redux": "^7.1.5",
     "@types/validator": "^12.0.1",

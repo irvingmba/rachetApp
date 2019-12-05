@@ -1,4 +1,7 @@
 import validator from 'validator';
+import { ExecutionParams } from 'subscriptions-transport-ws';
+import { FragmentReplacement } from 'graphql-middleware';
+import { Request, Response } from 'express';
 
 // Interface for complete records
 export interface IntUserInfo {
@@ -48,4 +51,13 @@ export interface stringError {
 export interface typeApproval {
     user: boolean;
     password: boolean;
+};
+
+export interface IntContext {
+    request: Request;
+    response: Response;
+    connection: ExecutionParams;
+    fragmentReplacements: FragmentReplacement[];
+    userAccess:IntUserAccess[];
+    userInfo:IntUserInfo[];
 };

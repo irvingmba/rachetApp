@@ -3,7 +3,7 @@ import { string } from "prop-types";
 /**
  * I will use this data as a little database to mock the schema and the resolvers of the graphql interface
  */
-export const UserInfo=[
+export const userInfo=[
     {
         id: "1",
         name: "Homero",
@@ -36,7 +36,7 @@ export const UserInfo=[
     },
 ];
 
-export const access = [
+export const userAccess = [
     {
         id: 1,
         nickname: "Dad",
