@@ -4,14 +4,14 @@ const secret = "I haven't finished the chat application";
 
 const encOptions: jwt.SignOptions = {
     algorithm: "HS256",
-    // expiresIn: "1h",
+    expiresIn: "1h",
 };
 
 const decOptions: jwt.VerifyOptions = {
     algorithms: ['HS256'],
 };
 
-export function sign( payload: string, ) {
+export function sign( payload: {} ) {
     return jwt.sign( payload, secret, encOptions );
 };
 
