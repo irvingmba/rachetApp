@@ -25,8 +25,4 @@ const options:Options = {
   },
 };
 
-server.express.post( "/tkn",function( req, res ) {
-  res.send("test");
-} );
-
 server.start(options,() => console.log(`User Access Server is running on https://localhost:4000`))

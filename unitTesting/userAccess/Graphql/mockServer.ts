@@ -11,14 +11,19 @@ const typeDefs = './userAccess/src/schema.graphql';
 
 // Testing the resolvers in the mocks
 import { userInfo, userAccess } from './data';
+import { any } from 'prop-types';
 
 const mocks={
     Approval: () => ({
         user: () => resolvers.Approval.user,
         password: () => resolvers.Approval.password,
     }),
+    User: () => ({
+        id: () => resolvers.User.id,
+    }),
     Query: ()=>({
         info: ()=>resolvers.Query.info(),
+        tkn: (parent: any, args: any) => resolvers.Query.tkn(parent,args),
     }),
     Mutation: ()=>({
         register: (parent:any,args:any,context:any)=>resolvers.Mutation.register(parent,args,context),

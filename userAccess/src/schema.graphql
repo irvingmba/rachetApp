@@ -3,8 +3,13 @@ type Approval {
     password: Boolean!
 }
 
+type User {
+    id: String!
+}
+
 type Query {
     info: String!
+    tkn(key: String!): User!
 }
 
 type Mutation {

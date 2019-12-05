@@ -2,6 +2,7 @@ import { MUser, IntContext, IntUserInfo, IntUserAccess, MLogin } from './types';
 import { validInputString, validInputDate, validInputEmail, validInputNickname, validInputPass } from './validation/validation';
 import { encryptPswd,comparePswd } from './Authentication/encryption';
 import { sign } from './Authentication/authentication';
+import { confCookieToken } from './Authentication/cookieConfig';
 
 export const register = (parent:undefined,args:MUser, context:IntContext)=>{
     const registerUser:IntUserInfo = {
@@ -29,7 +30,7 @@ export const login = (parent:undefined,args:MLogin,context:IntContext)=>{
         context.response.cookie(
           "token",
           sign({id: userFound.id}),
-          {expires: new Date(Date.now()+(60*60*1000))}
+          confCookieToken
         );
       };
       return {
