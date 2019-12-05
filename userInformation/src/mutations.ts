@@ -1,7 +1,7 @@
-import { IntPublicFace, IntUserAccess, IntUserInfo, IntContactInfo } from './types';
+import { IntPublicFace, IntUserAccess, IntUserInfo, IntContactInfo, IntContext } from './types';
 import { validEmail, validNickname } from './validation/validation';
 
-export const addContact = (parent: undefined, args:IntPublicFace, context: {userInfo: IntUserInfo[], userAccess: IntUserAccess[], contactInfo: IntContactInfo[]}) => {
+export const addContact = (parent: undefined, args:IntPublicFace, context: IntContext) => {
     const contact = context.userAccess.find((user) => args.id ? user.id == args.id: args.nickname ? user.nickname == args.nickname : args.email ? user.email == args.email : null),
     owner = context.contactInfo.find((user) => user.id == "1"),
     exist = owner ? owner.contacts.some((user) =>user == (contact ? contact.id : null)) : null;
@@ -15,7 +15,7 @@ export const addContact = (parent: undefined, args:IntPublicFace, context: {user
     throw "Code 20: Invalid user";
 };
 
-export const delContact = (parent: undefined, args:IntPublicFace, context: {userInfo: IntUserInfo[], userAccess: IntUserAccess[], contactInfo: IntContactInfo[]}) => {
+export const delContact = (parent: undefined, args:IntPublicFace, context: IntContext) => {
     args.nickname = validNickname(args.nickname);
     args.email = validEmail(args.email);
     const contact = context.userAccess.find((user) => args.id ? user.id == args.id: args.nickname ? user.nickname == args.nickname : args.email ? user.email == args.email : null),

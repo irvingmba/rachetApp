@@ -11,7 +11,6 @@ const typeDefs = './userAccess/src/schema.graphql';
 
 // Testing the resolvers in the mocks
 import { userInfo, userAccess } from './data';
-import { any } from 'prop-types';
 
 const mocks={
     Approval: () => ({
@@ -46,5 +45,7 @@ const mockServer = new GraphQLServer({
     mocks,
     context: (req) => ({...req, userInfo, userAccess}),
 });
+
+mockServer.express.use((req,res)=>console.log(req.body));
 
 mockServer.start(options,()=>console.log(`Mocking on port https://localhost:4001`));

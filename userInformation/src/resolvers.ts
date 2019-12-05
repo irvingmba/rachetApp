@@ -12,6 +12,7 @@ export const resolvers = {
   Mutation: {
     addContact,
     delContact,
+  },
   User: {
     id: (parent: IntUser) => parent.id,
     name: (parent: IntUser) => parent.name,
@@ -24,4 +25,4 @@ export const resolvers = {
     nickname: (parent:IntPublicFace) => parent.nickname,
     email: (parent: IntPublicFace) => parent.email,
   },
-};  
+};

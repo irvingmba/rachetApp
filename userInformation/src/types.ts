@@ -1,4 +1,7 @@
 import validator from "validator";
+import { Request, Response } from "express";
+import { ExecutionParams } from "subscriptions-transport-ws";
+import { FragmentReplacement } from "graphql-middleware";
 
 export interface IntUserInfo {
     id: string;
@@ -36,6 +39,10 @@ export interface IntConstText {
     length?: validator.IsLengthOptions;
 };
 
-export interface IntConstEmail {
-    
+export interface IntContext {
+    request: Request;
+    response: Response;
+    userInfo: IntUserInfo[];
+    userAccess: IntUserAccess[];
+    contactInfo: IntContactInfo[];
 };
