@@ -1,10 +1,12 @@
-import { IntContext } from './types';
+import { IntContext, resToken } from './types';
 import { authenticate } from './Authentication/authentication';
 
-export const getOwnProfile = (parent:undefined,args:undefined, context:IntContext) => {
+export const getOwnProfile = async (parent:undefined,args:undefined, context:IntContext) => {
   const cookie:{token:string} = context.request.cookies;
   console.log(cookie);
-  console.log(authenticate(cookie? cookie.token : ""));
+  const res = await authenticate(cookie.token);
+  console.log(res);
+  // const userID = res.data.tkn.id;
   const found = context.userInfo.find((user) => user.id == "1");
   const afound = context.userAccess.find((user) => user.id == "1");
   if (found && afound) {
@@ -17,6 +19,7 @@ export const getOwnProfile = (parent:undefined,args:undefined, context:IntContex
     };
   };
   return null;
+  throw "Code 30: Authentication not accomplished";
 };
 
 export const getContacts = (parent: undefined, args: undefined, context: IntContext) => {

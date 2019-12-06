@@ -36,7 +36,8 @@ const options:Options = {
       key: fs.readFileSync(path.resolve(__dirname,'../../../userAccess/keys/key.pem')),
       cert: fs.readFileSync(path.resolve(__dirname,'../../../userAccess/keys/certificate.pem')),
     },
-    port: 4001
+    port: 4001,
+    endpoint: "/gql",
   };
 
 const mockServer = new GraphQLServer({
@@ -45,7 +46,5 @@ const mockServer = new GraphQLServer({
     mocks,
     context: (req) => ({...req, userInfo, userAccess}),
 });
-
-mockServer.express.use((req,res)=>console.log(req.body));
 
 mockServer.start(options,()=>console.log(`Mocking on port https://localhost:4001`));

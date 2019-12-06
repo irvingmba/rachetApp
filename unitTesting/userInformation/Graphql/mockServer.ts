@@ -56,7 +56,8 @@ const options:Options = {
       key: fs.readFileSync(path.resolve(__dirname,'../../../userInformation/keys/key.pem')),
       cert: fs.readFileSync(path.resolve(__dirname,'../../../userInformation/keys/certificate.pem')),
     },
-    port: 4011
+    port: 4011,
+    endpoint: "/gql",
   };
 
 const mockServer = new GraphQLServer({

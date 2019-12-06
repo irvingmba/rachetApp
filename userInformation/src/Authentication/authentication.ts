@@ -4,13 +4,22 @@ const options:AxiosRequestConfig = {
 
 };
 
-export const authenticate = async ( data:string ) => {
-    const valid = await axios.post('https://localhost:4001/',data)
-    .then(async (res)=>{
-        console.log(res.data);
-        return res.data;
-    }).catch((rej)=>{
-        return rej;
+const reqValidation = (data:string) => {
+    return `{
+        tkn(key:"${data}"){
+            id
+        }
+    }`;
+};
+
+export const authenticate = ( data:string ) => {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+    const valid = axios({
+        url: "https://localhost:4001/gql/",
+        method: "POST",
+        data: {
+            query: reqValidation(data)
+        },
     });
-    return await valid;
+    return valid;
 };

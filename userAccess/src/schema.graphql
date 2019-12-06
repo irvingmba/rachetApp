@@ -4,7 +4,7 @@ type Approval {
 }
 
 type User {
-    id: String!
+    id: ID!
 }
 
 type Query {

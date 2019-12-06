@@ -1,7 +1,5 @@
 import validator from "validator";
 import { Request, Response } from "express";
-import { ExecutionParams } from "subscriptions-transport-ws";
-import { FragmentReplacement } from "graphql-middleware";
 
 export interface IntUserInfo {
     id: string;
@@ -45,4 +43,12 @@ export interface IntContext {
     userInfo: IntUserInfo[];
     userAccess: IntUserAccess[];
     contactInfo: IntContactInfo[];
+};
+
+export interface resToken {
+    data: {
+        tkn: {
+            id: string;
+        };
+    };
 };

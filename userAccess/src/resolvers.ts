@@ -8,7 +8,7 @@ export const resolvers = {
     password: (parent:typeApproval) => parent.password,
   },
   User: {
-    id: (parent:{id:string;}) => parent.id,
+    id: (parent:any) => parent.id,
   },
   Query: {
     info: () => `Dark side`,
