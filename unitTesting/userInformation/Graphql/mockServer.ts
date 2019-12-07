@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 // Modules to be tested from the project
 import { resolvers } from '../../../userInformation/src/resolvers';
 const typeDefs = './userInformation/src/schema.graphql';
+import { authenticate } from '../../../userInformation/src/Authentication/authentication';
 
 // Testing the resolvers in the mocks
 import { UserInfo, access, contactInfo } from './data';
@@ -68,5 +69,23 @@ const mockServer = new GraphQLServer({
 });
 
 mockServer.express.use(cookieParser());
+
+mockServer.express.use(async(req,res,next)=> {
+  try {
+    const cookie:{token:string;} = req.cookies;
+    if(cookie.token){
+      const userID = await authenticate(cookie.token);
+      console.log(userID);
+      if(userID) {
+        Object.assign(res.locals,{userID});
+        next();
+        return;
+      };
+    };
+    throw "Code 31: Invalid token"
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 mockServer.start(options,()=>console.log(`Mocking on port https://localhost:4011`));

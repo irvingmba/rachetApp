@@ -1,4 +1,4 @@
-import { IntPublicFace, IntUserAccess, IntUserInfo, IntContactInfo, IntContext } from './types';
+import { IntPublicFace, IntContext } from './types';
 import { validEmail, validNickname } from './validation/validation';
 
 export const addContact = (parent: undefined, args:IntPublicFace, context: IntContext) => {

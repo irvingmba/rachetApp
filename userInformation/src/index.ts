@@ -3,7 +3,7 @@ import { resolvers } from './resolvers';
 import fs from 'fs';
 import path from 'path';
 import cookieParser from 'cookie-parser';
-import { ContextParameters } from 'graphql-yoga/dist/types';
+import { ContextParameters, Props } from 'graphql-yoga/dist/types';
 
 
 const context = (params:ContextParameters) => {
@@ -14,13 +14,15 @@ const context = (params:ContextParameters) => {
   };
 };
 
-const server = new GraphQLServer({
+export const props:Props = {
   typeDefs: './userServer/src/schema.graphql',
   resolvers,
   context,
-})
+};
 
-const options:Options = {
+const server = new GraphQLServer(props);
+
+export const options:Options = {
   https: {
     key: fs.readFileSync(path.resolve(__dirname,'../keys/key.pem')),
     cert: fs.readFileSync(path.resolve(__dirname,'../keys/certificate.pem')),

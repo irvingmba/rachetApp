@@ -44,11 +44,3 @@ export interface IntContext {
     userAccess: IntUserAccess[];
     contactInfo: IntContactInfo[];
 };
-
-export interface resToken {
-    data: {
-        tkn: {
-            id: string;
-        };
-    };
-};

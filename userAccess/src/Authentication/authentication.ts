@@ -11,7 +11,7 @@ const decOptions: jwt.VerifyOptions = {
     algorithms: ['HS256'],
 };
 
-export function sign( payload: {} ) {
+export function sign( payload: {id:string;} ) {
     return jwt.sign( payload, secret, encOptions );
 };
 
