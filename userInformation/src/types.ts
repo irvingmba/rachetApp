@@ -27,9 +27,9 @@ export interface IntUser {
 };
 
 export interface IntPublicFace {
-    id: string;
-    nickname: string;
-    email: string;
+    id?: string;
+    nickname?: string;
+    email?: string;
 };
 
 export interface IntConstText {

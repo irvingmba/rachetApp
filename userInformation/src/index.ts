@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import { ContextParameters, Props } from 'graphql-yoga/dist/types';
+import { authenticate } from './Authentication/authentication';
 
 
 const context = (params:ContextParameters) => {
@@ -32,5 +33,23 @@ export const options:Options = {
 };
 
 server.express.use(cookieParser());
+
+server.express.use(async(req,res,next)=> {
+  try {
+    const cookie:{token:string;} = req.cookies;
+    if(cookie.token){
+      const userID = await authenticate(cookie.token);
+      console.log(userID);
+      if(userID) {
+        Object.assign(res.locals,{userID});
+        next();
+        return;
+      };
+    };
+    throw "Code 31: Invalid token"
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 server.start(options,() => console.log(`User Information Server is running on https://localhost:4010`))
