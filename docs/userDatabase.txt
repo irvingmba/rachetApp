@@ -1,0 +1,8 @@
+* Local Information for local database
+
+MongoDB starting : pid=32033 port=27017 dbpath=/data/db/rachet 64-bit host=xtremito
+
+* Fix to error when creating the new dbpath to data/db/rachet
+
+sudo rm -rf /tmp/mongodb-27017.sock
+sudo service mongod start
