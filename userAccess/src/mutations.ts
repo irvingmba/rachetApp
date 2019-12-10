@@ -3,7 +3,7 @@ import { validInputString, validInputDate, validInputEmail, validInputNickname, 
 import { encryptPswd,comparePswd } from './Authentication/encryption';
 import { sign } from './Authentication/authentication';
 import { confCookieToken } from './Authentication/cookieConfig';
-import { noDuplicate, saveRegistry, userPassword } from '../../userDatabase/schema';
+import { noDuplicate, saveRegistry, userPassword } from '../../userDatabase/functions';
 
 const register = async (parent:undefined,args:MUser, context:IntContext)=>{
   const registerUser:MUser = {
@@ -23,27 +23,22 @@ const register = async (parent:undefined,args:MUser, context:IntContext)=>{
 };
 
 const login = async (parent:undefined,args:MLogin,context:IntContext)=>{
-    const userFound = await userPassword(validInputNickname(args.user));
-    // if (userFound.length){
-      const user = userFound.shift;
-      // user.
-      // const password = comparePswd( args.password, userFound[0] );
-    //   if( password ){
-    //     context.response.cookie(
-    //       "token",
-    //       sign({id: userFound.id}),
-    //       confCookieToken
-    //     );
-    //   };
-    //   return {
-    //     user: true,
-    //     password,
-    //   };
-    // };
-    // return {
-    //   user: false,
-    //   password: false
-    // };
+  const userFound = await userPassword(validInputNickname(args.user));
+  const user = userFound.shift();
+  if(user){
+    const password = comparePswd( args.password, user.Password );
+    if( password ){
+      context.response.cookie(
+        "token",
+        sign({id: user.id}),
+        confCookieToken
+      );
+    };
+    return {
+      user: true,
+      password,
+    };
+  };
     return {
       user: false,
       password: false

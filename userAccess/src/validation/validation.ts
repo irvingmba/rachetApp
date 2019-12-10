@@ -54,7 +54,7 @@ export function validInputPass(password: string) {
 
 export function validInputNickname(nickname: string) {
     if (
-        validator.isAlpha(nickname,nicknameInputConst.inputLanguage) &&
+        validator.isAlphanumeric(nickname,nicknameInputConst.inputLanguage) &&
         validator.isLength(nickname, nicknameInputConst.stringLength) &&
         !(/[\s]/.test(nickname))
     ) {

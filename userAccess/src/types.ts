@@ -1,5 +1,6 @@
 import validator from 'validator';
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 
 // Interface for complete records
 export interface IntPublicInfo {
@@ -7,7 +8,7 @@ export interface IntPublicInfo {
     nickname: string;
 };
 
-export interface IpublicFace extends Document {
+export interface IpublicFace extends mongoose.Document {
     nickname: string;
     email: string;
     password: string;

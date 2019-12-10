@@ -1,9 +1,8 @@
 import mongoose, { ConnectionOptions } from 'mongoose';
-import { MUser, IntPublicInfo } from '../userAccess/src/types';
-import { Db } from 'mongodb';
+import { IMuserAccess, IMuserInfo, IMContacts } from './types';
 
 const Schema = mongoose.Schema;
-const ObjectId = mongoose.Types.ObjectId;
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const uri = "mongodb://localhost/rachet";
 const options:ConnectionOptions = {
@@ -18,7 +17,10 @@ db.once('open', function(){
 });
 
 const schemUserInfo = new Schema({
-    IDAccess: ObjectId,
+    user: {
+        type: ObjectId,
+        ref: "userAccess"
+    },
     Name: String,
     Birthday: String,
 }, {
@@ -41,36 +43,7 @@ const schemContacts = new Schema({
     autoIndex: false
 });
 
-const userInfo = mongoose.model("userInfo", schemUserInfo);
-const userAccess = mongoose.model("userAccess",schemUserAccess);
-const contacts = mongoose.model("contacts",schemContacts);
+export const userInfo = mongoose.model<IMuserInfo>("userInfo", schemUserInfo);
+export const userAccess = mongoose.model<IMuserAccess>("userAccess",schemUserAccess);
+export const contacts = mongoose.model<IMContacts>("contacts",schemContacts);
 
-export async function saveRegistry(record:MUser){
-    const access = new userAccess({
-        Nickname: record.nickname,
-        Email: record.email,
-        Password: record.password
-    });
-    const user = new userInfo({
-        IDOwner: access._id,
-        Name: record.name,
-        Birthday: record.birthday
-    });
-    const pAccess = await access.save();
-    const pUser = await user.save();
-    return pAccess.id.toString();
-};
-
-export async function noDuplicate(user:IntPublicInfo) {
-    const foundNick = await userAccess.find({Nickname: user.nickname});
-    const foundEmail = await userAccess.find({Email: user.email});
-    if(foundNick.length || foundEmail.length) {
-        return true;
-    };
-    return false;
-};
-
-export async function userPassword(nickname:string){
-    const found = await userAccess.find({Nickname: nickname});
-    return found;
-};
