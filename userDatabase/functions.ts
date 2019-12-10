@@ -21,10 +21,10 @@ export async function saveRegistry(record:IcompRegistry){
 export async function noDuplicate(user:IpublicInfo) {
     const foundNick = await userAccess.find({Nickname: user.nickname});
     const foundEmail = await userAccess.find({Email: user.email});
-    if(foundNick.length || foundEmail.length) {
-        return true;
+    return {
+        nickname: foundNick.length ? true : false,
+        email: foundEmail.length ? true: false
     };
-    return false;
 };
 
 export async function userPassword(nickname:string){

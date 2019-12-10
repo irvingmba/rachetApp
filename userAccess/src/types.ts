@@ -50,6 +50,11 @@ export interface typeApproval {
     password: boolean;
 };
 
+export interface typeRegistered {
+    nickname: boolean;
+    email: boolean;
+};
+
 export interface IntContext {
     request: Request;
     response: Response;

@@ -14,11 +14,17 @@ const register = async (parent:undefined,args:MUser, context:IntContext)=>{
       password: encryptPswd(validInputPass(args.password)),
     };
     const duplicated = await noDuplicate({email: registerUser.email, nickname: registerUser.nickname});
-    if(duplicated){
-      throw "Code 14: This user exist";
+    if(duplicated.nickname || duplicated.email){
+      return {
+        nickname: !duplicated.nickname,
+        email: !duplicated.email
+      };
     } else {
       const id = await saveRegistry(registerUser);
-      return id;
+      return {
+        nickname: true,
+        email: true
+      };
     };
 };
 
