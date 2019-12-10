@@ -1,0 +1,9 @@
+Service                         Port
+
+User Access Server              4000
+User Access Testing             4001
+
+User Information Server         4010
+User Information Testing        4011
+
+Messages Server                 4020

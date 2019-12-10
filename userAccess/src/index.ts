@@ -6,7 +6,8 @@ import { ContextParameters } from 'graphql-yoga/dist/types';
 
 const context = ( req:ContextParameters ) => {
   return {
-    ...req
+    request: req.request,
+    response: req.response,
   };
 };
 
@@ -25,4 +26,4 @@ const options:Options = {
   },
 };
 
-server.start(options,() => console.log(`User Access Server is running on https://localhost:4000`))
+server.start(options,() => console.log(`User Access Server is running on https://localhost:4000/gql`));

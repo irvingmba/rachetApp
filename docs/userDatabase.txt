@@ -6,3 +6,11 @@ MongoDB starting : pid=32033 port=27017 dbpath=/data/db/rachet 64-bit host=xtrem
 
 sudo rm -rf /tmp/mongodb-27017.sock
 sudo service mongod start
+
+* Data for the mlab.com database for the project as a test.
+
+U imbedoya@tekmexico.com
+P MD- intecglobal?
+
+For database connection:
+rachetAdmin: RCT-admtekmex123!
