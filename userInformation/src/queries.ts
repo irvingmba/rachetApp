@@ -1,9 +1,20 @@
 import { IntContext } from './types';
 import { getID } from './Authentication/authentication';
+import { findUser, findInfo, objectToString } from '../../userDatabase/functions';
 
-export const getOwnProfile = (parent: undefined, args: undefined, context: IntContext) => {
+export const getOwnProfile = async (parent: undefined, args: undefined, context: IntContext) => {
   const id = getID(context);
-  return getProfile( id, context );
+  const user = await findUser({id}),
+  info = user ? await findInfo(user.userInfo.toHexString()) : null;
+  if(user && info) {
+    return {
+      name: info.Name,
+      nickname: user.Nickname,
+      birthday: info.Birthday,
+      email: user.Email,
+    };
+  };
+  throw "Code 24: Invalid user"
 };
 
 export const getContacts = (parent: undefined, args: undefined, context: IntContext) => {

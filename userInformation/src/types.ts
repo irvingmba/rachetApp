@@ -40,7 +40,4 @@ export interface IntConstText {
 export interface IntContext {
     request: Request;
     response: Response;
-    userInfo: IntUserInfo[];
-    userAccess: IntUserAccess[];
-    contactInfo: IntContactInfo[];
 };

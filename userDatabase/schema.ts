@@ -7,7 +7,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const uri = "mongodb://localhost/rachet";
 const options:ConnectionOptions = {
     useNewUrlParser: true,
-    dbName: "rachet"
+    dbName: "access"
 };
 mongoose.connect(uri, options);
 const db = mongoose.connection;
@@ -17,10 +17,6 @@ db.once('open', function(){
 });
 
 const schemUserInfo = new Schema({
-    user: {
-        type: ObjectId,
-        ref: "userAccess"
-    },
     Name: String,
     Birthday: String,
 }, {
@@ -30,15 +26,22 @@ const schemUserInfo = new Schema({
 const schemUserAccess = new Schema({
     Nickname: String,
     Email: String,
-    Password: String
+    Password: String,
+    userInfo: {
+        type: ObjectId,
+        ref: "userInfo"
+    },
+    contacts: {
+        type: ObjectId,
+        ref: "contacts"
+    }
 },{
     autoIndex: false
 });
 
 const schemContacts = new Schema({
-    IDOwner: String,
-    Contacts: [{id: String}],
-    Conversations: [{id: String}]
+    Contacts: [String],
+    Conversations: [String]
 },{
     autoIndex: false
 });

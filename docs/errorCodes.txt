@@ -11,11 +11,15 @@ Code 13         "Invalid password"                                  Verify the l
 
 User Information Service
 Code number     Problem                                             Solution
-Code 20:        "Invalid user"                                      A user that doesn't exist has been tried to be added, verify the user that you want to add
+Code 20:        "Invalid user"                                      A user that doesn't exist has tried to be added, verify the user that you want to add
 Code 21:        "Invalid user"                                      Verify the user that you want to delete, the resolvers can't verify it in the database
 Code 22:        "Invalid nickname"                                  The validation of the nickname failed, check the parameters of the validation function
 Code 23:        "Invalid email"                                     The validation of the email failed, check the parameters of the validation function
+Code 24:        "Invalid user"                                      The user you searched doesn't exist
 Code 30:        "Authentication not accomplished"                   Something wrong happened when trying to send the token to validate the user to the authentication server
 
 *********************************************************************************************
 
+User Database Configuration
+Code number     Problem                                             Solution
+Code 40         Target or contact doesn't exist                     Check the ids that are being processed in the function

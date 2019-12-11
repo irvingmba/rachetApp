@@ -14,14 +14,12 @@ export const resolvers = {
     delContact,
   },
   User: {
-    id: (parent: IntUser) => parent.id,
     name: (parent: IntUser) => parent.name,
     nickname: (parent: IntUser) => parent.nickname,
     birthday: (parent: IntUser) => parent.birthday,
     email: (parent: IntUser) => parent.email,
   },
   publicFace: {
-    id: (parent:IntPublicFace) => parent.id,
     nickname: (parent:IntPublicFace) => parent.nickname,
     email: (parent: IntPublicFace) => parent.email,
   },

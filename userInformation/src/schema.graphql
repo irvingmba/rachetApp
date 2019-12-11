@@ -1,11 +1,9 @@
 type publicFace {
-    id: ID!
     nickname: String!
     email: String!
 }
 
 type User {
-    id: ID!
     name: String!
     nickname: String!
     birthday: String!

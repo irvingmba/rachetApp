@@ -5,18 +5,19 @@ export interface IMuserAccess extends Document{
     Nickname: string;
     Email: string;
     Password: string;
+    userInfo: mongoose.Types.ObjectId;
+    contacts: mongoose.Types.ObjectId;
 };
 
 export interface IMuserInfo extends Document {
-    user: mongoose.Schema.Types.ObjectId;
     Name: string;
     Birthday: string;
 };
 
 export interface IMContacts extends Document {
     IDOwner: string;
-    Contacts: {id: string}[];
-    Conversations: {id: string}[];
+    Contacts: string[];
+    Conversations: string[];
 };
 
 export interface IcompRegistry {
