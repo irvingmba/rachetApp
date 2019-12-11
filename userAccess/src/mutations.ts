@@ -3,7 +3,7 @@ import { validInputString, validInputDate, validInputEmail, validInputNickname, 
 import { encryptPswd,comparePswd } from './Authentication/encryption';
 import { sign } from './Authentication/authentication';
 import { confCookieToken } from './Authentication/cookieConfig';
-import { noDuplicate, saveRegistry, userPassword } from '../../userDatabase/functions';
+import { noDuplicate, saveRegistry, userPassword } from '../../DBaccess/functions';
 
 const register = async (parent:undefined,args:MUser, context:IntContext)=>{
   const registerUser:MUser = {

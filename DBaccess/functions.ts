@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { userAccess, userInfo, contacts } from './schema';
+import { userAccess } from './schema';
 import { IcompRegistry, IpublicInfo, IMuserAccess, IMuserInfo } from './types';
 
 export async function saveRegistry(record:IcompRegistry){

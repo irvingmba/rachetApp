@@ -1,7 +1,7 @@
 import { IntPublicFace, IntContext } from './types';
 import { validEmail, validNickname } from './validation/validation';
 import { getID } from './Authentication/authentication';
-import { findUser, addDBContact, delDBContact } from '../../userDatabase/functions';
+import { findUser, addDBContact, delDBContact } from '../../DBaccess/functions';
 
 export const addContact = async (parent: undefined, args:IntPublicFace, context: IntContext) => {
   const idOwner:string = getID(context);

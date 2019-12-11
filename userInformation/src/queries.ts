@@ -1,6 +1,6 @@
 import { IntContext } from './types';
 import { getID } from './Authentication/authentication';
-import { findUser, findInfo, objectToString } from '../../userDatabase/functions';
+import { findUser, findInfo, objectToString } from '../../DBaccess/functions';
 
 export const getOwnProfile = async (parent: undefined, args: undefined, context: IntContext) => {
   const id = getID(context);
