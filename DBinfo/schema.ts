@@ -12,10 +12,10 @@ const options:ConnectionOptions = {
     useNewUrlParser: true,
     dbName: "userInfo"
 };
-const db = mongoose.createConnection(uri,options);
-db.on('error',console.error.bind(console,'connection error'));
-db.once('open', function(){
-    console.log("Connection to DB stablished");
+const dbUI = mongoose.createConnection(uri,options);
+dbUI.on('error',console.error.bind(console,'connection error'));
+dbUI.once('open', function(){
+    console.log("Connection to DB userInfo stablished");
 });
 
 /**
@@ -42,11 +42,11 @@ const schemUserInfo:mongoose.Schema<IsmUserInfo> = new Schema({
         type: ObjectId,
         alias: "idPassword"
     },
-    ic: {
+    ic: [{
         type: ObjectId,
         alias: "idContacts",
         ref: ""
-    },
+    }],
 },{
     autoIndex: false
 });
@@ -84,8 +84,13 @@ const schemContacts:mongoose.Schema<IsmContacts> = new Schema({
 // });
 
 /**
+ * Middleware for schema validation
+ */
+
+
+/**
  * Model definitions
  */
-const mdUserInfo = mongoose.model<ImdUserInfo>("userInfo",schemUserInfo);
-const mdContacts = mongoose.model<ImdContacts>("contacts",schemContacts);
-// const mdConversations = mongoose.model<>("conversations", schemConversations);
+export const mdUserInfo = dbUI.model<ImdUserInfo>("uInfo",schemUserInfo,"uInfo");
+export const mdContacts = dbUI.model<ImdContacts>("contacts",schemContacts,"contacts");
+// const mdConversations = dbUI.model<>("conversations", schemConversations);
