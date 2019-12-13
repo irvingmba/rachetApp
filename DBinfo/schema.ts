@@ -12,7 +12,8 @@ const options:ConnectionOptions = {
     useNewUrlParser: true,
     dbName: "userInfo",
     keepAlive: true,
-    keepAliveInitialDelay: 300000
+    keepAliveInitialDelay: 300000,
+    useFindAndModify: false
 };
 const dbUI = mongoose.createConnection(uri,options);
 dbUI.on('error',console.error.bind(console,'connection error'));

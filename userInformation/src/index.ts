@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import { ContextParameters, Props } from 'graphql-yoga/dist/types';
 import { authenticate } from './Authentication/authentication';
 
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const context = (params:ContextParameters) => {
   params.request.cookies
@@ -29,7 +30,7 @@ export const options:Options = {
     cert: fs.readFileSync(path.resolve(__dirname,'../keys/certificate.pem')),
   },
   port: 4010,
-  endpoint: "/gql",
+  endpoint: "/info",
 };
 
 server.express.use(cookieParser());

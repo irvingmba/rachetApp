@@ -28,6 +28,7 @@ export interface Iformprops {
     title: string;
     url: string;
     inputElements: IinputConfig[];
+    callback?: (data:any)=>void;
 };
 
 export type TreactOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>void;

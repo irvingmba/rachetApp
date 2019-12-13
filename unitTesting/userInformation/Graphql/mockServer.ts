@@ -27,14 +27,12 @@ const mocks={
         delContact: (parent:any,args:any,context:any) => resolvers.Mutation.delContact(parent,args,context),
     }),
     User: ()=>({
-        id: (parent:any) => resolvers.User.id(parent),
         name: (parent:any) => resolvers.User.name(parent),
         nickname: (parent:any) => resolvers.User.nickname(parent),
         birthday: (parent:any) => resolvers.User.birthday(parent),
         email: (parent:any) => resolvers.User.email(parent),
     }),
     publicFace: ()=>({
-        id: (parent:any) => resolvers.publicFace.id(parent),
         nickname: (parent:any) => resolvers.publicFace.nickname(parent),
         email: (parent:any) => resolvers.publicFace.email(parent),
     }),

@@ -19,9 +19,16 @@ const config:webpack.Configuration = {
         contentBase: path.resolve(__dirname, "./client/public/"),
         compress: true,
         port: 3000,
-        // https: true,
+        https: true,
         proxy: {
-            '/portal': 'http://localhost:8080',
+            '/gql': {
+                target: "https://localhost:4000",
+                secure: false,
+            },
+            '/info': {
+                target: "https://localhost:4010",
+                secure: false,
+            },
         },
     },
     module: {

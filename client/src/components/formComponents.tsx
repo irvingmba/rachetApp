@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import { getInputNames, arrayToObject, mapInputElements } from '../components/formFunctions';
 import { IsetObject, IinputProps, IinputConfig, Iformprops } from '../types/components';
+import { mutLogin } from '../utils/requests';
 
 /**
  * 
@@ -37,13 +38,11 @@ const GenForm:React.FunctionComponent<Iformprops> = (props:Iformprops) => {
     const nameObject = arrayToObject(names);
     const [data,setData] = useState({...nameObject});
     const inputs = mapInputElements(props.inputElements, [data,setData]);
+    const callback = props.callback ? props.callback : console.log;
 
     function handleSubmit(event:React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        console.log(props);
-        axios.post(props.url,data)
-        .then((response) => console.log(response))
-        .catch((error) => console.log(error));
+        callback(data);
     };
 
     return (
