@@ -1,6 +1,6 @@
 import { typeApproval, typeRegistered } from './types';
 import { register, login } from './mutations';
-import { info } from './queries';
+import { info, tkn } from './queries';
 
 export const resolvers = {
   Approval: {
@@ -15,7 +15,8 @@ export const resolvers = {
     id: (parent:{id:string;}) => parent.id,
   },
   Query: {
-    info
+    info,
+    tkn
   },
   Mutation: {
     register,

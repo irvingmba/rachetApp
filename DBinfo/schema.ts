@@ -1,5 +1,5 @@
 import mongoose, { ConnectionOptions } from 'mongoose';
-import { IsmUserInfo, ImdUserInfo, IsmContacts, ImdContacts } from './types';
+import { IsmUserInfo, ImdUserInfo, IsmContacts, ImdContacts, IsmCont } from './types';
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId;
@@ -10,7 +10,9 @@ const ObjectId = mongoose.Types.ObjectId;
 const uri = "mongodb://localhost/rachet";
 const options:ConnectionOptions = {
     useNewUrlParser: true,
-    dbName: "userInfo"
+    dbName: "userInfo",
+    keepAlive: true,
+    keepAliveInitialDelay: 300000
 };
 const dbUI = mongoose.createConnection(uri,options);
 dbUI.on('error',console.error.bind(console,'connection error'));
@@ -21,6 +23,25 @@ dbUI.once('open', function(){
 /**
  * Schema definition
  */
+const schemIDcont:mongoose.Schema<IsmCont> = new Schema({
+    idc: {
+        type: ObjectId,
+        alias: "dataContact"
+    }
+}, {
+    autoIndex: false
+});
+
+const schemContacts:mongoose.Schema<IsmContacts> = new Schema({
+    ci: {
+        type: [schemIDcont],
+        alias: "contactIds",
+        ref: ""
+    },
+}, {
+    autoIndex: false
+});
+
 const schemUserInfo:mongoose.Schema<IsmUserInfo> = new Schema({
     n: {
         type: String,
@@ -42,28 +63,14 @@ const schemUserInfo:mongoose.Schema<IsmUserInfo> = new Schema({
         type: ObjectId,
         alias: "idPassword"
     },
-    ic: [{
+    ic: {
         type: ObjectId,
         alias: "idContacts",
-        ref: ""
-    }],
+        ref: "contacts"
+    },
 },{
     autoIndex: false
 });
-
-const schemContacts:mongoose.Schema<IsmContacts> = new Schema({
-    ci: [{
-        type: ObjectId,
-        alias: "contactIds",
-        ref: ""
-    }],
-    cm: [{
-        type: ObjectId,
-        alias: "conversationIds",
-        ref: ""
-    }],
-});
-
 
 // const schemConversations:mongoose.Schema<> = new Schema({
 //     m: [{

@@ -3,9 +3,9 @@ import { constNickname } from './constraints';
 
 export function validNickname(nickname: string) {
     if(
-        validator.isAlpha(nickname,constNickname.alpha) &&
+        validator.isAlphanumeric(nickname,constNickname.alpha) &&
         validator.isLength(nickname, constNickname.length) &&
-        /[\s]/.test(nickname)
+        !(/[\s]/.test(nickname))
     ) {
         return nickname
     };

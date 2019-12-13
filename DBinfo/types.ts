@@ -9,15 +9,19 @@ export interface IsmUserInfo {
     email: string;
     birthday: string;
     idPassword: mongoose.Types.ObjectId;
-    idContacts: mongoose.Types.ObjectId[];
+    idContacts: mongoose.Types.ObjectId;
 };
 export interface ImdUserInfo extends mongoose.Document, IsmUserInfo {};
 
 export interface IsmContacts {
-    contactIds: string[];
-    conversationIds: string[];
+    contactIds: IsmCont[];
 };
 export interface ImdContacts extends mongoose.Document, IsmContacts {};
+
+export interface IsmCont {
+    dataContact: mongoose.Types.ObjectId;
+};
+export interface ImdCont extends mongoose.Document, IsmCont {};
 
 /**
  * Types and interfaces for handling data
@@ -28,4 +32,10 @@ export interface Iregistry {
     email: string;
     birthday: string;
     password: string;
+};
+
+export interface IfindUser {
+    id?: string;
+    nickname?: string;
+    email?: string;
 };

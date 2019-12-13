@@ -14,6 +14,7 @@ type User {
 
 type Query {
     info: String!
+    tkn(key: String!): User!
 }
 
 type Mutation {

@@ -16,7 +16,7 @@ const context = (params:ContextParameters) => {
 };
 
 export const props:Props = {
-  typeDefs: './userServer/src/schema.graphql',
+  typeDefs: './userInformation/src/schema.graphql',
   resolvers,
   context,
 };
@@ -39,7 +39,6 @@ server.express.use(async(req,res,next)=> {
     const cookie:{token:string;} = req.cookies;
     if(cookie.token){
       const userID = await authenticate(cookie.token);
-      console.log(userID);
       if(userID) {
         Object.assign(res.locals,{userID});
         next();
@@ -52,4 +51,4 @@ server.express.use(async(req,res,next)=> {
   }
 });
 
-server.start(options,() => console.log(`User Information Server is running on https://localhost:4010`))
+server.start(options,() => console.log(`User Information Server is running on https://localhost:4010/gql`))

@@ -14,7 +14,7 @@ type Query {
     info: String!
     getOwnProfile: User!
     getContacts: [publicFace!]
-    getContactInfo(id: ID!): User!
+    getContactInfo(nickname: String!): User!
 }
 
 type Mutation {
@@ -23,5 +23,5 @@ type Mutation {
         nickname: String
         email: String
     ): Boolean!
-    delContact(id: ID!): Boolean!
+    delContact(nickname: String!): Boolean!
 }
