@@ -20,6 +20,7 @@ const config:webpack.Configuration = {
         compress: true,
         port: 3000,
         https: true,
+        historyApiFallback: true,
         proxy: {
             '/gql': {
                 target: "https://localhost:4000",

@@ -1,2 +1,6 @@
 node_modules
 local.env
+certificate.pem
+key.pem
+userInformation/keys
+userAccess/keys
