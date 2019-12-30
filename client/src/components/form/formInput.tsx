@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 interface Iprops {
   properties?: Iproperties;
-  handlers?: string
+  parentState?: IparentState;
+  label?: string;
 };
 
 interface Iproperties {
@@ -11,15 +12,39 @@ interface Iproperties {
   required?: boolean;
 };
 
-const inputState = () => {
-  const [state, setState] = useState<string>('');
+interface IparentState {
+  state: {};
+  dispatch: React.Dispatch<Idispatch>;
 };
 
-const FormInput:React.FunctionComponent<Iprops> = ({properties, handlers}) => {
+interface Idispatch{
+  type: string;
+  payload: {};
+};
 
+const inputState = (init:string) => {
+  const [state, setState] = useState<string>(init);
+  return {
+    state,
+    setState
+  };
+};
+
+const FormInput:React.FunctionComponent<Iprops> = ({properties, parentState, label}) => {
+
+  const { state, dispatch } = parentState || { state: "", dispatch: undefined };
+  const data = typeof state === 'string' ? state : state[properties ? properties.name]
   return (
-    <input
-    {...properties}
-    />
+    <label>
+      {label ? label : ""}
+      <input
+      value = {data}
+      onChange = {dispatch}
+      {...properties}
+      />
+    </label>
   );
+
 };
+
+export default FormInput;
