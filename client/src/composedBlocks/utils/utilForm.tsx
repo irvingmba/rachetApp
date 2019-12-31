@@ -10,13 +10,14 @@ import uniqueId from 'lodash/uniqueId';
  */
 export function mapInputsToArray( inputs:IinputConfig[], handlers?:{state:{};dispatch:React.Dispatch<{type: string; payload: {}}>} ) {
 
-  const {state, dispatch} = handlers ? handlers : {state: "", dispatch: undefined};
+  // const {state, dispatch} = handlers ? handlers : {state: "", dispatch: undefined};
   const inpComponents = inputs.map( input => {
       const iLabel = input.features && input.features.label ? input.features.label : undefined;
       return (
           <FormInput 
-          label={iLabel}
           key={uniqueId()}
+          label={iLabel}
+          parentState={handlers}
           properties={input.properties}
           />
       );

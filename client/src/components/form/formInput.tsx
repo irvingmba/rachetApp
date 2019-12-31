@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, SetStateAction } from "react";
 
 interface Iprops {
-  properties?: Iproperties;
+  properties: Iproperties;
   parentState?: IparentState;
   label?: string;
 };
@@ -13,7 +13,9 @@ interface Iproperties {
 };
 
 interface IparentState {
-  state: {};
+  state: {
+    [key:string]: string;
+  };
   dispatch: React.Dispatch<Idispatch>;
 };
 
@@ -22,25 +24,43 @@ interface Idispatch{
   payload: {};
 };
 
-const inputState = (init:string) => {
-  const [state, setState] = useState<string>(init);
+export const ALTER = 'ALTER';
+
+const handleChange = (setValue:React.Dispatch<SetStateAction<string>> ,dispatch?:React.Dispatch<Idispatch>) => {
+  if(!dispatch){
+    return {
+      onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(event.target.value);
+      }
+    };
+  };
   return {
-    state,
-    setState
+    onChange:(event:React.ChangeEvent<HTMLInputElement>)=> {
+      const value = event.target.value;
+      dispatch({
+        type: ALTER,
+        payload: {
+          [event.target.name]: value,
+        },
+      });
+      setValue(value)
+    }
   };
 };
 
 const FormInput:React.FunctionComponent<Iprops> = ({properties, parentState, label}) => {
 
-  const { state, dispatch } = parentState || { state: "", dispatch: undefined };
-  const data = typeof state === 'string' ? state : state[properties ? properties.name]
+  const inputProps = {...properties},
+  { state, dispatch } = parentState || {},
+  [value, setValue] = useState("");
+  Object.assign(inputProps,handleChange(setValue, dispatch));
+  
   return (
     <label>
       {label ? label : ""}
       <input
-      value = {data}
-      onChange = {dispatch}
-      {...properties}
+      value = {value}
+      {...inputProps}
       />
     </label>
   );

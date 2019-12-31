@@ -1,12 +1,16 @@
 import React from 'react';
 
-import LoginP from '../composedBlocks/login/loginBlock';
+import LoginBlock from '../composedBlocks/login/loginBlock';
+import { NavLink } from 'react-router-dom';
 
 const LoginPage:React.FunctionComponent = () => {
 
     return (
         <>
-            <LoginP />
+        <NavLink
+        to="/registry"
+        >Registry</NavLink>
+            <LoginBlock />
         </>
     );
 };

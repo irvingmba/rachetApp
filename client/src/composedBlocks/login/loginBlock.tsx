@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 // import axios from 'axios';
 
 // import { inputsLogin } from './elements';
@@ -30,27 +30,17 @@ import React, { useReducer } from 'react';
 
 // export default Login;
 
-import { getInputNames, arrayToObject, mapInputsToArray } from '../utils/utilForm';
+import { mapInputsToArray, getInputNames } from '../utils/utilForm';
 import { inputsLogin } from './elements';
-
-function reducer(state:{},action:{type:string;payload:{}}){
-    if(action.type === 'ALTER'){
-        return {...state, ...action.payload}
-    };
-    return state;
-};
-
-function handleSubmit(e:React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-};
+import { simpleFormReducer } from '../utils/FormReducers'
 
 const LoginBlock:React.FunctionComponent<{}> = () => {
-    const [state, dispatch] = useReducer(reducer,{});
+    const [state, dispatch] = useReducer(simpleFormReducer,{});
     const inputElements = mapInputsToArray( inputsLogin, {state, dispatch} );
-    const inputWState = inputElements.map( element => {
-        return
-    } );
-
+    const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(state);
+    };
     return (
         <form
         onSubmit={handleSubmit}
@@ -59,3 +49,5 @@ const LoginBlock:React.FunctionComponent<{}> = () => {
         </form>
     );
 };
+
+export default LoginBlock;

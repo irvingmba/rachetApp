@@ -1,19 +1,19 @@
-import React,{ useState } from 'react';
+import React,{ useState, useReducer } from 'react';
 
 import { inputElements } from './variables';
-import { GenForm } from '../../components/formComponents';
-
+import { mapInputsToArray } from '../utils/utilForm';
+import { simpleFormReducer } from "../utils/FormReducers";
 
 const Registry:React.FunctionComponent = () => {
+    const [state,dispatch] = useReducer(simpleFormReducer,{});
+    const mappedInputs = mapInputsToArray(inputElements, {state, dispatch});
+
     return (
-        <GenForm 
-        title="Registry"
-        url="http://localhost:8080/"
-        inputElements={inputElements}
-        />
+        <form>
+            <h1>Registry</h1>
+            {...mappedInputs}
+        </form>
     );
 };
-
-
 
 export default Registry;
