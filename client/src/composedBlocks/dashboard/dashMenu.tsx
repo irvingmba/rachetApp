@@ -5,8 +5,13 @@ const DashboardMenu = () => {
 
   return (
     <>
+    <BrowserRouter>
     <ul>
+      <li>
+        <NavLink to="/contacts">Contacts</NavLink>
+      </li>
     </ul>
+    </BrowserRouter>
     </>
   );
 };

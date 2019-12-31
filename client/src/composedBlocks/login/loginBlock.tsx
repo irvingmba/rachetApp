@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useContext } from 'react';
 // import axios from 'axios';
 
 // import { inputsLogin } from './elements';
@@ -30,26 +30,35 @@ import React, { useReducer, useState } from 'react';
 
 // export default Login;
 
-import { mapInputsToArray } from '../utils/utilForm';
+import { mapInputsToArray, arrayToObject, getInputNames } from '../utils/utilForm';
 import { inputsLogin } from './elements';
 import { simpleFormReducer } from '../utils/FormReducers'
 import axios from 'axios';
+import uniqueId from 'lodash/uniqueId';
+
+export const parentContext = React.createContext({} as {state: {[key:string]:string}, dispatch:React.Dispatch<{type:string; payload:{}}>});
 
 const LoginBlock:React.FunctionComponent<{}> = () => {
-    const [state, dispatch] = useReducer(simpleFormReducer,{});
-    const inputElements = mapInputsToArray( inputsLogin, {state, dispatch} );
+    const inputElements = mapInputsToArray( inputsLogin );
+    
+    const [state, dispatch] = useReducer(simpleFormReducer, {});
+
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(state);
     };
+    
     return (
         <form
         onSubmit={handleSubmit}
         >
             <h1>Login</h1>
+            <parentContext.Provider value={{state,dispatch}}>
             {...inputElements}
+            </parentContext.Provider>
         </form>
     );
 };
 
-export default LoginBlock;
+
+export { LoginBlock as default};

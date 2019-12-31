@@ -8,7 +8,7 @@ import uniqueId from 'lodash/uniqueId';
  * @param inputs Array of objects with features of input elements
  * @returns An array of <FormInput> components
  */
-export function mapInputsToArray( inputs:IinputConfig[], handlers?:{state:{};dispatch:React.Dispatch<{type: string; payload: {}}>} ) {
+export function mapInputsToArray( inputs:IinputConfig[], handlers?:{state:{[key:string]:string;};dispatch:React.Dispatch<{type: string; payload: {}}>} ) {
 
   // const {state, dispatch} = handlers ? handlers : {state: "", dispatch: undefined};
   const inpComponents = inputs.map( input => {
