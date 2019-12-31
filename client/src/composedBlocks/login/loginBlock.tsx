@@ -30,9 +30,10 @@ import React, { useReducer, useState } from 'react';
 
 // export default Login;
 
-import { mapInputsToArray, getInputNames } from '../utils/utilForm';
+import { mapInputsToArray } from '../utils/utilForm';
 import { inputsLogin } from './elements';
 import { simpleFormReducer } from '../utils/FormReducers'
+import axios from 'axios';
 
 const LoginBlock:React.FunctionComponent<{}> = () => {
     const [state, dispatch] = useReducer(simpleFormReducer,{});
@@ -45,6 +46,7 @@ const LoginBlock:React.FunctionComponent<{}> = () => {
         <form
         onSubmit={handleSubmit}
         >
+            <h1>Login</h1>
             {...inputElements}
         </form>
     );
