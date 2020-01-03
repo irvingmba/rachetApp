@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useContext } from 'react';
+import React, { useReducer, useState, useContext, createContext } from 'react';
 // import axios from 'axios';
 
 // import { inputsLogin } from './elements';
@@ -35,14 +35,13 @@ import { inputsLogin } from './elements';
 import { simpleFormReducer } from '../utils/FormReducers'
 import axios from 'axios';
 import uniqueId from 'lodash/uniqueId';
-
-export const parentContext = React.createContext({} as {state: {[key:string]:string}, dispatch:React.Dispatch<{type:string; payload:{}}>});
+import { IinputConfig } from '../../types/components';
 
 const LoginBlock:React.FunctionComponent<{}> = () => {
-    const inputElements = mapInputsToArray( inputsLogin );
     
     const [state, dispatch] = useReducer(simpleFormReducer, {});
-
+    const inputElements = mapInputsToArray( inputsLogin, [state, dispatch] );
+    
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(state);
@@ -53,9 +52,26 @@ const LoginBlock:React.FunctionComponent<{}> = () => {
         onSubmit={handleSubmit}
         >
             <h1>Login</h1>
-            <parentContext.Provider value={{state,dispatch}}>
-            {...inputElements}
-            </parentContext.Provider>
+            {inputElements}
+        </form>
+    );
+};
+
+const testSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("here");
+};
+const TestForm:React.FunctionComponent<{inputsLogin:IinputConfig[]}> = ({inputsLogin}) => {
+
+    const [state, dispatch] = useReducer(simpleFormReducer, {});
+    const inputs = mapInputsToArray(inputsLogin, [state,dispatch]);
+
+    return (
+        <form
+        onSubmit={testSubmit}
+        >
+            <h1>Test</h1>
+        {inputs}
         </form>
     );
 };

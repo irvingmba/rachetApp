@@ -1,28 +1,32 @@
 import React from 'react';
 import FormInput from "../../components/form/formInput";
 import { IinputConfig } from '../../types/components';
-import uniqueId from 'lodash/uniqueId';
 
 /**
  * @description Function that maps an array of objects with features and input properties
  * @param inputs Array of objects with features of input elements
  * @returns An array of <FormInput> components
  */
-export function mapInputsToArray( inputs:IinputConfig[], handlers?:{state:{[key:string]:string;};dispatch:React.Dispatch<{type: string; payload: {}}>} ) {
-
-  // const {state, dispatch} = handlers ? handlers : {state: "", dispatch: undefined};
+export function mapInputsToArray( inputs:IinputConfig[], [state, dispatch]:[{[key:string]:string;},React.Dispatch<{type: string; payload: {}}>] ) {
+  
+  const handlers = {state, dispatch}
   const inpComponents = inputs.map( input => {
-      const iLabel = input.features && input.features.label ? input.features.label : undefined;
-      return (
-          <FormInput 
-          key={uniqueId()}
-          label={iLabel}
-          parentState={handlers}
-          properties={input.properties}
-          />
-      );
+    const iLabel = input.features && input.features.label ? input.features.label : undefined;
+    return (
+        <FormInput 
+        key={input.properties.name}
+        label={iLabel}
+        parentState={handlers}
+        properties={input.properties}
+        />
+    );
   });
   return inpComponents;
+};
+
+function handleDispatch(dispatch:React.Dispatch<{type: string; payload: {}}>) {
+  
+  return 
 };
 /**
  * @description Function that takes an array with objects that contains input properties and gives back an array with the names of those elements

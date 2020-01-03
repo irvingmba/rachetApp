@@ -6,7 +6,7 @@ import { simpleFormReducer } from "../utils/FormReducers";
 
 const Registry:React.FunctionComponent = () => {
     const [state,dispatch] = useReducer(simpleFormReducer,{});
-    const mappedInputs = mapInputsToArray(inputElements, {state, dispatch});
+    const mappedInputs = mapInputsToArray(inputElements,[state, dispatch]);
     const handleSubmit = (event:React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log(state);
@@ -17,7 +17,7 @@ const Registry:React.FunctionComponent = () => {
         onSubmit={handleSubmit}
         >
             <h1>Registry</h1>
-            {...mappedInputs}
+            {mappedInputs}
         </form>
     );
 };

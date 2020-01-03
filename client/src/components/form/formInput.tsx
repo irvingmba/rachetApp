@@ -1,5 +1,5 @@
-import React, { useState, SetStateAction, useContext } from "react";
-import { parentContext } from "../../composedBlocks/login/loginBlock";
+import React, { useState, SetStateAction, useContext, useEffect } from "react";
+import { actionForm } from "../../composedBlocks/utils/FormReducers";
 
 interface Iprops {
   properties: Iproperties;
@@ -38,33 +38,27 @@ const handleChange = (setValue:React.Dispatch<SetStateAction<string>> ,dispatch?
   return {
     onChange:(event:React.ChangeEvent<HTMLInputElement>)=> {
       const value = event.target.value;
-      dispatch({
-        type: ALTER,
-        payload: {
-          [event.target.name]: value,
-        },
-      });
-      setValue(value);
+      dispatch(actionForm(event.target.name, value));
     }
   };
 };
 
+const manageState = (local:string, parent?:string) => {
+  if(parent){};
+};
+
 const FormInput:React.FunctionComponent<Iprops> = ({properties, parentState, label}) => {
 
-  const {state, dispatch} = useContext(parentContext);
-
   const inputProps = {...properties},
-  // { state, dispatch } = parentState || {},
-  [value, setValue] = useState("");
+  [value, setValue] = useState(""),
+  {state, dispatch} = parentState || {};
   Object.assign(inputProps,handleChange(setValue, dispatch));
-  console.log(state);
   
   return (
     <label>
       {label ? label : ""}
       <input
-      // value = {state && properties.name in state ? state[properties.name] : ""}
-      value = {value}
+      value = {state && properties.name in state ? state[properties.name] : value}
       {...inputProps}
       />
     </label>
