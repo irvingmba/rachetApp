@@ -5,8 +5,6 @@ import { mutationLogin } from "../utils/queries"
 import { mapInputsToArray } from '../utils/utilForm';
 import { inputsLogin } from './elements';
 import { simpleFormReducer } from '../utils/FormReducers'
-import axios from 'axios';
-import { IinputConfig } from '../../types/components';
 import { loginUser } from "../utils/httpRequest";
 
 
@@ -18,8 +16,8 @@ const LoginBlock:React.FunctionComponent<{}> = () => {
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(state);
-        const {name, password} = state;
-        loginUser(mutationLogin({name, password}));
+        const {user, password} = state || {};
+        loginUser(mutationLogin({user, password}));
     };
     
     return (

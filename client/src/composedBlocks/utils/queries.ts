@@ -1,8 +1,8 @@
-export const mutationLogin = (data:{name:string;password:string}) => {
-  const {name, password} = data;
+export const mutationLogin = (data:{user:string;password:string}) => {
+  const {user, password} = data;
   return `mutation{
       login(
-        user: "${name}"
+        user: "${user}"
         password: "${password}"
       ){
         user

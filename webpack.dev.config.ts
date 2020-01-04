@@ -22,8 +22,9 @@ const config:webpack.Configuration = {
         https: true,
         historyApiFallback: true,
         proxy: {
-            '/gql': {
+            '/login': {
                 target: "https://localhost:4000",
+                pathRewrite: {'^/login': '/gql'},
                 secure: false,
             },
             '/info': {
