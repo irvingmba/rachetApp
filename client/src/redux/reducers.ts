@@ -1,9 +1,13 @@
-import { SIGNIN } from './actionCreators';
-import { IActionSignIn } from '../types/redux';
+import { USER_LOGIN } from './actionCreators';
 
-function redSignInData(state={}, action:IActionSignIn) {
+interface IactionUserLogin {
+    type: string;
+    payload: {};
+};
+
+function redUserLogin(state:{}, action:IactionUserLogin) {
     switch(action.type) {
-        case SIGNIN:
+        case USER_LOGIN:
             return {...state, ...action.payload};
         default:
             return state;
