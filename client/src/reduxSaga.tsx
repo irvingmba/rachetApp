@@ -1,5 +1,5 @@
 import React from 'react';
-import redux, { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from "react-redux";
 import createSagaMiddleware  from 'redux-saga';
 import combinedReducer from "./redux/reducers"

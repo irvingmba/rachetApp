@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import { USER_LOGIN } from './actionCreators';
+import { LOGIN_REJECTED } from './actionCreators';
+import { loginRejected } from './fnUtilities';
 
 interface IactionUserLogin {
     type: string;
@@ -8,8 +9,9 @@ interface IactionUserLogin {
 
 function redUserLogin(state={}, action:IactionUserLogin) {
     switch(action.type) {
-        case USER_LOGIN:
-            return {...state, ...action.payload};
+        case LOGIN_REJECTED:
+            const rejObj = loginRejected({...action.payload});
+            return {...state, ...rejObj};
         default:
             return state;
     };

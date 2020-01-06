@@ -2,10 +2,8 @@ import React, { useReducer } from 'react';
 import { mapInputsToArray } from '../utils/utilForm';
 import { inputsLogin } from './elements';
 import { simpleFormReducer } from '../utils/FormReducers';
-import { mutationLogin } from "../../reduxSaga/http/queries";
-import { loginUser } from "../../reduxSaga/http/httpRequest";
 import { connect, useDispatch } from "react-redux";
-import { USER_LOGIN } from '../../redux/actionCreators';
+import { ASC_LOGIN } from "../../reduxSaga/sagaLogin";
 
 const LoginBlock:React.FunctionComponent<{}> = () => {
     
@@ -15,11 +13,7 @@ const LoginBlock:React.FunctionComponent<{}> = () => {
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch({type: USER_LOGIN, payload:state})
-        // console.log(state);
-        // const {user, password} = state || {};
-        // loginUser(mutationLogin({user, password}));
-
+        dispatch({type: ASC_LOGIN, payload:state})
     };
     
     return (
