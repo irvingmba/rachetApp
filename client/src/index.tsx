@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import RoutedApp from './router';
-
+import App from './reduxSaga';
 
 const box:HTMLDivElement = document.getElementById('content') as HTMLDivElement;
 ReactDOM.render(
-    <RoutedApp />,
+    <App />,
     box
 );

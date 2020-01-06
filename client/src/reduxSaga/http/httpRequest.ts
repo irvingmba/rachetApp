@@ -10,12 +10,9 @@ const URL_LOGIN = "/login"
  * @param return A promise
  */
 export function loginUser(query: string){
-    const mutation:any = axios({
-        url: URL_LOGIN,
-        method: "POST",
-        data: {
-            query
-        },
-    }).then((res)=>res.data).catch((rej)=>console.log(rej));
-    console.log(mutation);
+    const mutation = axios.post<string,{data:{user:boolean; password:boolean;}}>(URL_LOGIN, query);
+    return mutation.catch(reason => {
+        console.log(reason);
+        throw "Code 50 Something went wrong with the promise"
+    });
 };

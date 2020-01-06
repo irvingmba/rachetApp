@@ -1,23 +1,25 @@
-import React, { useReducer, useState, useContext, createContext } from 'react';
-// import axios from 'axios';
-
-import { mutationLogin } from "../utils/queries"
+import React, { useReducer } from 'react';
 import { mapInputsToArray } from '../utils/utilForm';
 import { inputsLogin } from './elements';
-import { simpleFormReducer } from '../utils/FormReducers'
-import { loginUser } from "../utils/httpRequest";
-
+import { simpleFormReducer } from '../utils/FormReducers';
+import { mutationLogin } from "../../reduxSaga/http/queries";
+import { loginUser } from "../../reduxSaga/http/httpRequest";
+import { connect, useDispatch } from "react-redux";
+import { USER_LOGIN } from '../../redux/actionCreators';
 
 const LoginBlock:React.FunctionComponent<{}> = () => {
     
-    const [state, dispatch] = useReducer(simpleFormReducer, {});
-    const inputElements = mapInputsToArray( inputsLogin, [state, dispatch] );
+    const [state, update] = useReducer(simpleFormReducer, {});
+    const inputElements = mapInputsToArray( inputsLogin, [state, update] );
+    const dispatch = useDispatch();
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(state);
-        const {user, password} = state || {};
-        loginUser(mutationLogin({user, password}));
+        dispatch({type: USER_LOGIN, payload:state})
+        // console.log(state);
+        // const {user, password} = state || {};
+        // loginUser(mutationLogin({user, password}));
+
     };
     
     return (
@@ -30,4 +32,6 @@ const LoginBlock:React.FunctionComponent<{}> = () => {
     );
 };
 
-export { LoginBlock as default};
+const ConnectedLogin = connect(null)(LoginBlock);
+
+export { ConnectedLogin as default};

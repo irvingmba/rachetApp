@@ -24,3 +24,9 @@ Code 30:        "Authentication not accomplished"                   Something wr
 User Database Configuration
 Code number     Problem                                             Solution
 Code 40         Target or contact doesn't exist                     Check the ids that are being processed in the function
+
+*********************************************************************************************
+
+Redux Saga
+Code number     Problem                                             Solution
+Code 50         Couldn't finish the request to the server           Check query or server service(reduxSaga/http)

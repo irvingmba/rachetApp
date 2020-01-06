@@ -1,3 +1,4 @@
+import { combineReducers } from 'redux';
 import { USER_LOGIN } from './actionCreators';
 
 interface IactionUserLogin {
@@ -5,7 +6,7 @@ interface IactionUserLogin {
     payload: {};
 };
 
-function redUserLogin(state:{}, action:IactionUserLogin) {
+function redUserLogin(state={}, action:IactionUserLogin) {
     switch(action.type) {
         case USER_LOGIN:
             return {...state, ...action.payload};
@@ -14,4 +15,8 @@ function redUserLogin(state:{}, action:IactionUserLogin) {
     };
 };
 
-export default redSignInData;
+const combinedReducer = combineReducers({
+    Login: redUserLogin
+});
+
+export default combinedReducer;
