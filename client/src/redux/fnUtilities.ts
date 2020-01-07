@@ -6,3 +6,4 @@ ${message}
 `)
   return {connected: false};
 };
+

@@ -27,6 +27,11 @@ const config:webpack.Configuration = {
                 pathRewrite: {'^/login': '/gql'},
                 secure: false,
             },
+            '/register': {
+                target: "https://localhost:4000",
+                pathRewrite: {'^/register': '/gql'},
+                secure: false,
+            },
             '/info': {
                 target: "https://localhost:4010",
                 secure: false,

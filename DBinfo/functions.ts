@@ -23,6 +23,7 @@ export async function saveRegistry(data: Iregistry){
  * @param {object} filter Object wich sends the values to search in the database
  * @param {string} filter nk - Nickname
  * @param {string} filter e - Email
+ * @param return If the the record exist it returns true, otherwise false or null
  */
 export async function existUserInfo(filter:{nk?:string;e?:string;}){
     if(filter){

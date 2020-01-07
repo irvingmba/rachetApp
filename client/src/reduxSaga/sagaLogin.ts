@@ -1,11 +1,11 @@
 import { mutationLogin } from "./http/queries";
 import { loginUser } from "./http/httpRequest";
-import { take, call, put } from "redux-saga/effects"
+import { take, call, put } from "redux-saga/effects";
 import { LOGIN_REJECTED } from "../redux/actionCreators";
 
 export const ASC_LOGIN = "ASC_LOGIN";
 
-export function* asLogin(){
+export function* sagaLogin(){
   while(true){
     const data = yield take(ASC_LOGIN);
     try {
@@ -18,7 +18,7 @@ export function* asLogin(){
       yield put({type: LOGIN_REJECTED, payload:{user:serverResp.data.user, password:serverResp.data.password}});
     } catch (error) {
       console.log(error);
-      throw "Code 51: Something went wrong with the login saga"
+      console.log("Code 51: Something went wrong with the login saga");
     }
   };
 };

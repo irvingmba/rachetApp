@@ -11,3 +11,27 @@ export const mutationLogin = (data:{user:string;password:string}) => {
   }`
   return {query};
 };
+
+export interface IdataRegistry {
+  name: string;
+  UserID: string;
+  birthday: string;
+  email: string;
+  password: string;
+};
+
+export const mutationRegistry = (data:IdataRegistry) => {
+  const query = `mutation{
+    register(
+      name: "${data.name}"
+      nickname: "${data.UserID}"
+      birthday: "${data.birthday}"
+      email: "${data.email}"
+      password: "${data.password}"
+    ){
+      nickname
+      email
+    }
+  }`
+  return {query};
+};

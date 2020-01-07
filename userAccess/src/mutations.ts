@@ -6,6 +6,13 @@ import { confCookieToken } from './Authentication/cookieConfig';
 import { savePswrd, getPwrd } from '../../DBaccess/functions';
 import { saveRegistry, existUserInfo, findUser } from '../../DBinfo/functions';
 
+/**
+ * Resolver that takes the args and checks if the given data is valid, if it passes the validation, it sends the data to the database to be recorded
+ * @param {undefined} parent Data from the parent(not used)
+ * @param {MUser} args Registry data that the resolver is going to validate and store
+ * @param {IntContext} context Methods from the request and response available(not used)
+ * @param return The resolver returns an object where true means that the parameter sent is valid and false means that the parameter already exists of is invalid
+ */
 const register = async (parent:undefined,args:MUser, context:IntContext)=>{
   const registerUser:MUser = {
     name: validInputString(args.name),

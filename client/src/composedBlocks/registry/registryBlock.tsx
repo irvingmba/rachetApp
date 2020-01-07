@@ -1,15 +1,25 @@
-import React,{ useState, useReducer } from 'react';
-
+import React,{ useReducer } from 'react';
 import { inputElements } from './variables';
 import { mapInputsToArray } from '../utils/utilForm';
 import { simpleFormReducer } from "../utils/FormReducers";
+import { connect, useDispatch } from 'react-redux';
+import { ASC_REGISTER } from "../../reduxSaga/sagaRegister";
+import { verifySamePassword, alertDifferentPass } from '../utils/utilFns';
 
 const Registry:React.FunctionComponent = () => {
-    const [state,dispatch] = useReducer(simpleFormReducer,{});
-    const mappedInputs = mapInputsToArray(inputElements,[state, dispatch]);
+
+    const dispatch = useDispatch();
+    const [state,update] = useReducer(simpleFormReducer,{});
+    const mappedInputs = mapInputsToArray(inputElements,[state, update]);
+
     const handleSubmit = (event:React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(state);
+        const samePass = verifySamePassword(state);
+        if(samePass) {
+            dispatch({type:ASC_REGISTER, payload: state});
+        } else{
+            alertDifferentPass();
+        };
     };
 
     return (
@@ -22,4 +32,6 @@ const Registry:React.FunctionComponent = () => {
     );
 };
 
-export default Registry;
+const connectedRegistry = connect(null)(Registry);
+
+export default connectedRegistry;

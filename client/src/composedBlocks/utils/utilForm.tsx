@@ -1,5 +1,5 @@
 import React from 'react';
-import FormInput from "../../components/form/formInput";
+import FormInput, { Iproperties } from "../../components/form/formInput";
 import { IinputConfig } from '../../types/components';
 
 /**

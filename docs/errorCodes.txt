@@ -28,5 +28,6 @@ Code 40         Target or contact doesn't exist                     Check the id
 *********************************************************************************************
 
 Redux Saga
-Code number     Problem                                             Solution
-Code 50         Couldn't finish the request to the server           Check query or server service(reduxSaga/http)
+Code number     Problem                                                     Solution
+Code 50         Couldn't finish the request to the server                   Check query or server service(reduxSaga/http)
+Code 52         Something went wrong when the registry was been sent        Check query or service (reduxSaga/http)

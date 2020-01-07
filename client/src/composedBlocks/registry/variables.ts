@@ -1,4 +1,5 @@
 import { IinputConfig } from '../../types/components';
+import { dateToHTMLString, nowToStdString } from '../utils/utilFns';
 
 export const inputElements:IinputConfig[] = [
     {
@@ -8,7 +9,9 @@ export const inputElements:IinputConfig[] = [
         properties: {
             type: "text",
             name: "name",
-            required: true
+            required: true,
+            pattern: ".{3,100}",
+            title: "You can type a name of 3 to 100 characters"
         },
     },
     {
@@ -18,7 +21,9 @@ export const inputElements:IinputConfig[] = [
         properties: {
             type: "text",
             name: "UserID",
-            required: true
+            required: true,
+            pattern: ".{3,30}",
+            title: "You can type a nickname of 3 to 30 characters"
         },
     },
     {
@@ -28,7 +33,10 @@ export const inputElements:IinputConfig[] = [
         properties: {
             type: "date",
             name: "birthday",
-            required: true
+            required: true,
+            min: "1900-1-1",
+            max: dateToHTMLString(),
+            title: `An input starting from 01-01-1900 to ${nowToStdString()}`
         },
     },
     {

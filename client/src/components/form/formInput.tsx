@@ -7,11 +7,12 @@ interface Iprops {
   label?: string;
 };
 
-interface Iproperties {
+export interface Iproperties {
   name: string;
   type: string;
-  required?: boolean;
+  [x:string]:string|number|boolean;
 };
+
 
 interface IparentState {
   state: {

@@ -9,8 +9,7 @@ export interface IinputProps {
 export interface IinputProperties {
     name: string;
     type: string;
-    required?: boolean|undefined;
-    value?: string;
+    [x:string]:string|number|boolean;
 };
 export interface IsetObject {
     data: {
