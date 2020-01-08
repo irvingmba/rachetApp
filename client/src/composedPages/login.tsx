@@ -7,9 +7,13 @@ const LoginPage:React.FunctionComponent = () => {
 
     return (
         <>
-        <NavLink
-        to="/registry"
-        >Registry</NavLink>
+        <NavLink to="/registry">
+            Registry
+        </NavLink>
+        <p></p>
+        <NavLink to="/dashboard">
+            Dashboard
+        </NavLink>
             <LoginBlock />
         </>
     );
