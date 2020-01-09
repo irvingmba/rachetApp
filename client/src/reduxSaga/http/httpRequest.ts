@@ -2,8 +2,7 @@ import axios from "axios";
 import { IdataRegistry } from "./queries";
 
 // Subpaths for the request from the client to the server side
-const URL_LOGIN = "/login"
-const URL_REGISTER = "/register"
+import { URL_LOGIN, URL_REGISTER } from "../../globalConfig";
 
 /**
  * Function that sends data to the server to login the user
@@ -13,7 +12,7 @@ const URL_REGISTER = "/register"
 export function loginUser(query: {}){
     const mutation = axios.post<string,{data:{ login:{user:boolean; password:boolean;}}}>(URL_LOGIN, query);
     return mutation.catch(reason => {
-        console.log(reason);
+        alert("Something is wrong with your connection, verify it and try again");
         throw "Code 50 Something went wrong with the promise"
     });
 };
@@ -26,7 +25,7 @@ export function loginUser(query: {}){
 export function sendRegistry(query: {}){
     const mutation = axios.post<string, {data: IdataRegistry}>(URL_REGISTER,query);
     return mutation.catch(reason => {
-        console.log(reason);
+        alert("Something is wrong with your connection, verify it and try again");
         throw "Code 52: Something went wrong when the registry was been sent";
     });
 };

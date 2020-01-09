@@ -9,13 +9,13 @@ const DashboardPage = () => {
   return (<>
     <Container fluid={true}>
       <Row>
-        <Col>
+        <Col lg="2">
           <h3>Menu</h3>
         </Col>
-        <Col>
+        <Col lg="2">
           <h3>Options</h3>
         </Col>
-        <Col>
+        <Col lg="2">
           <h3>Display</h3>
         </Col>
       </Row>

@@ -10,10 +10,11 @@ const LoginPage:React.FunctionComponent = () => {
         <NavLink to="/registry">
             Registry
         </NavLink>
-        <p></p>
+        <hr />
         <NavLink to="/dashboard">
             Dashboard
         </NavLink>
+        <hr />
             <LoginBlock />
         </>
     );
