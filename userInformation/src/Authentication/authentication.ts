@@ -27,7 +27,10 @@ export const authenticate = async( data:string ) => {
     };
     throw "id not found";
 };
-
+/**
+ * Function that returns the user id from the response structure
+ * @param context Access to the response structure
+ */
 export const getID = (context:any) => {
     const res:any = context.response.locals;
     try {
