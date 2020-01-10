@@ -11,7 +11,8 @@ const options:ConnectionOptions = {
     useNewUrlParser: true,
     dbName: "access",
     keepAlive: true,
-    keepAliveInitialDelay: 300000
+    keepAliveInitialDelay: 300000,
+    useUnifiedTopology: true
 };
 const dbAS = mongoose.createConnection(uri,options);
 dbAS.on('error',console.error.bind(console,'connection error'));

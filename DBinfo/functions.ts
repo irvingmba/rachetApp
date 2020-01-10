@@ -65,10 +65,17 @@ export async function addContact(friend:ImdUserInfo,contacts:ImdContacts){
     const res = await contacts.save();
     return res;
 };
-
+/**
+ * Function that takes an string that comes from and ObjectID from the mongodb and looks for the contacts inside this
+ * @param id String from an Objectid key
+ * @param return returns the record of contacts of this user if the given user id exist, otherwise null
+ */
 export async function getContacts(id: string){
-    const contacts = await mdContacts.findById(id);
-    return contacts;
+    if(id){
+        const contacts = await mdContacts.findById(id);
+        return contacts;
+    };
+    return null;
 };
 
 export async function addContactRegistry(owner: ImdUserInfo,friend: ImdUserInfo){

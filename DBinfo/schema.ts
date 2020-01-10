@@ -13,7 +13,8 @@ const options:ConnectionOptions = {
     dbName: "userInfo",
     keepAlive: true,
     keepAliveInitialDelay: 300000,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useUnifiedTopology: true
 };
 const dbUI = mongoose.createConnection(uri,options);
 dbUI.on('error',console.error.bind(console,'connection error'));

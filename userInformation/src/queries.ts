@@ -19,8 +19,9 @@ export const getOwnProfile = async (parent: undefined, args: undefined, context:
 
 export const getContacts = async (parent: undefined, args: undefined, context: IntContext) => {
   const id = getID(context),
-  owner = await findUser({id}),
-  colContacts = owner ? await getDBcontacts(owner.idContacts.toHexString()) : null,
+  owner = await findUser({id});
+  console.log(owner?.idContacts);
+  const colContacts = owner ? await getDBcontacts(owner.idContacts ? owner.idContacts.toHexString() : "") : null,
   dataContacts = colContacts ? await contactPublicData(colContacts) : null;
   return dataContacts;
 };
