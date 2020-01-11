@@ -50,7 +50,7 @@ const config:webpack.Configuration = {
                 use: {
                     loader: 'html-loader',
                 },
-            }
+            },
         ],
     },
     resolve: {
