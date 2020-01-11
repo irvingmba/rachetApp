@@ -1,17 +1,19 @@
 import React from 'react';
-import { NavLink, Switch, BrowserRouter } from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
+
+const local = useRouteMatch();
 
 const DashboardMenu = () => {
 
   return (
     <>
-    <BrowserRouter>
     <ul>
       <li>
-        <NavLink to="/contacts">Contacts</NavLink>
+        <NavLink to={`${local.path}/contacts`}>Contacts</NavLink>
       </li>
     </ul>
-    </BrowserRouter>
     </>
   );
 };
+
+export default DashboardMenu;

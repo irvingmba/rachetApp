@@ -1,13 +1,12 @@
 import React from 'react';
-import uniqueId from 'lodash/uniqueId';
 
 interface IcontactListProps {
   contactArray: string[];
 };
 
 function mapContactsToList(contacts: string[]) {
-  const list = contacts.map(contact => {
-    return (<li key={uniqueId()}>contact</li>);
+  const list = contacts.map((contact,index) => {
+    return (<li key={index.toString()}>contact</li>);
   });
   return list;
 };
@@ -25,3 +24,5 @@ const ContactList:React.FunctionComponent<IcontactListProps> = ({contactArray}:I
     </>
   );
 };
+
+export default ContactList;

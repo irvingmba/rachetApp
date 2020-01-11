@@ -10,9 +10,7 @@ const RoutedApp = () => {
     <div>
       <Route exact path="/registry" component={RegistryPage} /> 
       <Route exact path="/dashboard" component={DashboardPage} />
-      <Route exact path="/" component={LoginPage}>
-        {/* <Redirect to="/dashboard" /> */}
-      </Route>
+      <Route exact path="/" component={LoginPage} />
     </div>
     </BrowserRouter>
   );
