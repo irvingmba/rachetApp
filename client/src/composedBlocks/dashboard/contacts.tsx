@@ -6,7 +6,7 @@ interface IcontactListProps {
 
 function mapContactsToList(contacts: string[]) {
   const list = contacts.map((contact,index) => {
-    return (<li key={index.toString()}>contact</li>);
+    return (<li key={index.toString()}>{contact}</li>);
   });
   return list;
 };

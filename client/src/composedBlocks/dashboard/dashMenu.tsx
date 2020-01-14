@@ -1,15 +1,14 @@
 import React from 'react';
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { PATH_DASHBOARD_CONTACTS_V } from '../../globalConfig';
 
-const local = useRouteMatch();
 
 const DashboardMenu = () => {
-
   return (
     <>
     <ul>
       <li>
-        <NavLink to={`${local.path}/contacts`}>Contacts</NavLink>
+        <NavLink to={PATH_DASHBOARD_CONTACTS_V}>Contacts</NavLink>
       </li>
     </ul>
     </>
