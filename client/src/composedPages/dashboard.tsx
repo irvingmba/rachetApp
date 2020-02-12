@@ -8,8 +8,12 @@ import ContactList from '../composedBlocks/contacts/contacts';
 import { PATH_DASHBOARD_CONTACTS_V, PATH_DASH_CONT_DISPLAY_V } from '../globalConfig';
 import DashDisplay from '../composedBlocks/dashboard/dashDisplay';
 import DashOptions from '../composedBlocks/dashboard/dashOptions';
+import { connect } from 'react-redux';
 
 const DashboardPage = () => {
+
+  // Call an asynchronous method to restore the state of the application
+
   return (<>
     <Container fluid={true}>
       <Row>
@@ -19,6 +23,7 @@ const DashboardPage = () => {
         </Col>
         <Col>
           <DashOptions />
+          {/* <ContactList /> */}
         </Col>
         <Col>
           <DashDisplay />
@@ -29,4 +34,6 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+const ConnectedDashboard = connect(null)(DashboardPage);
+
+export default ConnectedDashboard;

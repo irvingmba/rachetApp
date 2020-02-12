@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 interface IcontactListProps {
   contactArray: string[];
@@ -24,5 +25,9 @@ const ContactList:React.FunctionComponent<IcontactListProps> = ({contactArray}:I
     </>
   );
 };
+
+
+
+const ConnContactList = connect(null)(ContactList);
 
 export default ContactList;
