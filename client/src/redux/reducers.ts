@@ -22,7 +22,9 @@ function redUserLogin(state={}, action:IactionUserLogin) {
 };
 
 const combinedReducer = combineReducers({
-    Login: redUserLogin
+    login: redUserLogin
 });
 
 export default combinedReducer;
+
+export type stateType = ReturnType<typeof redUserLogin>;

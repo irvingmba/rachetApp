@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { stateType } from '../../redux/reducers';
 
 interface IcontactListProps {
   contactArray: string[];
@@ -26,7 +27,10 @@ const ContactList:React.FunctionComponent<IcontactListProps> = ({contactArray}:I
   );
 };
 
-
+function mapStateToProps(state:stateType){
+  if("contacts" in state && "contactList")
+  return
+};
 
 const ConnContactList = connect(null)(ContactList);
 

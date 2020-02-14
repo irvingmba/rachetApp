@@ -6,8 +6,9 @@ import { connect, useDispatch } from "react-redux";
 import { ASC_LOGIN } from "../../reduxSaga/sagaLogin";
 import { Redirect } from 'react-router-dom';
 import { PATH_DASHBOARD_VIEW } from '../../globalConfig';
+import { stateType } from '../../redux/reducers';
 
-const LoginBlock:React.FunctionComponent<{connected:boolean}> = ({connected}) => {
+const LoginBlock:React.FunctionComponent<{}> = () => {
     
     const [state, update] = useReducer(simpleFormReducer, {});
     const inputElements = mapInputsToArray( inputsLogin, [state, update] );
@@ -24,22 +25,21 @@ const LoginBlock:React.FunctionComponent<{connected:boolean}> = ({connected}) =>
         >
             <h1>Login</h1>
             {inputElements}
-            {connected ? <Redirect to={PATH_DASHBOARD_VIEW} /> : ""}
+            {/* {connected ? <Redirect to={PATH_DASHBOARD_VIEW} /> : ""} */}
         </form>
     );
 };
 
-const userStatus = ({Login}:{Login:{}}) => {
-    console.log("connected" in Login ? Login["connected"]: "");
-    return "connected" in Login ? Login["connected"] : false;
-};
+// const userStatus = (state:stateType) => {
+//     return "login" in state && "connected" in state["login"] ? state["login"]["connected"] : false;
+// };
 
-const mapStateToProps = (state:{Login:{}}) => {
-    return {
-        connected: userStatus(state)
-    };
-};
+// const mapStateToProps = (state:stateType) => {
+//     return {
+//         connected: userStatus(state)
+//     };
+// };
 
-const ConnectedLogin = connect(mapStateToProps)(LoginBlock);
+const ConnectedLogin = connect(null)(LoginBlock);
 
 export { ConnectedLogin as default};

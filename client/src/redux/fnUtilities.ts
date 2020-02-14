@@ -1,3 +1,7 @@
+/**
+ * Function that launches an alert window with a warning to the user that the login failed
+ * @param state State of the application
+ */
 export function loginRejected(state:{[x:string]:string;}) {
   const {user, password} = state,
   message = user ? "password" : "user\npassword";

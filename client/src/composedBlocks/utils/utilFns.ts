@@ -45,10 +45,3 @@ ${!resp.nickname ? "Nickname\n" : ""}${!resp.email ? "E-mail" : ""}
 It may already exists or the data that your introduced is invalid`;
   alert(message);
 };
-/**
- * Function that executes a redirection of the current web path to another path
- * @param url path to redirect
- */
-export function redirectTo(url:string) {
-  location.assign(url);
-};

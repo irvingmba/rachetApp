@@ -1,10 +1,7 @@
 import { mutationLogin } from "./http/queries";
 import { loginUser } from "./http/httpRequest";
 import { take, call, put } from "redux-saga/effects";
-import { LOGIN_REJECTED, LOGIN_SUCCESS, actionLoginRejected, actionLoginSuccess } from "../redux/actionCreators";
-import { redirectTo } from "../composedBlocks/utils/utilFns";
-import { PATH_DASHBOARD_VIEW } from "../globalConfig";
-import { storeDataSession } from "../redux/fnUtilities";
+import { actionLoginRejected, actionLoginSuccess } from "../redux/actionCreators";
 
 export const ASC_LOGIN = "ASC_LOGIN";
 
