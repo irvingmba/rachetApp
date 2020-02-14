@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import RegistryPage from './composedPages/registry';
 import LoginPage from './composedPages/login';
 import DashboardPage from './composedPages/dashboard';
@@ -12,17 +12,27 @@ const RoutedApp:React.FunctionComponent<props> = ({connected}) => {
     <BrowserRouter>
     <div>
       <Route exact path={PATH_REGISTER_VIEW} component={RegistryPage} /> 
-      <Route path={PATH_DASHBOARD_VIEW} component={DashboardPage} />
-      <Route exact path={PATH_LOGIN_VIEW} component={LoginPage}>
+      <Route path={PATH_DASHBOARD_VIEW}>
+        {connected ? <DashboardPage /> : <Redirect to={PATH_LOGIN_VIEW} />}
+      </Route>
+      <Route exact path={PATH_LOGIN_VIEW}>
+        {connected ? <Redirect to={PATH_DASHBOARD_VIEW} /> : <LoginPage />}
       </Route>
     </div>
     </BrowserRouter>
   );
 };
 
+function userLogged(state:stateType) {
+  if("login" in state && "connected" in state["login"]){
+    return state["login"]["connected"];
+  };
+  return false;
+};
+
 function mapStateToProps(state:stateType){
   return {
-    connected: true
+    connected: userLogged(state)
   };
 };
 type props = ReturnType<typeof mapStateToProps>;
