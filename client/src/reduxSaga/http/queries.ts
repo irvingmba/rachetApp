@@ -35,3 +35,5 @@ export const mutationRegistry = (data:IdataRegistry) => {
   }`
   return {query};
 };
+
+// export function 

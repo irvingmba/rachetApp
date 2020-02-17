@@ -5,7 +5,7 @@ import LoginPage from './composedPages/login';
 import DashboardPage from './composedPages/dashboard';
 import { PATH_REGISTER_VIEW, PATH_LOGIN_VIEW, PATH_DASHBOARD_VIEW } from './globalConfig';
 import { connect } from 'react-redux';
-import { stateType } from './redux/reducers';
+import { loginState } from './redux/reducers';
 
 const RoutedApp:React.FunctionComponent<props> = ({connected}) => {
   return (
@@ -23,14 +23,14 @@ const RoutedApp:React.FunctionComponent<props> = ({connected}) => {
   );
 };
 
-function userLogged(state:stateType) {
+function userLogged(state:loginState) {
   if("login" in state && "connected" in state["login"]){
     return state["login"]["connected"];
   };
   return false;
 };
 
-function mapStateToProps(state:stateType){
+function mapStateToProps(state:loginState){
   return {
     connected: userLogged(state)
   };

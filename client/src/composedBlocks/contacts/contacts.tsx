@@ -1,16 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { stateType } from '../../redux/reducers';
+import { loginState, contactState } from '../../redux/reducers';
 
 interface IcontactListProps {
-  contactArray: string[];
+  contactArray: Icontact[] | undefined;
 };
 
-function mapContactsToList(contacts: string[]) {
-  const list = contacts.map((contact,index) => {
-    return (<li key={index.toString()}>{contact}</li>);
-  });
-  return list;
+interface Icontact {
+  username: string;
+  email: string;
+  status: string;
+  birthday?: Date;
+};
+
+function mapContactsToList(contacts: Icontact[] | undefined) {
+  if(contacts){
+    const list = contacts.map((contact,index) => {
+      return (<li key={index.toString()}>{contact.username}</li>);
+    });
+    return list;
+  };
+  return undefined;
 };
 
 const ContactList:React.FunctionComponent<IcontactListProps> = ({contactArray}:IcontactListProps) => {
@@ -21,17 +31,35 @@ const ContactList:React.FunctionComponent<IcontactListProps> = ({contactArray}:I
     <>
     <h1>Contacts</h1>
     <ul>
-      {...list}
+      {list ? list : "No contacts"}
     </ul>
     </>
   );
 };
 
-function mapStateToProps(state:stateType){
-  if("contacts" in state && "contactList")
-  return
+/* --------- REDUX functions --------- */
+
+/**
+ * Function to get contacts from the state
+ * @param state 
+ */
+function getContacts(state:contactState){
+  if("contacts" in state && "contactList" in state["contacts"]){
+    return state["contacts"]["contactList"];
+  };
+  return undefined;
 };
 
-const ConnContactList = connect(null)(ContactList);
+/**
+ * Function that passes the state to an object for the properties
+ * @param state 
+ */
+function mapStateToProps(state:loginState){
+  return {
+    contactArray: getContacts(state)
+  };
+};
 
-export default ContactList;
+const ConnContactList = connect(mapStateToProps)(ContactList);
+
+export default ConnContactList;

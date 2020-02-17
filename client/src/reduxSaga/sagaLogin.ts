@@ -1,7 +1,7 @@
 import { mutationLogin } from "./http/queries";
 import { loginUser } from "./http/httpRequest";
 import { take, call, put } from "redux-saga/effects";
-import { actionLoginRejected, actionLoginSuccess } from "../redux/actionCreators";
+import { actionLoginSuccess } from "../redux/actionCreators";
 
 export const ASC_LOGIN = "ASC_LOGIN";
 
@@ -14,12 +14,6 @@ export function* sagaLogin(){
       const serverResp:{data:{login:{user:boolean; password:boolean}}} = res.data;
       if(serverResp.data.login.user && serverResp.data.login.password) {
         yield put(actionLoginSuccess({user, connected: true}));
-      }
-      else {
-        yield put(actionLoginRejected({
-          user:serverResp.data.login.user,
-          password:serverResp.data.login.password
-        }));
       };
     } catch (error) {
       console.log(error);

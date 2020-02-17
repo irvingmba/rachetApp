@@ -23,7 +23,7 @@ const DashboardPage = () => {
         </Col>
         <Col>
           <DashOptions />
-          {/* <ContactList /> */}
+          <ContactList />
         </Col>
         <Col>
           <DashDisplay />
