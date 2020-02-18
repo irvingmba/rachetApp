@@ -48,6 +48,12 @@ const manageState = (local:string, parent?:string) => {
   if(parent){};
 };
 
+/**
+ * Function that creates a form using React
+ * @param properties The properties of the inputs
+ * @param parentState An object containing the state of the form that will wrap the inputs(reducer form)
+ * @param label The label of the input
+ */
 const FormInput:React.FunctionComponent<Iprops> = ({properties, parentState, label}) => {
 
   const inputProps = {...properties},

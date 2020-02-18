@@ -1,5 +1,5 @@
-import { mutationLogin } from "./http/queries";
-import { loginUser } from "./http/httpRequest";
+import { mutationLogin } from "../../requests/http/mutations";
+import { loginUser } from "../../requests/http/httpRequest";
 import { take, call, put } from "redux-saga/effects";
 import { actionLoginSuccess } from "../redux/actionCreators";
 

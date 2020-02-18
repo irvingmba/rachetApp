@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import DashboardMenu from "../../composedBlocks/dashboard/dashMenu";
 import { Route, Switch, NavLink } from "react-router-dom";
 import ContactList from '../composedBlocks/contacts/contacts';
-import { PATH_DASHBOARD_CONTACTS_V, PATH_DASH_CONT_DISPLAY_V } from '../../globalConfig';
+import AddContact from "../composedBlocks/contacts/addContact";
 import DashDisplay from '../../composedBlocks/dashboard/dashDisplay';
 import DashOptions from '../../composedBlocks/dashboard/dashOptions';
 import { connect } from 'react-redux';
@@ -23,7 +23,7 @@ const DashboardPage = () => {
         </Col>
         <Col>
           <DashOptions />
-          <ContactList />
+          <AddContact />
         </Col>
         <Col>
           <DashDisplay />

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IdataRegistry } from "./queries";
+import { IdataRegistry } from "./mutations";
 
 // Subpaths for the request from the client to the server side
 import { URL_LOGIN, URL_REGISTER } from "../../globalConfig";

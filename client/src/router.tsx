@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
-import RegistryPage from './composedPages/registry';
-import LoginPage from './composedPages/login';
-import DashboardPage from './composedPages/dashboard';
+import RegistryPage from './ReactComponents/composedPages/registry';
+import LoginPage from './ReactComponents/composedPages/login';
+import DashboardPage from './ReactComponents/composedPages/dashboard';
 import { PATH_REGISTER_VIEW, PATH_LOGIN_VIEW, PATH_DASHBOARD_VIEW } from './globalConfig';
 import { connect } from 'react-redux';
-import { loginState } from './redux/reducers';
+import { loginState } from './StateManagement/redux/reducers';
 
 const RoutedApp:React.FunctionComponent<props> = ({connected}) => {
   return (

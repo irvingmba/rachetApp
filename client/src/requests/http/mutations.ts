@@ -1,51 +1,8 @@
 
-interface queryData {
-  type: queryType;
-  name: string;
-  args?: {
-    name: string;
-    data: string;
-  }[],
-  params?: string[];
-};
+import { queryData, addParameters, addArgs, buildQuery, queryType  } from "../../utils/queryBuilder";
 
-enum queryType {
-  Mutation = "mutation",
-  Query = "query"
-};
+function copyProps(obj:{[x:string]:string}){
 
-function buildQuery(objQuery:queryData){
-  return function(addArgs:(x:queryData)=>Function) {
-    return function(addParams: (x:queryData)=>Function) {
-      return `${objQuery.type}{${addArgs(objQuery)()}${addParams(objQuery)()}}`;
-    };
-  };
-};
-
-function addArgs({name, args}:queryData) {
-  if(!args) return function(){
-    return name;
-  };
-  let msg =name.concat("(\n");
-  for(let arg of args){
-    msg = msg.concat(`${arg.name}: "${arg.data}"`,"\n");
-  };
-  msg = msg.concat(")");
-  return function() {
-    return msg;
-  };
-};
-
-function addParameters({params}:queryData) {
-  if(!params) return () => "";
-  let msg = "{\n";
-  for(let param of params) {
-    msg = msg.concat(param,"\n");
-  };
-  msg = msg.concat("}");
-  return function(){
-    return msg;
-  };
 };
 /**
  * Function that takes the data and builds a query to mutate the login
@@ -111,4 +68,41 @@ export interface IdataRegistry {
   birthday: string;
   email: string;
   password: string;
+};
+
+/**
+ * Function that takes the data from an object and returns an object with the mutation for Graphql
+ * @param param0 
+ */
+function mutAddContact({id, nickname, email}: contactId){
+  let args = [{
+    name: "id",
+    data: id ? id : undefined
+  }, {
+    name: "nickname",
+    data: nickname ? nickname: undefined
+  }, {
+    name: "email",
+    data: email ? email : undefined
+  }].reduce(function(acc:{name:string; data:string;}[],val){
+    if(typeof val.data === undefined) {
+      return acc;
+    }
+    else {
+      return [...acc, {name: val.name, data: val.data ? val.data : ""}];
+    };
+  }, []);
+  const objData:queryData = {
+    type: queryType.Mutation,
+    name: "addContact",
+    args,
+  };
+  const query = buildQuery(objData)(addArgs)(addParameters);
+  return {query};
+};
+
+interface contactId{
+  id?: string;
+  nickname?: string;
+  email?: string;
 };

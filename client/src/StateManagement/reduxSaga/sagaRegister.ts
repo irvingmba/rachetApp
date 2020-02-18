@@ -1,8 +1,7 @@
-import { take, call, put } from "redux-saga/effects";
-import { sendRegistry } from "./http/httpRequest";
+import { take, call } from "redux-saga/effects";
+import { sendRegistry } from "../../requests/http/httpRequest";
 import { alertRegistryFail } from "../../ReactComponents/composedBlocks/utils/utilFns";
-import { mutationRegistry } from "./http/queries";
-import { PATH_LOGIN_VIEW } from "../../globalConfig";
+import { mutationRegistry } from "../../requests/http/mutations";
 
 export const ASC_REGISTER = "ASC_REGISTER";
 
