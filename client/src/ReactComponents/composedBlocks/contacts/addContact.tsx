@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 import { mapInputsToArray } from "../utils/utilForm";
 import { IinputConfig } from "../../../types/components";
 import { simpleFormReducer } from "../utils/FormReducers";
+import e from "express";
 
 const addContactStruct:IinputConfig[] = [{
   properties: {
@@ -16,13 +17,24 @@ const addContactStruct:IinputConfig[] = [{
   }
 }];
 
+function handleState(state:{[x:string]:string}){
+  return function handleSubmit(event:React.FormEvent<HTMLFormElement>){
+    event.preventDefault();
+    console.log(state);
+  };
+};
+
 function AddContact() {
   let [state,handler] = useReducer(simpleFormReducer,{});
   const inputs = mapInputsToArray(addContactStruct,[state,handler]);
+
+
   return (
     <>
     <h3>Add Contact</h3>
-    {...inputs}
+    <form onSubmit={handleState(state)}>
+      {...inputs}
+    </form>
     </>
   );
 }
