@@ -74,7 +74,7 @@ export interface IdataRegistry {
  * Function that takes the data from an object and returns an object with the mutation for Graphql
  * @param param0 
  */
-function mutAddContact({id, nickname, email}: contactId){
+export function mutAddContact({id, nickname, email}: contactId){
   let args = [{
     name: "id",
     data: id ? id : undefined
@@ -101,7 +101,7 @@ function mutAddContact({id, nickname, email}: contactId){
   return {query};
 };
 
-interface contactId{
+export interface contactId{
   id?: string;
   nickname?: string;
   email?: string;

@@ -1,8 +1,9 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { IdataRegistry } from "./mutations";
 
 // Subpaths for the request from the client to the server side
-import { URL_LOGIN, URL_REGISTER } from "../../globalConfig";
+import { URL_LOGIN, URL_REGISTER, URL_CONTACT } from "../../globalConfig";
+
 
 /**
  * Function that sends data to the server to login the user
@@ -29,3 +30,31 @@ export function sendRegistry(query: {}){
         throw "Code 52: Something went wrong when the registry was been sent";
     });
 };
+
+/**
+ * Function that returns a promise of sending a request to add a contact
+ * @param mutation graphql mutation
+ */
+export function addContact(mutation: {}) {
+    const request = getQuery(mutation)(addContacConfig);
+    return axios(request).catch(reason => {
+        alert("Something is wrong with your connection, verify it and try again");
+        console.log(reason);
+        throw "Code 53: Something wrong happened when attempeted to add a contact";
+    });
+};
+
+const addContacConfig:AxiosRequestConfig = {
+    method: "POST",
+    url: URL_CONTACT,
+};
+
+function getQuery(query: {}){
+    return function getObjConfig(config: AxiosRequestConfig){
+        return {
+            ...config,
+            data: query
+        };
+    };
+};
+

@@ -36,7 +36,7 @@ export function addArgs({name, args}:queryData) {
 };
 
 export function addParameters({params}:queryData) {
-  if(!params) return () => "{ }";
+  if(!params) return () => "";
   let msg = "{\n";
   for(let param of params) {
     msg = msg.concat(param,"\n");
