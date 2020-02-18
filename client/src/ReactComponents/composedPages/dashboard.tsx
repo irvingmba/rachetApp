@@ -2,12 +2,12 @@ import React from 'react';
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DashboardMenu from "../../composedBlocks/dashboard/dashMenu";
+import DashboardMenu from "../../ReactComponents/composedBlocks/dashboard/dashMenu";
 import { Route, Switch, NavLink } from "react-router-dom";
 import ContactList from '../composedBlocks/contacts/contacts';
 import AddContact from "../composedBlocks/contacts/addContact";
-import DashDisplay from '../../composedBlocks/dashboard/dashDisplay';
-import DashOptions from '../../composedBlocks/dashboard/dashOptions';
+import DashDisplay from '../../ReactComponents/composedBlocks/dashboard/dashDisplay';
+import DashOptions from '../../ReactComponents/composedBlocks/dashboard/dashOptions';
 import { connect } from 'react-redux';
 
 const DashboardPage = () => {
