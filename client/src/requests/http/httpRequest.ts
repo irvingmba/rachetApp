@@ -36,7 +36,7 @@ export function sendRegistry(query: {}){
  * @param mutation graphql mutation
  */
 export function addContact(mutation: {}) {
-    const request = getQuery(mutation)(addContacConfig);
+    const request = getRequest(mutation)(addContacConfig);
     return axios(request).catch(reason => {
         alert("Something is wrong with your connection, verify it and try again");
         console.log(reason);
@@ -49,7 +49,14 @@ const addContacConfig:AxiosRequestConfig = {
     url: URL_CONTACT,
 };
 
-function getQuery(query: {}){
+export function getContacts(query: {}){
+    // const request = getRequest(query)()
+};
+
+
+
+
+function getRequest(query: {}){
     return function getObjConfig(config: AxiosRequestConfig){
         return {
             ...config,

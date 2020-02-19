@@ -14,11 +14,7 @@ export enum queryType {
 };
 
 export function buildQuery(objQuery:queryData){
-  return function(addArgs:(x:queryData)=>Function) {
-    return function(addParams: (x:queryData)=>Function) {
-      return `${objQuery.type}{${addArgs(objQuery)()}${addParams(objQuery)()}}`;
-    };
-  };
+  return `${objQuery.type}{${addArgs(objQuery)()}${addParameters(objQuery)()}}`;
 };
 
 export function addArgs({name, args}:queryData) {

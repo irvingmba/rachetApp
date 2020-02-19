@@ -24,7 +24,7 @@ export const mutationLogin = (data:{user:string;password:string}) => {
       "password"
     ]
   };
-  const query = buildQuery(objData)(addArgs)(addParameters);
+  const query = buildQuery(objData);
   return {query};
 };
 
@@ -58,7 +58,7 @@ export const mutationRegistry = (data:IdataRegistry) => {
       "email"
     ]
   };
-  const query2 = buildQuery(objData)(addArgs)(addParameters);
+  const query2 = buildQuery(objData);
     return {query: query2};
   };
   
@@ -97,7 +97,7 @@ export function mutAddContact({id, nickname, email}: contactId){
     name: "addContact",
     args,
   };
-  const query = buildQuery(objData)(addArgs)(addParameters);
+  const query = buildQuery(objData);
   return {query};
 };
 
