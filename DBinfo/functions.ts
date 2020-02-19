@@ -1,6 +1,5 @@
 import { mdUserInfo, mdContacts } from './schema';
 import { Iregistry, ImdUserInfo, ImdContacts, IfindUser } from './types';
-import { Types } from 'mongoose';
 
 /**
  * Registry operations
@@ -44,13 +43,13 @@ export async function findUser( condition:{id?: string; nk?: string; e?:string;}
         const user = await mdUserInfo.findById(condition.id);
         return user;
     }
-    const doc:any = {...condition};
-    for (const key in doc) {
-        if (!doc[key]) {
-            delete doc[key];
-        }
-    }
-    if(doc){
+    const doc = Object.entries(condition).reduce(function(acc,prop){
+        if(prop[1]){
+            return {...acc,[prop[0]]:prop[1]};
+        };
+        return {...acc};
+    },{});
+    if(Object.keys(doc).length){
         const user = await mdUserInfo.find(doc);
         return user ? user.shift() : null;
     };

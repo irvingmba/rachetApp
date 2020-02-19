@@ -7,6 +7,9 @@ export const addContact = async (parent: undefined, args:IntPublicFace, context:
   const idOwner:string = getID(context),
   {id, nickname, email} = validatePublicFace(args);
   const {owner, friend, contacts, exist} = await contactExist(idOwner,{id, nickname, email});
+  if(owner && friend && owner.id == friend.id){
+    return false;
+  };
   if(owner && friend && contacts){
     if(exist) {
       return false;
