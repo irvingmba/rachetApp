@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { IdataRegistry } from "./mutations";
 
 // Subpaths for the request from the client to the server side
@@ -35,7 +35,7 @@ export function sendRegistry(query: {}){
  * Function that returns a promise of sending a request to add a contact
  * @param mutation graphql mutation
  */
-export function addContact(mutation: {}) {
+export function addContact(mutation: {}):Promise<AxiosResponse<{data:{data:{addContact: boolean}}}>> {
     const request = getRequest(mutation)(addContacConfig);
     return axios(request).catch(reason => {
         alert("Something is wrong with your connection, verify it and try again");
@@ -49,11 +49,23 @@ const addContacConfig:AxiosRequestConfig = {
     url: URL_CONTACT,
 };
 
-export function getContacts(query: {}){
-    // const request = getRequest(query)()
+/**
+ * Function that gets the contact list of the user
+ * @param query object that contains the query that will be sent to the graphql service in the server
+ */
+export function getContacts(query: {}):Promise<AxiosResponse<{data:{data:{getContacts: {nickname: string; email: string;}[]}}}>>{
+    const request = getRequest(query)(getContactsConfig);
+    return axios(request).catch(reason => {
+        alert("Something is wrong with your connection, verify it and try again");
+        console.log(reason);
+        throw "Code 54: Something wrong happened when attempeted to get the contacts";
+    });
 };
 
-
+const getContactsConfig:AxiosRequestConfig = {
+    method: "POST",
+    url: URL_CONTACT
+};
 
 
 function getRequest(query: {}){

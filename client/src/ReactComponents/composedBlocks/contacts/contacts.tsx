@@ -1,22 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loginState, contactState } from '../../../StateManagement/redux/reducers';
+import { loginState, contactState, typeRootReducer } from '../../../StateManagement/redux/reducers';
 
 interface IcontactListProps {
   contactArray: Icontact[] | undefined;
 };
 
 interface Icontact {
-  username: string;
+  nickname: string;
   email: string;
-  status: string;
+  status?: string;
   birthday?: Date;
 };
 
 function mapContactsToList(contacts: Icontact[] | undefined) {
   if(contacts){
     const list = contacts.map((contact,index) => {
-      return (<li key={index.toString()}>{contact.username}</li>);
+      return (<li key={index.toString()}>{contact.nickname}</li>);
     });
     return list;
   };
@@ -43,7 +43,8 @@ const ContactList:React.FunctionComponent<IcontactListProps> = ({contactArray}:I
  * Function to get contacts from the state
  * @param state 
  */
-function getContacts(state:contactState){
+function getContacts(state:typeRootReducer){
+  console.log(state);
   if("contacts" in state && "contactList" in state["contacts"]){
     return state["contacts"]["contactList"];
   };
@@ -54,7 +55,7 @@ function getContacts(state:contactState){
  * Function that passes the state to an object for the properties
  * @param state 
  */
-function mapStateToProps(state:loginState){
+function mapStateToProps(state:typeRootReducer){
   return {
     contactArray: getContacts(state)
   };

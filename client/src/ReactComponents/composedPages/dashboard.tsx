@@ -4,15 +4,18 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DashboardMenu from "../../ReactComponents/composedBlocks/dashboard/dashMenu";
 import { Route, Switch, NavLink } from "react-router-dom";
-import ContactList from '../composedBlocks/contacts/contacts';
 import AddContact from "../composedBlocks/contacts/addContact";
 import DashDisplay from '../../ReactComponents/composedBlocks/dashboard/dashDisplay';
 import DashOptions from '../../ReactComponents/composedBlocks/dashboard/dashOptions';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import { asyncGetContacts } from "../../StateManagement/reduxSaga/asyncActions";
+import ConnContactList from '../composedBlocks/contacts/contacts';
 
 const DashboardPage = () => {
 
   // Call an asynchronous method to restore the state of the application
+  const dispatch = useDispatch();
+  dispatch(asyncGetContacts({}));
 
   return (<>
     <Container fluid={true}>
@@ -24,6 +27,7 @@ const DashboardPage = () => {
         <Col>
           <DashOptions />
           <AddContact />
+          <ConnContactList />
         </Col>
         <Col>
           <DashDisplay />

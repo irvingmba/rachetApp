@@ -1,8 +1,10 @@
-import { take, call } from "redux-saga/effects"
-import { ASYNC_CONTACTS, asyncContactAction, SUB_ADD_CONTACT, SUB_GET_CONTACTS } from "./asyncActions";
+import { take, call, put } from "redux-saga/effects"
+import { ASYNC_CONTACTS, SUB_ADD_CONTACT, SUB_GET_CONTACTS } from "./asyncActions";
 import isEmail from "validator/lib/isEmail";
 import { mutAddContact } from "../../requests/http/mutations";
-import { addContact } from "../../requests/http/httpRequest";
+import { addContact, getContacts } from "../../requests/http/httpRequest";
+import { qryContactList } from "../../requests/http/queries";
+import { actionUpdateContactList } from "../redux/actionCreators";
 
 export function* sagaContacts() {
   while(true){
@@ -17,8 +19,15 @@ export function* sagaContacts() {
           const msg = response.data.data.addContact ? "Friendship request sended" : "Couldn't find your friend, please check your data";
           yield call(alert, msg);
           yield call(console.log, msg);
+          break;
         case SUB_GET_CONTACTS:
-          
+          // send the request to the service
+          const qryGetContacts = yield call(qryContactList);
+          const resGetContacts = yield call(getContacts,qryGetContacts);
+          const contactList = resGetContacts.data.data.getContacts
+          // get the response and update the state
+          yield call(console.log, contactList);
+          yield put(actionUpdateContactList(contactList));
       };
       
     } catch (error) {

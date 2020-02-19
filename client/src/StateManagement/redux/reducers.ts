@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { LOGIN_REJECTED, LOGIN_SUCCESS } from './actionCreators';
+import { LOGIN_REJECTED, LOGIN_SUCCESS, UPDATE_CONTACTS } from './actionCreators';
 import { loginRejected } from './fnUtilities';
 
 // Definition of constants over the reducers
@@ -18,7 +18,7 @@ const loginProps = [
     "birthday"
 ];
 const contactProps = [
-    "name",
+    "nickname",
     "email"
 ];
 // make a function to discriminate elements from a function based on the values of an array
@@ -51,7 +51,9 @@ function redUserLogin(state={connected: false}, action:Iaction) {
 function redUserContacts(state={}, action:Iaction) {
     switch(action.type) {
         // make a ALTER_CONTACTS case
+        case UPDATE_CONTACTS:
         // use the function to discriminate unnecessary properties and return the state
+            return {...state, contactList:action.payload};
         default: 
             return state;
     };
@@ -66,3 +68,5 @@ export default combinedReducer;
 
 export type loginState = ReturnType<typeof redUserLogin>;
 export type contactState = ReturnType<typeof redUserContacts>;
+
+export type typeRootReducer = ReturnType<typeof combinedReducer>;
