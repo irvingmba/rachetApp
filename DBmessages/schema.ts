@@ -77,11 +77,11 @@ const schemNotifications:mongoose.Schema<ISmNotifications> = new Schema({
 
 const schemUserActions:mongoose.Schema<ISmUserActions> = new Schema({
     idc:{
-        type: [schemConversations],
+        type: ObjectId,
         alias: "IDconversations"
     },
     idn: {
-        type: [schemNotifications],
+        type: ObjectId,
         alias: "IDnotifications"
     }
 }, {

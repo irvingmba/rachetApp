@@ -11,6 +11,7 @@
     "devBuild": "webpack --config webpack.dev.config.ts",
     "userAccess": "nodemon --exec 'ts-node' ./userAccess/src/index.ts",
     "userInfo": "nodemon --exec 'ts-node' ./userInformation/src/index.ts",
+    "messages": "nodemon --exec 'ts-node' ./Messages/src/index.ts",
     "testUserAccess": "nodemon --exec 'ts-node' ./unitTesting/userAccess/Graphql/mockServer.ts",
     "testUserInfo": "nodemon --exec 'ts-node' ./unitTesting/userInformation/Graphql/mockServer.ts"
   },
