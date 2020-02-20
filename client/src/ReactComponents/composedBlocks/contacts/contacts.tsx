@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loginState, contactState, typeRootReducer } from '../../../StateManagement/redux/reducers';
+import { typeRootReducer } from '../../../StateManagement/redux/reducers';
 
+/* ------------- LOCAL FUNCTIONS ------------------ */
 interface IcontactListProps {
   contactArray: Icontact[] | undefined;
 };
@@ -16,21 +17,30 @@ interface Icontact {
 function mapContactsToList(contacts: Icontact[] | undefined) {
   if(contacts){
     const list = contacts.map((contact,index) => {
-      return (<li key={index.toString()}>{contact.nickname}</li>);
+      return (<li key={index.toString()} data-nickname={contact.nickname}>{contact.nickname}</li>);
     });
     return list;
   };
   return undefined;
 };
 
+/* ------------ REACT COMPONENT ---------------- */
+
 const ContactList:React.FunctionComponent<IcontactListProps> = ({contactArray}:IcontactListProps) => {
 
+  function contactClicked(event:React.MouseEvent<HTMLUListElement, MouseEvent>){
+    const target = event.target;
+    if("dataset" in target){
+      const nickname = target["dataset"]["nickname"];
+      console.log(nickname);
+    };
+  };
   const list = mapContactsToList(contactArray);
 
   return (
     <>
     <h1>Contacts</h1>
-    <ul>
+    <ul onClick={contactClicked}>
       {list ? list : "No contacts"}
     </ul>
     </>
@@ -44,7 +54,6 @@ const ContactList:React.FunctionComponent<IcontactListProps> = ({contactArray}:I
  * @param state 
  */
 function getContacts(state:typeRootReducer){
-  console.log(state);
   if("contacts" in state && "contactList" in state["contacts"]){
     return state["contacts"]["contactList"];
   };

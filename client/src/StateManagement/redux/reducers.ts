@@ -37,7 +37,6 @@ interface Iaction {
 };
 
 function redUserLogin(state={connected: false}, action:Iaction) {
-    console.log(state, action);
     switch(action.type) {
         case LOGIN_SUCCESS:
             return {...state, ...action.payload}
@@ -50,9 +49,7 @@ function redUserLogin(state={connected: false}, action:Iaction) {
 
 function redUserContacts(state={}, action:Iaction) {
     switch(action.type) {
-        // make a ALTER_CONTACTS case
         case UPDATE_CONTACTS:
-        // use the function to discriminate unnecessary properties and return the state
             return {...state, contactList:action.payload};
         default: 
             return state;

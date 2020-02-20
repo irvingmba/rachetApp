@@ -1,10 +1,13 @@
 import React from 'react';
+import { ConversationWindow } from '../chat/conversation';
 
 const DashDisplay:React.FunctionComponent = () => {
 
   return (
     <>
-    <h1>The information is going to be displayed here</h1>
+    <p>The information is going to be displayed here</p>
+    
+    <ConversationWindow />
     </>
   );
 };
