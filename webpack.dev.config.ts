@@ -41,6 +41,10 @@ const config:webpack.Configuration = {
                 pathRewrite: {'^/contact': '/info'},
                 secure: false,
             },
+            '/listen': {
+                target: "https://localhost:4020",
+                secure: false,
+            },
         },
     },
     module: {

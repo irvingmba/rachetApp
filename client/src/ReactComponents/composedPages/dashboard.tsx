@@ -21,7 +21,7 @@ const DashboardPage = () => {
   const ioOptions:SocketIOClient.ConnectOpts = {
 
   };
-  const uri = "https://localhost:4020/listen";
+  const uri = "https://localhost:3000/listen";
   const socket = io.connect(uri, ioOptions);
   socket.on("connection", function(){console.log("Connected to server");});
   socket.emit("notification connected", "message sent");
