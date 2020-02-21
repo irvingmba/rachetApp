@@ -14,10 +14,12 @@ const httpsOptions:https.ServerOptions = {
 };
 const server = https.createServer(httpsOptions,app);
 
+server.listen(4020,()=> console.log(`Messages Server is running on https://localhost:4020/`));
+
 const ioOptions:socket.ServerOptions = {
     path: "/listen"
 };
-const io = socket(server);
+const io = socket(server, ioOptions);
 
 io.on("connection",function(socket){
     console.log("user connected");
@@ -26,5 +28,3 @@ io.on("connection",function(socket){
         console.log(msg);
     });
 });
-
-server.listen(4020,()=> console.log(`Messages Server is running on https://localhost:4020/`));
