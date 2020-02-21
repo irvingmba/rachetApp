@@ -41,8 +41,9 @@ const config:webpack.Configuration = {
                 pathRewrite: {'^/contact': '/info'},
                 secure: false,
             },
-            '/listen': {
+            '/conversation': {
                 target: "https://localhost:4020",
+                ws: true,
                 secure: false,
             },
         },

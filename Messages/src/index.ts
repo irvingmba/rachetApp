@@ -6,7 +6,12 @@ import path from "path";
 
 const app = express();
 
-app.get("/", (req, res)=> res.send("Testing service"));
+app.get("/", (req, res)=> {
+    console.log(req);
+    res.send("Testing service")
+});
+
+
 
 const httpsOptions:https.ServerOptions = {
     key: fs.readFileSync(path.resolve(__dirname,'../keys/key.pem')),
@@ -17,12 +22,13 @@ const server = https.createServer(httpsOptions,app);
 server.listen(4020,()=> console.log(`Messages Server is running on https://localhost:4020/`));
 
 const ioOptions:socket.ServerOptions = {
-    path: "/listen"
+    path: "/conversation"
 };
 const io = socket(server, ioOptions);
 
 io.on("connection",function(socket){
     console.log("user connected");
+    io.emit("this", {will: "be received"});
     
     socket.on("notification connected",function(msg){
         console.log(msg);

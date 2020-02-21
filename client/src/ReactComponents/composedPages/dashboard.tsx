@@ -19,12 +19,13 @@ const DashboardPage = () => {
   dispatch(asyncGetContacts({}));
 
   const ioOptions:SocketIOClient.ConnectOpts = {
-
+    path: "/conversation"
   };
-  const uri = "https://localhost:3000/listen";
-  const socket = io.connect(uri, ioOptions);
+  const uri = "https://localhost:3000";
+  const socket = io.connect(uri,ioOptions);
   socket.on("connection", function(){console.log("Connected to server");});
   socket.emit("notification connected", "message sent");
+  console.log("socket executed");
 
   return (<>
     <Container fluid={true}>
