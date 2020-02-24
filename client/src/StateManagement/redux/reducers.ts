@@ -1,60 +1,60 @@
 import { combineReducers } from 'redux';
-import { LOGIN_REJECTED, LOGIN_SUCCESS, UPDATE_CONTACTS } from './actionCreators';
-import { loginRejected } from './fnUtilities';
+import { LOGIN_SUCCESS, UPDATE_CONTACTS, SELECT_CONTACT, TActSelectContact, TActUpdateContactList, ISelectContact, Ostatus, TActLoginSuccess } from './actionCreators';
 
-// Definition of constants over the reducers
-const connected = "connected",
-username = "username",
-name = "name",
-email = "email",
-birthday = "birthday";
 
-// define the values for the different namespaces in the state
-const loginProps = [
-    "connected",
-    "username",
-    "name",
-    "email",
-    "birthday"
-];
-const contactProps = [
-    "nickname",
-    "email"
-];
-// make a function to discriminate elements from a function based on the values of an array
-function pickProperties(props:string[], obj:{[x:string]:string | boolean}){
-    if(!props.length) return {};
-    let newObject = {};
-    for(const prop of props){
-        if(prop in obj) newObject = {...newObject, [prop]: obj[prop] };
-    };
-    return newObject
-};
+/* ------------- REDUCERS ----------------- */
 
-interface Iaction {
-    type: string;
-    payload: {};
-};
-
-function redUserLogin(state={connected: false}, action:Iaction) {
+function redUserLogin(state: ILoginState = {status: Ostatus.offline}, action:TActionLogin) {
+    console.log("LOGIN",state);
     switch(action.type) {
         case LOGIN_SUCCESS:
             return {...state, ...action.payload}
-        // make a ALTER_DATA case
-        // use the function to discriminate unnecesary properties and return the state
         default:
             return state;
     };
 };
 
-function redUserContacts(state={}, action:Iaction) {
+interface ILoginState {
+    user?: string;
+    status?: Ostatus;
+    name?: string;
+    email?: string;
+    birthday?: Date;
+};
+
+type TActionLogin = TActLoginSuccess;
+
+function redUserContacts(state:contactsState = {}, action:IActionContacts) {
+    console.log("CONTACTS",state);
     switch(action.type) {
         case UPDATE_CONTACTS:
-            return {...state, contactList:action.payload};
+            return {...state, contactList:action.payload as []};
+        case SELECT_CONTACT:
+            return {
+                ...state,
+                currentContact: {...action.payload as ISelectContact}
+            };
         default: 
             return state;
     };
 };
+
+interface contactsState {
+    contactList?: [];
+    currentContact?: ISelectContact;
+};
+
+type IActionContacts = TActSelectContact | TActUpdateContactList;
+
+// function redConversations(state = {}, action){
+//     switch(action.type){
+//         default:
+//             return state;
+//     };
+// };
+
+
+// ROOT REDUCER
 
 const combinedReducer = combineReducers({
     login: redUserLogin,
@@ -66,4 +66,4 @@ export default combinedReducer;
 export type loginState = ReturnType<typeof redUserLogin>;
 export type contactState = ReturnType<typeof redUserContacts>;
 
-export type typeRootReducer = ReturnType<typeof combinedReducer>;
+export type typeRootState = ReturnType<typeof combinedReducer>;

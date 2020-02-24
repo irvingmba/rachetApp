@@ -1,81 +1,65 @@
-import React, { useReducer } from "react";
-import { genFormReducer, genActionForm, test1 } from "../utils/FormReducers";
+import React, { useState } from "react";
 
-interface lclStateType {
-  messages?:{
-    nickname: string;
-    date: Date;
-    msg: string
-  }[];
-};
-
-
-function handleState(state: {}, handler:React.Dispatch<{type:string;payload:{}}>){
-  return function handleSubmit(event:React.FormEvent<HTMLFormElement>){
-    event.preventDefault();
-    console.log(state);
-    console.log(createMsg("currentMsg" in state ? state["currentMsg"] : "",{nickname: "test", date: Date(), msg: ""}));
+/* Handling onChange event from input */
+function updInput(handler: React.Dispatch<React.SetStateAction<string>>){
+  return function handleChangeEvent(event:React.ChangeEvent<HTMLInputElement>){
+    const element = onInputChange(event);
+    handler(element.value);
+    return;
   };
 };
 
-function createMsg(msg: string, userData: {}){
+
+function onInputChange(event:React.ChangeEvent<HTMLInputElement>){
+  return event.target;
+};
+
+/* Hnadling submit event from input */
+function handleSubmit(event:React.FormEvent<HTMLFormElement>){
+  event.preventDefault();
+  return;
+};
+
+function genMessage(data:{nickname: string, message: string}){
   return {
-    ...userData,
-    msg: msg
+    nickname: data.nickname,
+    date: Date(),
+    message: data.message
   };
 };
 
-function pushMessage(msgs:[],msg:{}){
-  return [...msgs, msg];
+function execSubmit(msg: TMessage){
+  return function runningSubmit(event:React.FormEvent<HTMLFormElement>){
+    handleSubmit(event);
+    console.log(msg);
+    return;
+  };
 };
 
-function typingMsg(state:{}, handler:React.Dispatch<{type:string;payload:{}}>){
-  return function(event:React.ChangeEvent<HTMLInputElement>){
-    const value = event.target.value;
-    handler(genActionForm({currentMsg: value}));
-  }
-};
+type TMessage = ReturnType<typeof genMessage>;
 
 /* --------------- REACT COMPONENT ----------------------- */
-export function ConversationWindow(){
-  const [state, updState] = useReducer(genFormReducer,{} as test1);
-  type lclStateType2 = typeof state;
-  const msgList = printMsgs(state);
-  const baseMsg = {
-    nickname: "test",
-    date: Date(),
-    msg: ""
-  };
+export function ConversationWindow({nickname}:props){
 
-  function printMsgs(state:lclStateType2){
-    if("messages" in state){
-      const stateArr = state["messages"] || [];
-      const messages = stateArr.reduce(
-        function(acc:JSX.Element[], message){
-          const msgElement = <li>
-            <h6>{message["nickname"]}:</h6>
-            <p>{message["msg"]}</p>
-            <sub>{ message["date"]}</sub>
-          </li>;
-          return acc.concat(msgElement);
-        }, []
-      );
-
-      return messages;
-    };
-    return null;
-  };
+  const [state, updState] = useState("");
+  const handleChange = updInput(updState);
+  const msg = genMessage({nickname, message:state});
+  const submitMsg = execSubmit(msg);
 
   return (
     <>
     <h5>Chat conversation</h5>
       <ul>
-      {msgList ? msgList : "The conversation is empty"}
+      {"The conversation is empty"}
       </ul>
-    <form onSubmit={handleState(state,updState)}>
-      <input type="text" onChange={typingMsg(state,updState)}/>
+    <form onSubmit={submitMsg}>
+      <input type="text" onChange={handleChange} value={state}/>
       <input type="submit" value="Send"/>
     </form>
     </>
   );
+};
+
+interface props{
+  nickname: string;
 };

@@ -1,7 +1,7 @@
 import { mutationLogin } from "../../requests/http/mutations";
 import { loginUser } from "../../requests/http/httpRequest";
 import { take, call, put } from "redux-saga/effects";
-import { actionLoginSuccess } from "../redux/actionCreators";
+import { actionLoginSuccess, Ostatus } from "../redux/actionCreators";
 
 export const ASC_LOGIN = "ASC_LOGIN";
 
@@ -13,7 +13,7 @@ export function* sagaLogin(){
       const res = yield call(loginUser, mutationLogin({user, password}));
       const serverResp:{data:{login:{user:boolean; password:boolean}}} = res.data;
       if(serverResp.data.login.user && serverResp.data.login.password) {
-        yield put(actionLoginSuccess({user, connected: true}));
+        yield put(actionLoginSuccess({user, status: Ostatus.online}));
       };
     } catch (error) {
       console.log(error);
