@@ -18,7 +18,7 @@ export function* sagaContacts() {
           const response = yield call(addContact,mutation);
           const msg = response.data.data.addContact ? "Friendship request sended" : "Couldn't find your friend, please check your data";
           yield call(alert, msg);
-          yield call(console.log, msg);
+          yield call(console.log, msg, response.data.data.addContact);
           break;
         case SUB_GET_CONTACTS:
           // send the request to the service
@@ -32,6 +32,7 @@ export function* sagaContacts() {
       
     } catch (error) {
       console.log(error);
+      alert("Something wrong happened, please verify your data");
     }
   };
   

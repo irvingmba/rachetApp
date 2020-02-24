@@ -9,7 +9,6 @@ function updInput(handler: React.Dispatch<React.SetStateAction<string>>){
   };
 };
 
-
 function onInputChange(event:React.ChangeEvent<HTMLInputElement>){
   return event.target;
 };
@@ -39,11 +38,11 @@ function execSubmit(msg: TMessage){
 type TMessage = ReturnType<typeof genMessage>;
 
 /* --------------- REACT COMPONENT ----------------------- */
-export function ConversationWindow({nickname}:props){
+export function ConversationWindow({user}:props){
 
   const [state, updState] = useState("");
   const handleChange = updInput(updState);
-  const msg = genMessage({nickname, message:state});
+  const msg = genMessage({nickname: user, message:state});
   const submitMsg = execSubmit(msg);
 
   return (
@@ -61,5 +60,6 @@ export function ConversationWindow({nickname}:props){
 };
 
 interface props{
-  nickname: string;
+  user: string;
+  contactNick?: string;
 };
