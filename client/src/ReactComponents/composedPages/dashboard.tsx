@@ -36,8 +36,6 @@ const DashboardPage = () => {
         </Col>
         <Col>
           <DashOptions />
-          <AddContact />
-          <ConnContactList />
         </Col>
         <Col>
           <DashDisplay />

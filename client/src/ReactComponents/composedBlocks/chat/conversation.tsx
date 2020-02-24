@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { typeRootState } from "../../../StateManagement/redux/reducers";
 
 /* Handling onChange event from input */
 function updInput(handler: React.Dispatch<React.SetStateAction<string>>){
@@ -13,16 +15,15 @@ function onInputChange(event:React.ChangeEvent<HTMLInputElement>){
   return event.target;
 };
 
-/* Hnadling submit event from input */
+/* Handling submit event from input */
 function handleSubmit(event:React.FormEvent<HTMLFormElement>){
   event.preventDefault();
   return;
 };
 
-function genMessage(data:{nickname: string, message: string}){
+function genMessage(data:{username: string, message: string}){
   return {
-    nickname: data.nickname,
-    date: Date(),
+    username: data.username,
     message: data.message
   };
 };
@@ -38,11 +39,11 @@ function execSubmit(msg: TMessage){
 type TMessage = ReturnType<typeof genMessage>;
 
 /* --------------- REACT COMPONENT ----------------------- */
-export function ConversationWindow({user}:props){
+function ConversationWindow({user}:props){
 
   const [state, updState] = useState("");
   const handleChange = updInput(updState);
-  const msg = genMessage({nickname: user, message:state});
+  const msg = genMessage({username: user, message:state});
   const submitMsg = execSubmit(msg);
 
   return (
@@ -59,7 +60,20 @@ export function ConversationWindow({user}:props){
   );
 };
 
-interface props{
-  user: string;
-  contactNick?: string;
+/* ------------ REDUX FUNCTIONS ----------------- */
+
+function mapStateToProps(state: typeRootState) {
+  return {
+    user: getOwnUser(state),
+  };
 };
+
+type props = ReturnType<typeof mapStateToProps>;
+
+function getOwnUser(state: typeRootState) {
+  return state.login.user || "";
+};
+
+const ConnConversationWindow = connect(mapStateToProps)(ConversationWindow);
+
+export default ConnConversationWindow;

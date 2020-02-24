@@ -5,7 +5,7 @@ import LoginPage from './ReactComponents/composedPages/login';
 import DashboardPage from './ReactComponents/composedPages/dashboard';
 import { PATH_REGISTER_VIEW, PATH_LOGIN_VIEW, PATH_DASHBOARD_VIEW } from './globalConfig';
 import { connect } from 'react-redux';
-import { loginState, typeRootState } from './StateManagement/redux/reducers';
+import { typeRootState } from './StateManagement/redux/reducers';
 import { Ostatus } from './StateManagement/redux/actionCreators';
 
 const RoutedApp:React.FunctionComponent<props> = ({status}) => {

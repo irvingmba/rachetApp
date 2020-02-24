@@ -36,17 +36,17 @@ function contactClicked(event:React.MouseEvent<HTMLUListElement, MouseEvent>){
   return null;
 };
 
-function selectContact(data:{nickname?: string}|null){
-  const nickname = data?.nickname || "";
+function selectContact(data:{username?: string}|null){
+  const username = data?.username || "";
   return {
-    nickname
+    username
   };
 };
 
 function lazyDispatch(dispatch:Dispatch){
   return function runLazyFunctions(event:React.MouseEvent<HTMLUListElement, MouseEvent>){
-    const nickname = contactClicked(event);
-    const data = selectContact(nickname ? {nickname} : null);
+    const username = contactClicked(event);
+    const data = selectContact(username ? {username} : null);
     dispatch(actionSelectContact(data));
     return;
   };
