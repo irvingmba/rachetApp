@@ -10,14 +10,28 @@ type ObjectId = mongoose.Types.ObjectId;
     message: string;
  };
 
+ export interface ISmParticipants {
+     IDUser: ObjectId;
+ };
+
  export interface ISmEvents {
      from: ObjectId;
+     username: string;
      event: string;
      status: string;
  };
 
  export interface ISmConversations {
-     messages: ISmMessages[];
+     messages: ObjectId[];
+     participants: ISmParticipants[];
+     updated: number;
+     kind: Ekind,
+     chatname: string
+ };
+
+ export enum Ekind {
+     simple = "simple",
+     group = "group"
  };
 
  export interface ISmNotifications {
@@ -25,8 +39,8 @@ type ObjectId = mongoose.Types.ObjectId;
  };
 
  export interface ISmUserActions {
-     IDconversations: ISmConversations[];
-     IDnotifications: ISmNotifications[];
+     IDconversations: ObjectId[];
+     IDnotifications: ObjectId[];
  };
 
  export interface IMdUserActions extends mongoose.Document, ISmUserActions {};
@@ -34,6 +48,8 @@ type ObjectId = mongoose.Types.ObjectId;
  export interface IMdConversations extends mongoose.Document, ISmConversations {};
 
  export interface IMdNotifications extends mongoose.Document, ISmNotifications {};
+
+ export interface IMdMessages extends mongoose.Document, ISmMessages {};
  
 /**
  * Types and interfaces for handling data

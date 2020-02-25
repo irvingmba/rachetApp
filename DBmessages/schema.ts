@@ -1,5 +1,5 @@
 import mongoose, { ConnectionOptions } from 'mongoose';
-import { ISmMessages, ISmEvents, ISmConversations, ISmNotifications, ISmUserActions, IMdUserActions, IMdConversations, IMdNotifications } from './types';
+import { ISmMessages, ISmEvents, ISmConversations, ISmNotifications, ISmUserActions, IMdUserActions, IMdConversations, IMdNotifications, ISmParticipants, IMdMessages } from './types';
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId;
@@ -40,10 +40,39 @@ const schemMessages:mongoose.Schema<ISmMessages> = new Schema({
     autoIndex: false
 });
 
+const schemParticipants:mongoose.Schema<ISmParticipants> = new Schema({
+    u:{
+        type: ObjectId,
+        alias: "IDUser"
+    }, 
+    n: {
+        type: String,
+        alias: "username"
+    }
+}, {
+    autoIndex: false
+});
+
 const schemConversations:mongoose.Schema<ISmConversations> = new Schema({
     msgs: {
-        type: [schemMessages],
+        type: [ObjectId],
         alias: "messages"
+    },
+    ps: {
+        type: [schemParticipants],
+        alias: "participants"
+    },
+    upd: {
+        type: Number,
+        alias: "updated"
+    },
+    k: {
+        type: String,
+        alias: "kind"
+    },
+    c: {
+        type: String,
+        alias: "chatName"
     }
 }, {
     autoIndex: false
@@ -53,6 +82,10 @@ const schemEvents:mongoose.Schema<ISmEvents> = new Schema({
     f: {
         type: ObjectId,
         alias: "from"
+    },
+    u: {
+        type: String,
+        alias: "username"
     },
     e: {
         type: String,
@@ -77,11 +110,11 @@ const schemNotifications:mongoose.Schema<ISmNotifications> = new Schema({
 
 const schemUserActions:mongoose.Schema<ISmUserActions> = new Schema({
     idc:{
-        type: ObjectId,
+        type: [ObjectId],
         alias: "IDconversations"
     },
     idn: {
-        type: ObjectId,
+        type: [ObjectId],
         alias: "IDnotifications"
     }
 }, {
@@ -98,5 +131,6 @@ const schemUserActions:mongoose.Schema<ISmUserActions> = new Schema({
  * Model definitions
  */
 export const mdUserActions = dbMessages.model<IMdUserActions>("userActions", schemUserActions, "userActions");
-export const mdConversations = dbMessages.model<IMdConversations>("Messages", schemConversations, "Messages");
+export const mdConversations = dbMessages.model<IMdConversations>("Conversations", schemConversations, "Conversations");
 export const mdNotifications = dbMessages.model<IMdNotifications>("Notifications", schemNotifications, "Notifications");
+export const mdMessages = dbMessages.model<IMdMessages>("Messages", schemMessages, "Messages")
