@@ -4,6 +4,9 @@ import fs from 'fs';
 import path from 'path';
 import { ContextParameters } from 'graphql-yoga/dist/types';
 
+export const DEVELOPMENT_MODE = true;
+export const pathUserInfo = "https://localhost:4010/info";
+
 const context = ( req:ContextParameters ) => {
   return {
     request: req.request,

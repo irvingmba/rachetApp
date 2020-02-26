@@ -11,7 +11,7 @@ export async function saveRegistry(data: Iregistry){
         nickname: data.nickname,
         email: data.email,
         birthday: data.birthday,
-        idPassword: data.password,
+        idAccess: data.access,
     });
     const sUser = await user.save();
     return sUser;

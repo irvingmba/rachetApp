@@ -63,7 +63,7 @@ const schemUserInfo:mongoose.Schema<IsmUserInfo> = new Schema({
     },
     ip: {
         type: ObjectId,
-        alias: "idPassword"
+        alias: "idAccess"
     },
     ic: {
         type: ObjectId,

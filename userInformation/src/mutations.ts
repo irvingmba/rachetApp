@@ -1,11 +1,13 @@
 import { IntPublicFace, IntContext } from './types';
-import { validEmail, validNickname } from './validation/validation';
-import { getID } from './Authentication/authentication';
-import { addContact as addDBContact, getContacts, addContactRegistry, contactExist, deleteContact } from '../../DBinfo/functions';
+import { validEmail, validNickname, validInputString, validInputDate } from './validation/validation';
+import { getID, authenticate } from './Authentication/authentication';
+import { addContact as addDBContact, getContacts, addContactRegistry, contactExist, deleteContact, findUser, saveRegistry } from '../../DBinfo/functions';
+import { Iregistry } from '../../DBinfo/types';
 
 export const addContact = async (parent: undefined, args:IntPublicFace, context: IntContext) => {
   const idOwner:string = getID(context),
   {id, nickname, email} = validatePublicFace(args);
+  if(!idOwner) throw "Code 14: Invalid token";
   const {owner, friend, contacts, exist} = await contactExist(idOwner,{id, nickname, email});
   if(owner && friend && owner.id == friend.id){
     return false;
@@ -26,6 +28,7 @@ export const addContact = async (parent: undefined, args:IntPublicFace, context:
 
 export const delContact = async (parent: undefined, args:IntPublicFace, context: IntContext) => {
   const idOwner:string = getID(context);
+  if(!idOwner) throw "Code 14: Invalid token";
   const {id, nickname, email} = validatePublicFace(args);
   const {owner,friend,contacts,exist} = await contactExist(idOwner,{id, nickname, email});
   if(!exist) {
@@ -36,6 +39,26 @@ export const delContact = async (parent: undefined, args:IntPublicFace, context:
     return nContacts ? true : false;
   };
   throw "Code 24: Invalid user"
+};
+
+export async function addUser(parent:undefined, args:IntPublicFace , context:IntContext) {
+  const idOwner: string = args.token ? await authenticate(args.token) : "";
+  if(!idOwner) throw "Code 14: Invalid token";
+  const data = {
+    name: args.name ? validInputString(args.name) : "",
+    nickname: args.nickname ? validNickname(args.nickname) : "",
+    email: args.email ? validEmail(args.email) : "",
+    birthday: args.birthday ? validInputDate(args.birthday) : ""
+  };
+  const dataRegistry:Iregistry = {
+    name: data.name,
+    nickname: data.nickname,
+    email: data.email,
+    birthday: data.birthday,
+    access: idOwner
+  };
+  const registry = await saveRegistry(dataRegistry);
+  return registry ? true : false;
 };
 
 /** Internal functions */

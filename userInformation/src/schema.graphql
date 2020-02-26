@@ -24,4 +24,11 @@ type Mutation {
         email: String
     ): Boolean!
     delContact(nickname: String!): Boolean!
+    addUser(
+        token: String!
+        name: String!
+        nickname: String!
+        email: String!
+        birthday: String!
+    ): Boolean!
 }

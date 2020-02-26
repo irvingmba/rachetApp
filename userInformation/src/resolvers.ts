@@ -1,6 +1,6 @@
 import { IntUser, IntPublicFace } from './types';
 import { getOwnProfile, getContacts, getContactInfo } from './queries';
-import { addContact,delContact } from './mutations';
+import { addContact, delContact, addUser } from './mutations';
 
 export const resolvers = {
   Query: {
@@ -12,6 +12,7 @@ export const resolvers = {
   Mutation: {
     addContact,
     delContact,
+    addUser
   },
   User: {
     name: (parent: IntUser) => parent.name,

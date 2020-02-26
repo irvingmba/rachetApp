@@ -27,8 +27,11 @@ export interface IntUser {
 };
 
 export interface IntPublicFace {
+    token?: string;
     id?: string;
+    name?:string;
     nickname?: string;
+    birthday?: string;
     email?: string;
 };
 
@@ -40,4 +43,9 @@ export interface IntConstText {
 export interface IntContext {
     request: Request;
     response: Response;
+};
+
+export interface optVInputString {
+    inputLanguage?: validator.AlphaLocale;
+    stringLength?: validator.IsLengthOptions;
 };

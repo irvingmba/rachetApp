@@ -8,7 +8,7 @@ export interface IsmUserInfo {
     nickname: string;
     email: string;
     birthday: string;
-    idPassword: mongoose.Types.ObjectId;
+    idAccess: mongoose.Types.ObjectId;
     idContacts: mongoose.Types.ObjectId;
 };
 export interface ImdUserInfo extends mongoose.Document, IsmUserInfo {};
@@ -31,7 +31,7 @@ export interface Iregistry {
     nickname: string;
     email: string;
     birthday: string;
-    password: string;
+    access: string;
 };
 
 export interface IfindUser {

@@ -16,7 +16,7 @@ export async function getPwrd(id: string) {
 
 // Create
 
-function createRecord(obj: IsmUserAccess) {
+export function createRecord(obj: IsmUserAccess) {
     const record = new mdUserAccess(obj);
     return record.save();
 };
@@ -38,13 +38,13 @@ export function getRecordByEmail(email: string) {
     return record;
 };
 
-export function getRecordByNickname(nickname: string) {
+export async function getRecordByNickname(nickname: string) {
     const finder = {
         n: {
             $eq: nickname
         }
     };
-    const record = mdUserAccess.findOne(finder);
+    const record = await mdUserAccess.findOne(finder);
     return record;
 };
 

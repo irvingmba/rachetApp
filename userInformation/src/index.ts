@@ -46,10 +46,11 @@ server.express.use(async(req,res,next)=> {
         return;
       };
     };
-    throw "Code 31: Invalid token"
+    next();
+    console.log("passed middleware");
   } catch (error) {
     console.log(error);
   }
 });
 
-server.start(options,() => console.log(`User Information Server is running on https://localhost:4010/gql`))
+server.start(options,() => console.log(`User Information Server is running on https://localhost:4010/info`))
