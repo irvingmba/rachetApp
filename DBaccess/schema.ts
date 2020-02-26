@@ -28,6 +28,18 @@ const schemUserAccess:mongoose.Schema<IsmUserAccess> = new Schema({
         type: String,
         alias: "password",
     },
+    n: {
+        type: String,
+        alias: "nickname"
+    },
+    e: {
+        type: String,
+        alias: "email"
+    },
+    l: {
+        type: String,
+        alias: "lastLogin"
+    }
 },{
     autoIndex: false
 });

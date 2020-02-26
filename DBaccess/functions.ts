@@ -1,4 +1,5 @@
 import { mdUserAccess } from './schema';
+import { IsmUserAccess } from './types';
 
 export async function savePswrd(password: string){
     const oPassword = new mdUserAccess({
@@ -13,53 +14,59 @@ export async function getPwrd(id: string) {
     return res;
 };
 
-// export async function noDuplicate(user:IpublicInfo) {
-//     const foundNick = await userAccess.find({Nickname: user.nickname});
-//     const foundEmail = await userAccess.find({Email: user.email});
-//     return {
-//         nickname: foundNick.length ? true : false,
-//         email: foundEmail.length ? true: false
-//     };
-// };
+// Create
+
+function createRecord(obj: IsmUserAccess) {
+    const record = new mdUserAccess(obj);
+    return record.save();
+};
+
+// Read
+
+function getRecordById(id: string) {
+    const record = mdUserAccess.findById(id);
+    return record;
+};
+
+export function getRecordByEmail(email: string) {
+    const finder = {
+        e: {
+            $eq: email
+        }
+    };
+    const record = mdUserAccess.findOne(finder);
+    return record;
+};
+
+export function getRecordByNickname(nickname: string) {
+    const finder = {
+        n: {
+            $eq: nickname
+        }
+    };
+    const record = mdUserAccess.findOne(finder);
+    return record;
+};
 
 
-// export async function findContacts(userId: string){
-//     const users = await userAccess.find({_id: userId}),
-//     user = users ? users.shift() : null;
-//     if(user) {
-//         const contact = contacts.find({_id: user.contacts});
-//         return contact;
-//     };
-//     return null;
-// };
+// Update
 
-// export async function addDBContact(IDowner:string,IDcontact:string){
-//     const {exist,IdContacts} = await contactExists(IDowner,{id: IDcontact});
-//     if(!exist){
-//         IdContacts.Contacts.push(IDcontact);
-//         await IdContacts.save();
-//         return true;
-//     };
-//     return false;
-// };
+function updateLastLogin(idRecord: string, date: string) {
+    const modifier = {
+        $set: {
+            l: date
+        }
+    };
+    const record = mdUserAccess.findByIdAndUpdate(idRecord, modifier);
+    return record;
+};
 
-
-
-// export async function delDBContact(IDowner: string, IDcontact:{id?:string;nickname?:string;email?:string;} ){
-//     const {exist,IdContacts,contact} = await contactExists(IDowner,IDcontact);
-//     if(exist){
-//         IdContacts.Contacts.splice(IdContacts.Contacts.indexOf(contact._id),1);
-//         await IdContacts.save();
-//         return true;
-//     };
-//     return false;
-// };
-
-// export async function findInfo(IDinfo: string){
-//     const info = await userInfo.findById(IDinfo)
-//     return info;
-// };
-
-// export function objectToString(object:mongoose.Types.ObjectId){
-//     return object.toHexString();
-// };
+function updateNickname(idRecord: string, nickname: string) {
+    const modifier = {
+        $set: {
+            n: nickname
+        }
+    };
+    const record = mdUserAccess.findByIdAndUpdate(idRecord, modifier);
+    return record;
+};

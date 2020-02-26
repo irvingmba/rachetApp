@@ -1,4 +1,4 @@
-import { MUser, IntContext, MLogin, IpublicFace, typeRegistered } from './types';
+import { MUser, IntContext, MLogin } from './types';
 import { validInputString, validInputDate, validInputEmail, validInputNickname, validInputPass } from './validation/validation';
 import { encryptPswd,comparePswd } from './Authentication/encryption';
 import { sign } from './Authentication/authentication';
@@ -57,3 +57,9 @@ const login = async (parent:undefined,args:MLogin,context:IntContext)=>{
 };
 
 export { register, login };
+
+/* --------- LOCAL FUNCTIONS ----------- */
+
+function userExists(nickname: string) {
+
+};
