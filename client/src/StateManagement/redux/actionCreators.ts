@@ -4,6 +4,7 @@
 export const USER_LOGIN = "USER_LOGIN";
 export const LOGIN_REJECTED = "LOGIN_REJECTED";
 export const LOGIN_SUCCESS= "LOGIN_SUCCESS";
+export const REGISTRY = "REGISTRY";
 // CONTACTS
 export const UPDATE_CONTACTS = "UPDATE_CONTACTS";
 export const SELECT_CONTACT = "SELECT_CONTACT";
@@ -19,9 +20,13 @@ interface ILoginSuccess {
     password?: boolean;
 };
 
+interface IRegistry {
+    registry: boolean;
+};
+
 export enum Ostatus {
     online = "online",
-    offline = "onffline"
+    offline = "offline"
 };
 
 export function actionLoginSuccess({user, status}:ILoginSuccess){
@@ -34,8 +39,15 @@ export function actionLoginSuccess({user, status}:ILoginSuccess){
     };
 };
 
-export type TActLoginSuccess = ReturnType<typeof actionLoginSuccess>;
+export function actionRegistry(payload: IRegistry) {
+    return {
+        type: REGISTRY,
+        payload: {...payload}
+    };
+};
 
+export type TActLoginSuccess = ReturnType<typeof actionLoginSuccess>;
+export type TActRegistry = ReturnType<typeof actionRegistry>;
 
 // Contacts Section
 export function actionUpdateContactList(data:[]){

@@ -8,11 +8,13 @@ import { connect } from 'react-redux';
 import { typeRootState } from './StateManagement/redux/reducers';
 import { Ostatus } from './StateManagement/redux/actionCreators';
 
-const RoutedApp:React.FunctionComponent<props> = ({status}) => {
+const RoutedApp:React.FunctionComponent<props> = ({status, registry}) => {
   return (
     <BrowserRouter>
     <div>
-      <Route exact path={PATH_REGISTER_VIEW} component={RegistryPage} /> 
+      <Route exact path={PATH_REGISTER_VIEW} >
+        {registry === false ? <RegistryPage /> : <Redirect to={PATH_LOGIN_VIEW}/>}
+      </Route> 
       <Route path={PATH_DASHBOARD_VIEW}>
         {status === Ostatus.online ? <DashboardPage /> : <Redirect to={PATH_LOGIN_VIEW} />}
       </Route>
@@ -31,9 +33,15 @@ function userLogged(state:typeRootState) {
   return Ostatus.offline;
 };
 
+function getRegistry(state: typeRootState) {
+  if(state.login.registry === true) return true;
+  return false;
+};
+
 function mapStateToProps(state:typeRootState){
   return {
-    status: userLogged(state)
+    status: userLogged(state),
+    registry: getRegistry(state)
   };
 };
 type props = ReturnType<typeof mapStateToProps>;

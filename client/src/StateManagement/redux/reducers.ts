@@ -1,21 +1,29 @@
 import { combineReducers } from 'redux';
-import { LOGIN_SUCCESS, UPDATE_CONTACTS, SELECT_CONTACT, TActSelectContact, TActUpdateContactList, ISelectContact, Ostatus, TActLoginSuccess, TActPushMsg, PUSH_MSG, IActPushMsg } from './actionCreators';
+import { LOGIN_SUCCESS, UPDATE_CONTACTS, SELECT_CONTACT, TActSelectContact, TActUpdateContactList, ISelectContact, Ostatus, TActLoginSuccess, TActPushMsg, PUSH_MSG, IActPushMsg, TActRegistry, REGISTRY } from './actionCreators';
 
 
 /* ------------- REDUCERS ----------------- */
 
+const initiaLogin = {
+    status: Ostatus.offline,
+    registry: false
+};
+
 // Login reducer
-function redUserLogin(state: ILoginState = {status: Ostatus.offline}, action:TActionLogin) {
+function redUserLogin(state: ILoginState = initiaLogin, action:TActionLogin) {
     console.log("LOGIN",state);
     switch(action.type) {
         case LOGIN_SUCCESS:
-            return {...state, ...action.payload}
+            return {...state, ...action.payload};
+        case REGISTRY:
+            return {...state, ...action.payload};
         default:
             return state;
     };
 };
 
 interface ILoginState {
+    registry?: boolean;
     user?: string;
     status?: Ostatus;
     name?: string;
@@ -23,7 +31,7 @@ interface ILoginState {
     birthday?: Date;
 };
 
-type TActionLogin = TActLoginSuccess;
+type TActionLogin = TActLoginSuccess | TActRegistry;
 
 // Contacts reducer
 function redUserContacts(state:contactsState = {}, action:IActionContacts) {

@@ -1,7 +1,8 @@
-import { take, call } from "redux-saga/effects";
+import { take, call, put } from "redux-saga/effects";
 import { sendRegistry } from "../../requests/http/httpRequest";
 import { alertRegistryFail } from "../../ReactComponents/composedBlocks/utils/utilFns";
 import { mutationRegistry } from "../../requests/http/mutations";
+import { actionRegistry } from "../redux/actionCreators";
 
 export const ASC_REGISTER = "ASC_REGISTER";
 
@@ -18,7 +19,7 @@ export function* sagaRegister() {
       if(nickname && email){
         yield call(alert,"You has been registered successfully");
         console.log("The user has been registered woohooo... redirect to login");
-        // redirectTo(PATH_LOGIN_VIEW);
+        yield put(actionRegistry({registry: true}));
       } else {
         yield call(alertRegistryFail, {nickname, email});
       };
