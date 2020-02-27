@@ -6,7 +6,7 @@ import { validNickname } from './validation/validation';
 export const getOwnProfile = async (parent: undefined, args: undefined, context: IntContext) => {
   const id = getID(context);
   if(!id) throw "Code 14: Invalid token";
-  const user = await findUser({id});
+  const user = await findUser({idAccess: id});
   if(user) {
     return {
       name: user.name,
@@ -21,7 +21,7 @@ export const getOwnProfile = async (parent: undefined, args: undefined, context:
 export const getContacts = async (parent: undefined, args: undefined, context: IntContext) => {
   const id = getID(context);
   if(!id) throw "Code 14: Invalid token";
-  const owner = await findUser({id}),
+  const owner = await findUser({idAccess: id}),
   colContacts = owner ? await getDBcontacts(owner.idContacts ? owner.idContacts.toHexString() : "") : null,
   dataContacts = colContacts ? await contactPublicData(colContacts) : null;
   return dataContacts;

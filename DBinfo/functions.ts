@@ -38,9 +38,9 @@ export async function existUserInfo(filter:{nk?:string;e?:string;}){
  * @param condition nk - Nickname
  * @param condition e - email
  */
-export async function findUser( condition:{id?: string; nk?: string; e?:string;} ){
-    if(condition.id){
-        const user = await mdUserInfo.findById(condition.id);
+export async function findUser( condition:{idAccess?: string; nk?: string; e?:string;} ){
+    if(condition.idAccess){
+        const user = await mdUserInfo.findById(condition.idAccess);
         return user;
     }
     const doc = Object.entries(condition).reduce(function(acc,prop){
@@ -51,6 +51,7 @@ export async function findUser( condition:{id?: string; nk?: string; e?:string;}
     },{});
     if(Object.keys(doc).length){
         const user = await mdUserInfo.find(doc);
+        console.log(user, condition.idAccess);
         return user ? user.shift() : null;
     };
     return null
@@ -89,8 +90,8 @@ export async function addContactRegistry(owner: ImdUserInfo,friend: ImdUserInfo)
 };
 
 export async function contactExist(idOwner:string,contact:IfindUser){
-    const owner = await findUser({id:idOwner}),
-    friend = await findUser({id:contact.id, nk: contact.nickname, e: contact.email}),
+    const owner = await findUser({idAccess:idOwner}),
+    friend = await findUser({idAccess:contact.id, nk: contact.nickname, e: contact.email}),
     contacts = owner && owner.idContacts ? await getContacts(owner.idContacts.toHexString()) : null;
     if(owner && friend && contacts) {
         const exist = contacts.contactIds.some((user)=>user.dataContact.toHexString()===friend.id);
@@ -121,7 +122,7 @@ export async function deleteContact(contacts:ImdContacts,idContact: string) {
 
 export async function contactPublicData(contacts: ImdContacts){
     const data = contacts.contactIds.map(async (user)=>{
-        const dUser = await findUser({id:user.dataContact.toHexString()});
+        const dUser = await findUser({idAccess:user.dataContact.toHexString()});
         if(dUser) {
             return {
                 name: dUser.name,
@@ -133,4 +134,11 @@ export async function contactPublicData(contacts: ImdContacts){
         return null;
     });
     return data;
+};
+
+export function getUserByIp(passId: string) {
+    const condition = {
+        ip: passId
+    };
+    return mdUserInfo.findOne(condition);
 };

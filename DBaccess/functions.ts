@@ -51,7 +51,7 @@ export async function getRecordByNickname(nickname: string) {
 
 // Update
 
-function updateLastLogin(idRecord: string, date: string) {
+export function updateLastLogin(idRecord: string, date: string) {
     const modifier = {
         $set: {
             l: date

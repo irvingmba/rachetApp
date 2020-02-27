@@ -12,6 +12,7 @@ const options:ConnectionOptions = {
     dbName: "access",
     keepAlive: true,
     keepAliveInitialDelay: 300000,
+    useFindAndModify: false,
     useUnifiedTopology: true
 };
 const dbAS = mongoose.createConnection(uri,options);

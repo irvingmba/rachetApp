@@ -3,7 +3,7 @@ import { validInputString, validInputDate, validInputEmail, validInputNickname, 
 import { encryptPswd,comparePswd } from './Authentication/encryption';
 import { sign } from './Authentication/authentication';
 import { confCookieToken } from './Authentication/cookieConfig';
-import { getRecordByNickname, getRecordByEmail, createRecord } from '../../DBaccess/functions';
+import { getRecordByNickname, getRecordByEmail, createRecord, updateLastLogin } from '../../DBaccess/functions';
 import { IsmUserAccess } from '../../DBaccess/types';
 import axios, {AxiosRequestConfig} from "axios";
 import { DEVELOPMENT_MODE, pathUserInfo } from "./index";
@@ -65,10 +65,12 @@ const login = async (parent:undefined,args:MLogin,context:IntContext)=>{
         sign({id: record.id}),
         confCookieToken
       );
-    };
-    return {
-      user: true,
-      password: passMatch
+      const loginDate = (new Date()).toISOString();
+      const updated = await updateLastLogin(user.id, loginDate);
+      return {
+        user: true,
+        password: passMatch
+      };
     };
   };
   return {
@@ -139,7 +141,6 @@ export function addParameters({params}:queryData) {
 };
 
 function getRequest(query: {}){
-  console.log(query);
   return function getObjConfig(config: AxiosRequestConfig):AxiosRequestConfig{
       return {
           ...config,

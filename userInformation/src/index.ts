@@ -47,7 +47,6 @@ server.express.use(async(req,res,next)=> {
       };
     };
     next();
-    console.log("passed middleware");
   } catch (error) {
     console.log(error);
   }
