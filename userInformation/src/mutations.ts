@@ -1,7 +1,7 @@
 import { IntPublicFace, IntContext } from './types';
 import { validEmail, validNickname, validInputString, validInputDate } from './validation/validation';
 import { getID, authenticate } from './Authentication/authentication';
-import { addContact as addDBContact, getContacts, addContactRegistry, contactExist, deleteContact, findUser, saveRegistry, getUserByIp } from '../../DBinfo/functions';
+import { addContact as addDBContact, getContacts, addContactRegistry, contactExist, deleteContact, saveRegistry, getUserByIp } from '../../DBinfo/functions';
 import { Iregistry } from '../../DBinfo/types';
 
 export const addContact = async (parent: undefined, args:IntPublicFace, context: IntContext) => {
@@ -9,7 +9,7 @@ export const addContact = async (parent: undefined, args:IntPublicFace, context:
   {id, nickname, email} = validatePublicFace(args);
   if(!idOwner) throw "Code 14: Invalid token";
   const refOwner = await getUserByIp(idOwner);
-  const {owner, friend, contacts, exist} = await contactExist(idOwner ,{id, nickname, email});
+  const {owner, friend, contacts, exist} = await contactExist(refOwner?.id ,{id, nickname, email});
   if(owner && friend && owner.id == friend.id){
     return false;
   };

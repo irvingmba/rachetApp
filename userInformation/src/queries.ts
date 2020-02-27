@@ -1,6 +1,6 @@
 import { IntContext } from './types';
 import { getID } from './Authentication/authentication';
-import { findUser, getContacts as getDBcontacts, contactPublicData, contactExist } from  '../../DBinfo/functions';
+import { findUser, getContacts as getDBcontacts, contactPublicData, contactExist, getUserByIp } from  '../../DBinfo/functions';
 import { validNickname } from './validation/validation';
 
 export const getOwnProfile = async (parent: undefined, args: undefined, context: IntContext) => {
@@ -21,7 +21,7 @@ export const getOwnProfile = async (parent: undefined, args: undefined, context:
 export const getContacts = async (parent: undefined, args: undefined, context: IntContext) => {
   const id = getID(context);
   if(!id) throw "Code 14: Invalid token";
-  const owner = await findUser({idAccess: id}),
+  const owner = await getUserByIp(id),
   colContacts = owner ? await getDBcontacts(owner.idContacts ? owner.idContacts.toHexString() : "") : null,
   dataContacts = colContacts ? await contactPublicData(colContacts) : null;
   return dataContacts;
