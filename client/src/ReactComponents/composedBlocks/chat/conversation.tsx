@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { typeRootState } from "../../../StateManagement/redux/reducers";
+import { asyncSendMsg } from "../../../StateManagement/reduxSaga/asyncActions";
+import { Dispatch } from "redux";
 
 /* Handling onChange event from input */
 function updInput(handler: React.Dispatch<React.SetStateAction<string>>){
@@ -21,16 +23,17 @@ function handleSubmit(event:React.FormEvent<HTMLFormElement>){
   return;
 };
 
-function genMessage(data:{username: string, message: string}){
+function genMessage<T>(data:{user:T, message: string}){
   return {
-    username: data.username,
+    user: data.user,
     message: data.message
   };
 };
 
-function execSubmit(msg: TMessage){
+function execSubmit(msg: TMessage, dispatch:Dispatch){
   return function runningSubmit(event:React.FormEvent<HTMLFormElement>){
     handleSubmit(event);
+    dispatch(asyncSendMsg(msg));
     console.log(msg);
     return;
   };
@@ -42,9 +45,10 @@ type TMessage = ReturnType<typeof genMessage>;
 function ConversationWindow({user}:props){
 
   const [state, updState] = useState("");
+  const dispatch=useDispatch();
   const handleChange = updInput(updState);
-  const msg = genMessage({username: user, message:state});
-  const submitMsg = execSubmit(msg);
+  const msg = genMessage({user, message:state});
+  const submitMsg = execSubmit(msg, dispatch);
 
   return (
     <>
@@ -71,7 +75,10 @@ function mapStateToProps(state: typeRootState) {
 type props = ReturnType<typeof mapStateToProps>;
 
 function getOwnUser(state: typeRootState) {
-  return state.login.user || "";
+  return {
+    username: state.login.user,
+    email: state.login.email
+  };
 };
 
 const ConnConversationWindow = connect(mapStateToProps)(ConversationWindow);

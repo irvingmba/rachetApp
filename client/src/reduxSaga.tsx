@@ -7,6 +7,7 @@ import { sagaLogin } from "./StateManagement/reduxSaga/sagaLogin";
 import { sagaRegister } from "./StateManagement/reduxSaga/sagaRegister";
 import RoutedApp from "./router";
 import { sagaContacts } from './StateManagement/reduxSaga/sagaContacts';
+import { sagaConversation } from './StateManagement/reduxSaga/sagaConversation';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -15,6 +16,7 @@ const store = createStore(combinedReducer, applyMiddleware(sagaMiddleware));
 const descLogin = sagaMiddleware.run(sagaLogin);
 const descRegister = sagaMiddleware.run(sagaRegister);
 const descContacts = sagaMiddleware.run(sagaContacts);
+const descConversations = sagaMiddleware.run(sagaConversation);
 
 const RedSagApp:React.FunctionComponent = () => {
   return (
