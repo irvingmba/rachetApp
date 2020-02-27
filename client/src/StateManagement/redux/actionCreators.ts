@@ -9,6 +9,7 @@ export const REGISTRY = "REGISTRY";
 export const UPDATE_CONTACTS = "UPDATE_CONTACTS";
 export const SELECT_CONTACT = "SELECT_CONTACT";
 // CONVERSATIONS
+export const SEL_USER_MSG = "SEL_USER_MSG";
 export const PUSH_MSG = "PUSH_MSG";
 
 /* ---------------- ACTIONS --------------- */
@@ -75,6 +76,18 @@ export type TActSelectContact = ReturnType<typeof actionSelectContact>;
 
 // Messages section
 
+export function actionSelUserMsg(user: ISelUserMsg) {
+    return {
+        type: SEL_USER_MSG,
+        payload: {...user}
+    };
+};
+
+export interface ISelUserMsg {
+    username: string;
+    email?: string;
+};
+
 export function actionPushMsg(msg: IActPushMsg) {
     return {
         type: PUSH_MSG,
@@ -89,3 +102,4 @@ export interface IActPushMsg {
 };
 
 export type TActPushMsg = ReturnType<typeof actionPushMsg>;
+export type TActSelUserMsg = ReturnType<typeof actionSelUserMsg>;

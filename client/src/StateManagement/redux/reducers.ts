@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { LOGIN_SUCCESS, UPDATE_CONTACTS, SELECT_CONTACT, TActSelectContact, TActUpdateContactList, ISelectContact, Ostatus, TActLoginSuccess, TActPushMsg, PUSH_MSG, IActPushMsg, TActRegistry, REGISTRY } from './actionCreators';
+import { LOGIN_SUCCESS, UPDATE_CONTACTS, SELECT_CONTACT, TActSelectContact, TActUpdateContactList, ISelectContact, Ostatus, TActLoginSuccess, TActPushMsg, PUSH_MSG, IActPushMsg, TActRegistry, REGISTRY, SEL_USER_MSG, ISelUserMsg, TActSelUserMsg } from './actionCreators';
 
 
 /* ------------- REDUCERS ----------------- */
@@ -60,8 +60,13 @@ type IActionContacts = TActSelectContact | TActUpdateContactList;
 function redConversations(state:IConversationState = {}, action: TActionConversations){
     console.log("Conversation",state);
     switch(action.type){
+        case SEL_USER_MSG:
+            const selPayload = action.payload as ISelUserMsg;
+            return {
+                ...state,
+                toUser: {...selPayload}
+            };
         case PUSH_MSG:
-
             return {
                 ...state,
             };
@@ -72,6 +77,7 @@ function redConversations(state:IConversationState = {}, action: TActionConversa
 
 interface IConversationState {
     conversationList?: IconversationList[];
+    toUser?: ISelUserMsg;
 };
 
 interface IconversationList {
@@ -86,7 +92,7 @@ interface Iplayers {
     username:string;
 };
 
-type TActionConversations = TActPushMsg;
+type TActionConversations = TActSelUserMsg | TActPushMsg;
 
 
 // ROOT REDUCER
