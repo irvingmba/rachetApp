@@ -24,10 +24,6 @@ export const addContact = async (parent: undefined, args:IntPublicFace, context:
     const registered = await addContactRegistry(owner,friend);
     return registered ? true : false;
   };
-  console.log(refOwner);
-  console.log(friend);
-  console.log( contacts);
-
   return false;
 };
 
