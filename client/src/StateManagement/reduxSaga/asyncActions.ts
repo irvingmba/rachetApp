@@ -1,4 +1,5 @@
 import { EsocketTypes } from "../../requests/socketio/socket";
+import { ICurrentChat } from "../redux/reducers";
 
 /* Constants for asynchronous action types*/
 // Contacts
@@ -57,9 +58,10 @@ export function asyncSendMsg(payload: IAsyncSendMsg) {
 interface IAsyncSendMsg {
   user: {
     username: string;
-    email: string;
+    email?: string;
   } | unknown;
   message: string;
+  currentChat: ICurrentChat;
 };
 
 /* ------ LOCAL FUNCTIONS --------- */

@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { LOGIN_SUCCESS, UPDATE_CONTACTS, SELECT_CONTACT, TActSelectContact, TActUpdateContactList, ISelectContact, Ostatus, TActLoginSuccess, TActPushMsg, PUSH_MSG, IActPushMsg, TActRegistry, REGISTRY, SEL_USER_MSG, ISelUserMsg, TActSelUserMsg } from './actionCreators';
+import { findConvoByUsr } from './helpers';
 
 
 /* ------------- REDUCERS ----------------- */
@@ -61,10 +62,14 @@ function redConversations(state:IConversationState = {}, action: TActionConversa
     console.log("Conversation",state);
     switch(action.type){
         case SEL_USER_MSG:
-            const selPayload = action.payload as ISelUserMsg;
+            const selUserMsg = action.payload as ISelUserMsg;
+            const selPayload = findConvoByUsr(selUserMsg,state.conversationList);
             return {
                 ...state,
-                toUser: {...selPayload}
+                toUser: {...selUserMsg},
+                currentChat: {
+                    id: selPayload?.id || null
+                }
             };
         case PUSH_MSG:
             return {
@@ -78,18 +83,33 @@ function redConversations(state:IConversationState = {}, action: TActionConversa
 interface IConversationState {
     conversationList?: IconversationList[];
     toUser?: ISelUserMsg;
+    currentChat?: ICurrentChat;
+};
+
+export interface ICurrentChat {
+    id: string | null;
+    members?: Iplayers;
+    kind?: eKind;
+};
+
+export enum eKind {
+    single = "single",
+    group = "group"
 };
 
 export interface IconversationList {
+    id: string | null;
+    members: Iplayers[];
     messages: IActPushMsg[];
-    participants: Iplayers[];
     update: Date;
     notSent: number;
+    kind: eKind;
     chatName: string;
 };
 
 interface Iplayers {
     username:string;
+    email?:string;
 };
 
 type TActionConversations = TActSelUserMsg | TActPushMsg;

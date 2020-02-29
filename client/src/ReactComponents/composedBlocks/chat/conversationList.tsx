@@ -14,7 +14,7 @@ function ConversationList(data: Tprops){
     <>
     <h5>Conversations</h5>
     <ul>
-    {conversationList}
+    {conversationList ? conversationList : <p>There is not conversations yet</p>}
     </ul>
     </>
   );
@@ -32,11 +32,12 @@ function mapStateToProps(state: typeRootState) {
 };
 
 function getConversationList(state: typeRootState) {
-  const convList = state.conversations.conversationList;
+  const convos = state.conversations;
+  const convList = convos && convos.conversationList;
   if(convList){
     const list = convList.reduce(
       function(acc:IConvList[], val){
-        const participants = val.participants;
+        const participants = val.members;
         const chatName = val.chatName;
         const update = val.update;
         return acc.concat({
@@ -56,7 +57,7 @@ function getConversationList(state: typeRootState) {
       />;
       return acc.concat(listElement);
     }, []);
-    return convList;
+    return list;
   };
   return null;
 };

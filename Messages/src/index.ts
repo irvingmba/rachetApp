@@ -52,10 +52,10 @@ io.on("connection",function(socket){
     console.log("user connected", socket.id);
     io.emit("this", {will: "be received"});
     
-    socket.on("message",function(msg){
+    socket.on("message",function(msg, fn){
+        console.log(msg, fn);
         const msgObj = getMessage(msg);
-        socket.emit("response",msgObj);
-        console.log(msgObj);
+        fn(msgObj);
     });
 
     socket.on("print", function(msg){

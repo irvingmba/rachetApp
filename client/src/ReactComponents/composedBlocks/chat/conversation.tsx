@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect, useDispatch } from "react-redux";
-import { typeRootState } from "../../../StateManagement/redux/reducers";
+import { typeRootState, ICurrentChat, eKind } from "../../../StateManagement/redux/reducers";
 import { asyncSendMsg } from "../../../StateManagement/reduxSaga/asyncActions";
 import { Dispatch } from "redux";
 
@@ -23,11 +23,30 @@ function handleSubmit(event:React.FormEvent<HTMLFormElement>){
   return;
 };
 
-function genMessage<T>(data:{user:T, message: string}){
-  return {
-    user: data.user,
-    message: data.message
+function genMessage (data:IDataMsg<unknown>){
+  if(data.currentChat.id){
+    return {
+      user: data.user,
+      message: data.message,
+      currentChat: data.currentChat
+    };
+  }
+  else {
+        return {
+          user: data.user,
+          message: data.message,
+          currentChat: {
+            ...data.currentChat,
+            kind: eKind.single
+          }
+        };
   };
+};
+
+interface IDataMsg<T> {
+  user: T;
+  message: string;
+  currentChat: ICurrentChat;
 };
 
 function execSubmit(msg: TMessage, dispatch:Dispatch){
@@ -42,7 +61,7 @@ type TMessage = ReturnType<typeof genMessage>;
 
 interface IMsgFromServer {
   username: string;
-  msg: string;
+  message: string;
   date: Date;
 };
 
@@ -53,7 +72,7 @@ function printMessages(arrMessage: IMsgFromServer[]) {
       key={index.toString()}
       >
         <p>{val.username}</p>
-        <p>{val.msg}</p>
+        <p>{val.message}</p>
         <p>{val.date}</p>
       </li>;
       return [liElem].concat(acc);
@@ -62,12 +81,12 @@ function printMessages(arrMessage: IMsgFromServer[]) {
 };
 
 /* --------------- REACT COMPONENT ----------------------- */
-function ConversationWindow({user}:props){
+function ConversationWindow({user, chatID}:props){
 
   const [state, updState] = useState("");
   const dispatch=useDispatch();
   const handleChange = updInput(updState);
-  const msg = genMessage({user, message:state});
+  const msg = genMessage({user, message:state, currentChat: chatID});
   const submitMsg = execSubmit(msg, dispatch);
 
   return (
@@ -89,6 +108,7 @@ function ConversationWindow({user}:props){
 function mapStateToProps(state: typeRootState) {
   return {
     user: getOwnUser(state),
+    chatID: getChatId(state)
   };
 };
 
@@ -98,6 +118,18 @@ function getOwnUser(state: typeRootState) {
   return {
     username: state.login.user,
     email: state.login.email
+  };
+};
+
+function getChatId(state:typeRootState) {
+  const currentChat =state.conversations?.currentChat; 
+  const {id} = currentChat || {id:null};
+  if(id) return {id}
+  else {
+    return {
+      id,
+      members: state.conversations.toUser,
+    };
   };
 };
 

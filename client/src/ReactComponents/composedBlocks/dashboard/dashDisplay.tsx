@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { typeRootState } from '../../../StateManagement/redux/reducers';
 import ContactOptions from '../../components/contact/contactOption';
 
-const DashDisplay:React.FunctionComponent<TdisplayProps> = ({currentContact, msgContact}) => {
+const DashDisplay:React.FunctionComponent<TdisplayProps> = ({currentContact,  convoId}) => {
 
   return (
     <>
     <p>The information is going to be displayed here</p>
     
     {currentContact?.username ? <ContactOptions /> : <p>"Select a contact"</p>}
-    {msgContact?.username ? <ConversationWindow /> : <p>"Select a conversation"</p>}
+    {convoId ? <ConversationWindow /> : <p>"Select a conversation"</p>}
     </>
   );
 };
@@ -21,7 +21,7 @@ const DashDisplay:React.FunctionComponent<TdisplayProps> = ({currentContact, msg
 function mapStateToProps(state: typeRootState){
   return {
     currentContact: getCurrContact(state),
-    msgContact: getMsgContact(state)
+    convoId: getConvoId(state)
   };
 };
 
@@ -31,8 +31,8 @@ function getCurrContact(state: typeRootState) {
   return state.contacts.currentContact;
 };
 
-function getMsgContact(state: typeRootState) {
-  return state.conversations.toUser;
+function getConvoId(state: typeRootState) {
+  return state.conversations?.currentChat;
 };
 
 const ConDashDisplay = connect(mapStateToProps)(DashDisplay);

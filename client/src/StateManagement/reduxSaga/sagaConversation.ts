@@ -1,7 +1,7 @@
 import { eventChannel} from "redux-saga";
 import { take, call, put, fork, takeEvery } from "redux-saga/effects";
 import { ASYNC_MSGS, SUB_MSGS_SEND, SOCKET_INIT } from "./asyncActions";
-import { socketConnect, socketEmit } from "../../requests/socketio/socket";
+import { socketConnect, socketEmitNAck } from "../../requests/socketio/socket";
 import { actionPushMsg, IActPushMsg } from "../redux/actionCreators";
 
 export function* sagaConversation() {
@@ -14,7 +14,7 @@ export function* sagaConversation() {
     switch(action.subtype) {
       case SUB_MSGS_SEND:
         if(!action.payload.message) break;
-        yield call(socketEmit, socket, action.payload);
+        yield call(socketEmitNAck, socket, action.payload, ackSendMsg);
         break;
       default:
         break;
@@ -29,7 +29,7 @@ function* socketSubscribe(socket:SocketIOClient.Socket) {
 
     socket.on("this",console.log);
 
-    socket.on("response",function(resp:IActPushMsg){
+    socket.on("response",function(resp:IMessage){
       emit(actionPushMsg(resp));
     });
     
@@ -37,6 +37,13 @@ function* socketSubscribe(socket:SocketIOClient.Socket) {
       return socket.close();
     };
   });
+};
+
+interface IMessage {
+  username: string;
+  msg: string;
+  lastDate: Date;
+  updateDate: Date;
 };
 
 // Function that hears the asynchronous channel operations
@@ -51,6 +58,8 @@ function* socketListener(action:ISocketAction){
   yield put(action);
 };
 
-function testingFunction(socket:any, msg: string) {
-  socket.emit("print", msg);
+// Functions for ack from the server
+
+function ackSendMsg(response: {}){
+  console.log(response)
 };

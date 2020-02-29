@@ -21,7 +21,12 @@ export interface IpayloadSocket {
   [x: string]: string;
 };
 
-export function socketEmit(socket: SocketIOClient.Socket, payload:IpayloadSocket) {
-  socket.emit(payload.socketType, payload);
+export function socketEmitNAck(socket: SocketIOClient.Socket, payload:IpayloadSocket,fn?:Function) {
+  if(fn) {
+    socket.emit(payload.socketType, payload, fn)
+  }
+  else{
+    socket.emit(payload.socketType, payload);
+  };
   return ;
 };

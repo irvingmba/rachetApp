@@ -9,6 +9,7 @@ const inputsLogin:IinputConfig[] = [
             name: "user",
             type: "text",
             required: true,
+            autoFocus: true
         },
     },
     {
