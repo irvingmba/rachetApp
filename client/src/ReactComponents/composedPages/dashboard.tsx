@@ -8,24 +8,15 @@ import AddContact from "../composedBlocks/contacts/addContact";
 import DashDisplay from '../../ReactComponents/composedBlocks/dashboard/dashDisplay';
 import DashOptions from '../../ReactComponents/composedBlocks/dashboard/dashOptions';
 import { connect, useDispatch } from 'react-redux';
-import { asyncGetContacts } from "../../StateManagement/reduxSaga/asyncActions";
+import { asyncGetContacts, asyncSocketInit } from "../../StateManagement/reduxSaga/asyncActions";
 import ConnContactList from '../composedBlocks/contacts/contacts';
-import io from "socket.io-client";
 
 const DashboardPage = () => {
 
   // Call an asynchronous method to restore the state of the application
   const dispatch = useDispatch();
   dispatch(asyncGetContacts({}));
-
-  const ioOptions:SocketIOClient.ConnectOpts = {
-    path: "/conversation"
-  };
-  const uri = "https://localhost:3000";
-  const socket = io.connect(uri,ioOptions);
-  socket.on("connection", function(){console.log("Connected to server");});
-  socket.emit("notification connected", "message sent");
-  console.log("socket executed");
+  dispatch(asyncSocketInit());
 
   return (<>
     <Container fluid={true}>

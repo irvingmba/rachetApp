@@ -1,3 +1,4 @@
+import { EsocketTypes } from "../../requests/socketio/socket";
 
 /* Constants for asynchronous action types*/
 // Contacts
@@ -7,6 +8,7 @@ export const SUB_GET_CONTACTS = "SUB_GET_CONTACTS";
 // Conversations
 export const ASYNC_MSGS = "ASYNC_MSGS";
 export const SUB_MSGS_SEND = "SUB_MSGS_SEND";
+export const SOCKET_INIT = "SOCKET_INIT";
 
 export type asyncContactAction = ReturnType<typeof asyncAddContact>;
 interface baseAction {
@@ -35,11 +37,20 @@ export function asyncGetContacts(payload:{}){
 
 // Conversations
 
+export function asyncSocketInit() {
+  return {
+    type: SOCKET_INIT
+  };
+};
+
 export function asyncSendMsg(payload: IAsyncSendMsg) {
   return {
     type: ASYNC_MSGS,
     subtype: SUB_MSGS_SEND,
-    payload: {...payload}
+    payload: {
+      ...payload,
+      socketType: EsocketTypes.sendMsg
+    }
   };
 };
 

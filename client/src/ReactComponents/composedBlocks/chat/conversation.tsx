@@ -34,12 +34,32 @@ function execSubmit(msg: TMessage, dispatch:Dispatch){
   return function runningSubmit(event:React.FormEvent<HTMLFormElement>){
     handleSubmit(event);
     dispatch(asyncSendMsg(msg));
-    console.log(msg);
     return;
   };
 };
 
 type TMessage = ReturnType<typeof genMessage>;
+
+interface IMsgFromServer {
+  username: string;
+  msg: string;
+  date: Date;
+};
+
+function printMessages(arrMessage: IMsgFromServer[]) {
+  const arrElements = arrMessage.reduce(
+    function print(acc:JSX.Element[], val, index) {
+      const liElem = <li
+      key={index.toString()}
+      >
+        <p>{val.username}</p>
+        <p>{val.msg}</p>
+        <p>{val.date}</p>
+      </li>;
+      return [liElem].concat(acc);
+    }, []
+  );
+};
 
 /* --------------- REACT COMPONENT ----------------------- */
 function ConversationWindow({user}:props){

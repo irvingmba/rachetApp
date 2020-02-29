@@ -49,14 +49,34 @@ io.use(async function(socket,next) {
 });
 
 io.on("connection",function(socket){
-    console.log("user connected");
+    console.log("user connected", socket.id);
     io.emit("this", {will: "be received"});
     
-    socket.on("notification connected",function(msg){
-        console.log(msg);
+    socket.on("message",function(msg){
+        const msgObj = getMessage(msg);
+        socket.emit("response",msgObj);
+        console.log(msgObj);
     });
+
+    socket.on("print", function(msg){
+        console.log(msg);
+    })
 });
+
 
 // Functions for local purposes
 
-function handleError() {};
+function getMessage(msg:IMessage) {
+    return {
+        username: msg.user.username,
+        msg: msg.message,
+        date: new Date()
+    };
+};
+
+interface IMessage {
+    user: {
+        username: string
+    };
+    message: string
+};

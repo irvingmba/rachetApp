@@ -80,7 +80,7 @@ interface IConversationState {
     toUser?: ISelUserMsg;
 };
 
-interface IconversationList {
+export interface IconversationList {
     messages: IActPushMsg[];
     participants: Iplayers[];
     update: Date;
