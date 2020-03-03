@@ -4,6 +4,7 @@ import https from 'https';
 import fs from "fs";
 import path from "path";
 import { lazyRequest } from './Requests/toAuthServer';
+import { ackSendMessage } from './socketFns';
 
 export const DEVELOPMENT_MODE = true;
 
@@ -54,7 +55,7 @@ io.on("connection",function(socket){
     
     socket.on("message",function(msg, fn){
         console.log(msg, fn);
-        const msgObj = getMessage(msg);
+        const msgObj = ackSendMessage(msg);
         fn(msgObj);
     });
 

@@ -38,7 +38,7 @@ function getUserAction(id: string) {
     return mdUserActions.findById(id);
 };
 
-function getConversation(id: string) {
+export function getConversation(id: string) {
     return mdConversations.findById(id);
 };
 
