@@ -34,14 +34,13 @@ function mapStateToProps(state: typeRootState) {
 function getConversationList(state: typeRootState) {
   const convos = state.conversations;
   const convList = convos && convos.conversationList;
+  console.log(convList);
   if(convList){
-    console.log(convList);
     const list = convList.reduce(
       function(acc:IConvList[], val){
         const participants = val.members;
         const chatName = val.chatName;
         const update = val.updated;
-        console.log(acc, val);
         return acc.concat({
           participants,
           chatName,
@@ -50,11 +49,9 @@ function getConversationList(state: typeRootState) {
       }, []
     )
     .sort(function(val1, val2){
-      console.log(val1,val2);
       return val1.update - val2.update;
     })
     .reduce(function (acc: TConvListElem[], val, index){
-      console.log( val);
       const listElement = <ConvListElem 
       key={index.toString()}
       chatName={val.chatName}

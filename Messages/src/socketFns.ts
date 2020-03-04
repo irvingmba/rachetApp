@@ -1,9 +1,10 @@
 import { getConversation } from "../../DBmessages/functions"
 
-export function ackSendMessage(reqClient:IReqClient) {
+export async function storeMsgNResp(reqClient:IReqClient) {
   const id = reqClient.currentChat.id;
   if(id){
-    const convo = getConversation(id);
+    const convo = await getConversation(id);
+    if(convo) return;
   };
   return buildConversation(reqClient);
 };

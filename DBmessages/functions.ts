@@ -39,7 +39,8 @@ function getUserAction(id: string) {
 };
 
 export function getConversation(id: string) {
-    return mdConversations.findById(id);
+    return mdConversations.findById(id)
+    .catch(function(reason){return null});
 };
 
 function getNotifications(id: string) {

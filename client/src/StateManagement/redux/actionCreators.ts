@@ -99,6 +99,7 @@ export function actionPushMsg(msg: IActPushMsg) {
 };
 
 export function actionNewConvo(convo: IconversationList) {
+    console.log(convo);
     return {
         type: NEW_CONVO,
         payload: {...convo}

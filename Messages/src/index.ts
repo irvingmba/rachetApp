@@ -4,7 +4,7 @@ import https from 'https';
 import fs from "fs";
 import path from "path";
 import { lazyRequest } from './Requests/toAuthServer';
-import { ackSendMessage } from './socketFns';
+import { storeMsgNResp } from './socketFns';
 
 export const DEVELOPMENT_MODE = true;
 
@@ -53,10 +53,15 @@ io.on("connection",function(socket){
     console.log("user connected", socket.id);
     io.emit("this", {will: "be received"});
     
-    socket.on("message",function(msg){
+    // get the user contacts
+    // join the socket to the rooms to get the notifications
+    // emit to a room identified with its id
+
+    socket.on("message",
+    async function(msg){
         console.log(msg);
-        const msgObj = ackSendMessage(msg);
-        socket.emit("ack",msgObj);
+        const msgObj = await storeMsgNResp(msg);
+        socket.emit("newConvo",msgObj);
     });
 
     socket.on("print", function(msg){
