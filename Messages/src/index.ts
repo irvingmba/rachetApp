@@ -53,10 +53,10 @@ io.on("connection",function(socket){
     console.log("user connected", socket.id);
     io.emit("this", {will: "be received"});
     
-    socket.on("message",function(msg, fn){
-        console.log(msg, fn);
+    socket.on("message",function(msg){
+        console.log(msg);
         const msgObj = ackSendMessage(msg);
-        fn(msgObj);
+        socket.emit("ack",msgObj);
     });
 
     socket.on("print", function(msg){

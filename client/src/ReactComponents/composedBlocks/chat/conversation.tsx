@@ -61,39 +61,41 @@ type TMessage = ReturnType<typeof genMessage>;
 
 interface IMsgFromServer {
   username: string;
-  message: string;
+  msg: string;
   date: Date;
 };
 
-function printMessages(arrMessage: IMsgFromServer[]) {
-  const arrElements = arrMessage.reduce(
+function printMessages(arrMessage: IMsgFromServer[]|null) {
+  const arrElements = arrMessage && arrMessage.reduce(
     function print(acc:JSX.Element[], val, index) {
       const liElem = <li
       key={index.toString()}
       >
         <p>{val.username}</p>
-        <p>{val.message}</p>
+        <p>{val.msg}</p>
         <p>{val.date}</p>
       </li>;
       return [liElem].concat(acc);
     }, []
   );
+  return arrElements;
 };
 
 /* --------------- REACT COMPONENT ----------------------- */
-function ConversationWindow({user, chatID}:props){
+function ConversationWindow({user, chatID, messages}:props){
 
   const [state, updState] = useState("");
   const dispatch=useDispatch();
   const handleChange = updInput(updState);
   const msg = genMessage({user, message:state, currentChat: chatID});
   const submitMsg = execSubmit(msg, dispatch);
+  const renderMsgs = printMessages(messages as IMsgFromServer[]);
 
   return (
     <>
     <h5>Chat conversation</h5>
       <ul>
-      {"The conversation is empty"}
+      {messages ? renderMsgs :  "The conversation is empty"}
       </ul>
     <form onSubmit={submitMsg}>
       <input type="text" onChange={handleChange} value={state}/>
@@ -108,7 +110,8 @@ function ConversationWindow({user, chatID}:props){
 function mapStateToProps(state: typeRootState) {
   return {
     user: getOwnUser(state),
-    chatID: getChatId(state)
+    chatID: getChatId(state),
+    messages: getMessages(state)
   };
 };
 
@@ -131,6 +134,20 @@ function getChatId(state:typeRootState) {
       members: state.conversations.toUser,
     };
   };
+};
+
+function getMessages(state: typeRootState) {
+  const { id } = getChatId(state);
+  if(!id) return null;
+  const convos = state.conversations.conversationList;
+  const theConvo = convos && convos.filter(
+    function(convo){
+      return convo.id === id;
+    }
+  )
+  .shift();
+  const messages = theConvo && theConvo.messages;
+  return messages ? messages : null;
 };
 
 const ConnConversationWindow = connect(mapStateToProps)(ConversationWindow);

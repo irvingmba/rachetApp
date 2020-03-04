@@ -33,32 +33,36 @@ function buildConversation(client:IReqClient) {
   const convo:IfNewConvoShp = {
     id: Math.trunc(Math.random()*100).toString(),
     messages:[{
-      message: client.message,
+      msg: client.message,
       username: client.user.username,
       date: new Date()
     }],
-    participants: [{
+    members: [{
       username:client.user.username
     }, {
       username: client.currentChat.members?.username || "",
     }],
     updated: new Date(),
-    kind: eSvrConvoKind.single
+    kind: eSvrConvoKind.single,
+    chatName: "",
+    notSent: 0
   };
   return convo;
 };
 
 interface IfNewConvoShp {
   id: string;
+  members: IfMem[];
   messages: IfMsgs[];
-  participants: IfMem[];
   updated: Date;
+  notSent: number;
   kind: eSvrConvoKind;
+  chatName: string;
 };
 
 interface IfMsgs {
   username: string;
-  message: string;
+  msg: string;
   date: Date;
 };
 

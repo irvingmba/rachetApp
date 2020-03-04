@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { LOGIN_SUCCESS, UPDATE_CONTACTS, SELECT_CONTACT, TActSelectContact, TActUpdateContactList, ISelectContact, Ostatus, TActLoginSuccess, TActPushMsg, PUSH_MSG, IActPushMsg, TActRegistry, REGISTRY, SEL_USER_MSG, ISelUserMsg, TActSelUserMsg } from './actionCreators';
+import { LOGIN_SUCCESS, UPDATE_CONTACTS, SELECT_CONTACT, TActSelectContact, TActUpdateContactList, ISelectContact, Ostatus, TActLoginSuccess, TActPushMsg, PUSH_MSG, IActPushMsg, TActRegistry, REGISTRY, SEL_USER_MSG, ISelUserMsg, TActSelUserMsg, NEW_CONVO, TActNewConvo } from './actionCreators';
 import { findConvoByUsr } from './helpers';
 
 
@@ -75,6 +75,16 @@ function redConversations(state:IConversationState = {}, action: TActionConversa
             return {
                 ...state,
             };
+        case NEW_CONVO:
+            const newConvo = {...action.payload as IconversationList};
+            const convoList = "conversationList" in state ? state["conversationList"] : [];
+            const resConvo = {
+                ...state,
+                conversationList: convoList?.concat(newConvo),
+                currentChat: {id: newConvo.id}
+            };
+            console.log(resConvo);
+            return resConvo;
         default:
             return state;
     };
@@ -101,7 +111,7 @@ export interface IconversationList {
     id: string | null;
     members: Iplayers[];
     messages: IActPushMsg[];
-    update: Date;
+    updated: Date;
     notSent: number;
     kind: eKind;
     chatName: string;
@@ -112,7 +122,7 @@ interface Iplayers {
     email?:string;
 };
 
-type TActionConversations = TActSelUserMsg | TActPushMsg;
+type TActionConversations = TActSelUserMsg | TActPushMsg | TActNewConvo;
 
 
 // ROOT REDUCER

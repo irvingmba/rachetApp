@@ -1,3 +1,5 @@
+import { IconversationList } from "./reducers";
+
 // *********** Action constants ************
 
 // LOGIN
@@ -11,6 +13,7 @@ export const SELECT_CONTACT = "SELECT_CONTACT";
 // CONVERSATIONS
 export const SEL_USER_MSG = "SEL_USER_MSG";
 export const PUSH_MSG = "PUSH_MSG";
+export const NEW_CONVO = "NEW_CONVO";
 
 /* ---------------- ACTIONS --------------- */
 
@@ -95,6 +98,13 @@ export function actionPushMsg(msg: IActPushMsg) {
     };
 };
 
+export function actionNewConvo(convo: IconversationList) {
+    return {
+        type: NEW_CONVO,
+        payload: {...convo}
+    };
+};
+
 export interface IActPushMsg {
     username: string;
     msg: string;
@@ -103,3 +113,4 @@ export interface IActPushMsg {
 
 export type TActPushMsg = ReturnType<typeof actionPushMsg>;
 export type TActSelUserMsg = ReturnType<typeof actionSelUserMsg>;
+export type TActNewConvo = ReturnType<typeof actionNewConvo>;

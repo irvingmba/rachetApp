@@ -34,21 +34,26 @@ function mapStateToProps(state: typeRootState) {
 function getConversationList(state: typeRootState) {
   const convos = state.conversations;
   const convList = convos && convos.conversationList;
+  console.log(convos, convList);
   if(convList){
     const list = convList.reduce(
       function(acc:IConvList[], val){
         const participants = val.members;
         const chatName = val.chatName;
-        const update = val.update;
+        const update = val.updated;
+        console.log(val, participants);
         return acc.concat({
           participants,
           chatName,
           update
         });
       }, []
-    ).sort(function(val1, val2){
+    )
+    .sort(function(val1, val2){
       return val1.update.getMilliseconds() - val2.update.getMilliseconds();
-    }).reduce(function (acc: TConvListElem[], val, index){
+    })
+    .reduce(function (acc: TConvListElem[], val, index){
+      console.log(val);
       const listElement = <ConvListElem 
       key={index.toString()}
       chatName={val.chatName}

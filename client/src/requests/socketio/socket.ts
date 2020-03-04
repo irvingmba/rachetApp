@@ -26,7 +26,7 @@ export function socketEmitNAck(socket: SocketIOClient.Socket, payload:IpayloadSo
     socket.emit(payload.socketType, payload, fn)
   }
   else{
-    socket.emit(payload.socketType, payload);
+    socket.emit(payload.socketType,  payload);
   };
-  return ;
+  return;
 };
