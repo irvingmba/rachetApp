@@ -35,7 +35,7 @@ function buildConversation(client:IReqClient) {
     messages:[{
       msg: client.message,
       username: client.user.username,
-      date: new Date()
+      date: Date.now()
     }],
     members: [{
       username:client.user.username
@@ -63,7 +63,7 @@ interface IfNewConvoShp {
 interface IfMsgs {
   username: string;
   msg: string;
-  date: Date;
+  date: number;
 };
 
 interface IfMem {

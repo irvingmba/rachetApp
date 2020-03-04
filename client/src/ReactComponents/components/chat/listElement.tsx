@@ -24,7 +24,7 @@ interface IConvListElem {
   participants: {
     username: string;
   }[];
-  update: Date
+  update: number
 };
 
 export type TConvListElem = ReturnType<typeof ConvListElem>;

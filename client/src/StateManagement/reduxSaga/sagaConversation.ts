@@ -93,7 +93,7 @@ interface IfNewConvoShp {
   id: string;
   messages: IfMsgs[];
   participants: IfMem[];
-  updated: Date;
+  updated: number;
   kind: TSvrConvoKind;
   chatName: string;
 };

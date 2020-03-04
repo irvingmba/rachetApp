@@ -77,6 +77,8 @@ function redConversations(state:IConversationState = {}, action: TActionConversa
             };
         case NEW_CONVO:
             const newConvo = {...action.payload as IconversationList};
+            const update = typeof newConvo.updated;
+            console.log(update);
             const convoList = "conversationList" in state ? state["conversationList"] : [];
             const resConvo = {
                 ...state,
@@ -111,7 +113,7 @@ export interface IconversationList {
     id: string | null;
     members: Iplayers[];
     messages: IActPushMsg[];
-    updated: Date;
+    updated: number;
     notSent: number;
     kind: eKind;
     chatName: string;
