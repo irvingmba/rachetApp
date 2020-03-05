@@ -3,12 +3,16 @@ import { getID } from './Authentication/authentication';
 import { findUser, getContacts as getDBcontacts, contactPublicData, contactExist, getUserByIp } from  '../../DBinfo/functions';
 import { validNickname } from './validation/validation';
 
+/* --------- Interfaces ------------ */
+
+/* ------- Exported functions to the resolvers ----------- */
 export const getOwnProfile = async (parent: undefined, args: undefined, context: IntContext) => {
   const id = getID(context);
   if(!id) throw "Code 14: Invalid token";
-  const user = await findUser({idAccess: id});
+  const user = await getUserByIp(id);
   if(user) {
     return {
+      id: user.id,
       name: user.name,
       nickname: user.nickname,
       birthday: user.birthday,
@@ -41,6 +45,17 @@ export const getContactInfo = async (parent: undefined, args: { nickname: string
     };
   };
   throw "Code 24: Invalid user"
+};
+
+export async function getUserActions(parent: undefined, args: {id: string;}, context:IntContext) {
+  const authId = getID(context);
+  const id = args.id;
+  if(!authId) throw "Code 14: Invalid token";
+  const user = await findUser({idAccess:id});
+  return {
+    idConversations: user ? user.idConversations : null,
+    idEvents: user ? user.idEvents : null,
+  };
 };
 
 /** Helpers */

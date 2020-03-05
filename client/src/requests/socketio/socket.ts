@@ -1,4 +1,8 @@
+import { eventChannel } from "redux-saga";
+import { put, call } from "redux-saga/effects";
 import io from "socket.io-client";
+import { actionPushMsg, actionNewConvo } from "../../StateManagement/redux/actionCreators";
+import { IconversationList } from "../../StateManagement/redux/reducers";
 
 export function socketConnect() {
   const ioOptions:SocketIOClient.ConnectOpts = {
@@ -29,4 +33,48 @@ export function socketEmitNAck(socket: SocketIOClient.Socket, payload:IpayloadSo
     socket.emit(payload.socketType,  payload);
   };
   return;
+};
+
+// Socket.io subscription function
+
+export function* socketSubscribe(socket:SocketIOClient.Socket) {
+  return eventChannel(function channel(emit) {
+
+    socket.on("this",console.log);
+
+    socket.on("response",function(resp:IMessage){
+      emit(actionPushMsg(resp));
+    });
+
+    socket.on("newConvo",function(obj:IconversationList){
+      if(obj) emit(actionNewConvo(obj));
+    });
+
+    socket.on("notifOnline", function(msg:unknown){
+      console.log(msg);
+    });
+    
+    return function disconnect(){
+      return socket.close();
+    };
+  });
+};
+
+interface IMessage {
+  username: string;
+  msg: string;
+  lastDate: Date;
+  updateDate: Date;
+};
+
+// Function that hears the asynchronous channel operations
+
+interface ISocketAction {
+  type: string;
+  payload: {};
+};
+
+export function* socketListener(action:ISocketAction){
+  yield call(console.log, action)
+  yield put(action);
 };

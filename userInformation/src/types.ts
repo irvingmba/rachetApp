@@ -18,6 +18,8 @@ export interface IntContactInfo {
     conversations: string[];
 };
 
+// Interfaces for resolver types
+
 export interface IntUser {
     id: string;
     name: string;
@@ -33,6 +35,22 @@ export interface IntPublicFace {
     nickname?: string;
     birthday?: string;
     email?: string;
+};
+
+export interface InUserActions {
+    idConversations: string | null;
+    idEvents: string | null;
+};
+
+export interface InEventAdded {
+    conversation: boolean;
+    event: boolean
+};
+
+export interface InArgsAddAction {
+    id: string;
+    idConversation?: string;
+    idEvent?: string;
 };
 
 export interface IntConstText {

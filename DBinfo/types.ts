@@ -10,6 +10,8 @@ export interface IsmUserInfo {
     birthday: string;
     idAccess: mongoose.Types.ObjectId;
     idContacts: mongoose.Types.ObjectId;
+    idConversations: mongoose.Types.ObjectId;
+    idEvents: mongoose.Types.ObjectId;
 };
 export interface ImdUserInfo extends mongoose.Document, IsmUserInfo {};
 

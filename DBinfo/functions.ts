@@ -1,5 +1,6 @@
 import { mdUserInfo, mdContacts } from './schema';
 import { Iregistry, ImdUserInfo, ImdContacts, IfindUser } from './types';
+import { Query } from 'mongoose';
 
 /**
  * Registry operations
@@ -34,15 +35,15 @@ export async function existUserInfo(filter:{nk?:string;e?:string;}){
 
 /**
  * Finds a user, if the id is given, the function ignores all the other data
- * @param condition id - User id
- * @param condition nk - Nickname
- * @param condition e - email
+ * @param idAccess id - User id
+ * @param nk nk - Nickname
+ * @param e e - email
  */
 export async function findUser( condition:{idAccess?: string; nk?: string; e?:string;} ){
     if(condition.idAccess){
         const user = await mdUserInfo.findById(condition.idAccess);
         return user;
-    }
+    };
     const doc = Object.entries(condition).reduce(function(acc,prop){
         if(prop[1]){
             return {...acc,[prop[0]]:prop[1]};
@@ -50,9 +51,9 @@ export async function findUser( condition:{idAccess?: string; nk?: string; e?:st
         return {...acc};
     },{});
     if(Object.keys(doc).length){
-        const user = await mdUserInfo.find(doc);
-        console.log(user, condition.idAccess);
-        return user ? user.shift() : null;
+        const userArray = await mdUserInfo.find(doc);
+        const user = userArray.shift();
+        return user ? user : null;
     };
     return null
 };
@@ -125,6 +126,7 @@ export async function contactPublicData(contacts: ImdContacts){
         const dUser = await findUser({idAccess:user.dataContact.toHexString()});
         if(dUser) {
             return {
+                id: dUser.id,
                 name: dUser.name,
                 nickname: dUser.nickname,
                 email: dUser.email,
@@ -135,10 +137,61 @@ export async function contactPublicData(contacts: ImdContacts){
     });
     return data;
 };
-
+ /**
+  * Function that searchs a user by the id stored in the authentication server
+  * @param passId id from the authentication server
+  * @returns the user's document that matches the id
+  */
 export function getUserByIp(passId: string) {
     const condition = {
         ip: passId
     };
     return mdUserInfo.findOne(condition);
 };
+
+/*---------- CRUD for registries ---------- */
+
+// Create
+
+function insertConvo(id:string, user: ImdUserInfo) {
+    const updateDoc = {
+        $push: {
+            idc: id
+        }
+    };
+    return user.updateOne(updateDoc);
+};
+
+function insertEvent(id:string, user: ImdUserInfo) {
+    const updateDoc = {
+        $push: {
+            ide: id
+        }
+    };
+    return user.updateOne(updateDoc);
+
+};
+
+/* -------- Query handling --------- */
+
+// Error handling
+
+function handleErrorDBQry<T>(qry: Query<T>):Promise<any> {
+    return qry.catch(function(err) {
+        console.error(err);
+        return null;
+    });
+};
+
+function exeQryWErrorHdlr<T>(qryFn: (...args:any[]) => Query<T>, errHandler: (qry:Query<T>)=>Promise<any>) {
+    return function takeParamsNExec(...args:unknown[]):Promise<T> {
+        return errHandler(qryFn(...args))
+    };
+};
+
+/* ------- Exporting registry operations ------- */
+
+
+export const insConvoInDB = exeQryWErrorHdlr(insertConvo, handleErrorDBQry);
+
+export const insEventInDB = exeQryWErrorHdlr(insertEvent, handleErrorDBQry);

@@ -1,12 +1,12 @@
-import socket from 'socket.io';
+import socket, { Server } from 'socket.io';
 import express from 'express';
 import https from 'https';
 import fs from "fs";
 import path from "path";
 import { lazyRequest } from './Requests/toAuthServer';
 import { storeMsgNResp } from './socketFns';
-
-export const DEVELOPMENT_MODE = true;
+import { getOwnContacts, getOwnId } from "./Requests/queryInfo";
+import { joinRoomsOfQry, onlineMsg2All, svr2RoomOn, getIdStr, createUsrRoom} from './socketFns/rooms';
 
 // Express configuration
 
@@ -31,31 +31,39 @@ const ioOptions:socket.ServerOptions = {
     path: "/conversation"
 };
 const io = socket(server, ioOptions);
+let authCookie = "";
 
 io.use(async function(socket,next) {
     const cookieName = "token";
     const headers = "headers" in socket.request ? socket.request["headers"] : "";
     const cookies:string = "cookie" in headers ? headers["cookie"] : "";
     const cookieArr = cookies.split(";");
-    let chosen = "";
     for(const cookie of cookieArr){
         const trimed = cookie.trim();
         const temp = trimed.indexOf(cookieName);
-        if(temp != -1) chosen = trimed;
+        if(temp != -1) authCookie = trimed;
     };
-    const cookieValue = chosen.substr(cookieName.length+1);
+    const cookieValue = authCookie.substr(cookieName.length+1);
     const authResp = await lazyRequest(cookieValue);
+    if(!authResp) return;
     console.log(authResp?.data);
     next();
 });
 
-io.on("connection",function(socket){
+
+io.on("connection",async function(socket){
     console.log("user connected", socket.id);
     io.emit("this", {will: "be received"});
     
-    // get the user contacts
-    // join the socket to the rooms to get the notifications
-    // emit to a room identified with its id
+    // Joining and creating notifications room
+    const idCons = await getOwnContacts(authCookie);
+    joinRoomsOfQry(socket, idCons);
+    const ownId = await getOwnId(authCookie);
+    const userRoom = createUsrRoom(io, ownId);
+    userRoom("notifOnline", ownId);
+
+    // get messages id
+    // join to the messages rooms
 
     socket.on("message",
     async function(msg){

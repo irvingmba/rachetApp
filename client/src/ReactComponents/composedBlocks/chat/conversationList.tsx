@@ -34,7 +34,6 @@ function mapStateToProps(state: typeRootState) {
 function getConversationList(state: typeRootState) {
   const convos = state.conversations;
   const convList = convos && convos.conversationList;
-  console.log(convList);
   if(convList){
     const list = convList.reduce(
       function(acc:IConvList[], val){

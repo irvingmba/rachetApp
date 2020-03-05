@@ -1,13 +1,25 @@
 type publicFace {
-    nickname: String!
-    email: String!
+    id: ID
+    nickname: String
+    email: String
 }
 
 type User {
-    name: String!
-    nickname: String!
-    birthday: String!
-    email: String!
+    id: ID
+    name: String
+    nickname: String
+    birthday: String
+    email: String
+}
+
+type userActions {
+    idConversations: [String]
+    idEvents: [String]
+}
+
+type eventAdded {
+    conversation: Boolean
+    event: Boolean
 }
 
 type Query {
@@ -15,6 +27,7 @@ type Query {
     getOwnProfile: User!
     getContacts: [publicFace!]
     getContactInfo(nickname: String!): User!
+    getUserActions(id:ID!):userActions
 }
 
 type Mutation {
@@ -31,4 +44,9 @@ type Mutation {
         email: String!
         birthday: String!
     ): Boolean!
+    addAction(
+        id: ID!
+        idConversation: ID
+        idEvent: ID
+    ): eventAdded
 }

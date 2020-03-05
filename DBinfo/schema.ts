@@ -70,6 +70,14 @@ const schemUserInfo:mongoose.Schema<IsmUserInfo> = new Schema({
         alias: "idContacts",
         ref: "contacts"
     },
+    idc: {
+        type: [ObjectId],
+        alias: "idConversations"
+    },
+    ide: {
+        type: [ObjectId],
+        alias: "idEvents"
+    }
 },{
     autoIndex: false
 });

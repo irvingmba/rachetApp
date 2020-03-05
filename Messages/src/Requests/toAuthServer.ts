@@ -1,11 +1,11 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { getRequest, makeRequest } from "../utils/gralFns";
 import { lazyQryTkn } from "../Authentication/authentication";
+import { AUTH_SERVER_URL } from "../globals"
 
-const AUTH_SERVER_PATH = "https://localhost:4000/gql/";
 
 const methodPOST: AxiosRequestConfig = {
-  url: AUTH_SERVER_PATH,
+  url: AUTH_SERVER_URL,
   method: "POST"
 };
 
