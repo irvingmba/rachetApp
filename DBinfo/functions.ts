@@ -153,23 +153,13 @@ export function getUserByIp(passId: string) {
 
 // Create
 
-function insertConvo(id:string, user: ImdUserInfo) {
+function insertAction(id:string, user: ImdUserInfo) {
     const updateDoc = {
-        $push: {
-            idc: id
+        $set: {
+            ida: id
         }
     };
     return user.updateOne(updateDoc);
-};
-
-function insertEvent(id:string, user: ImdUserInfo) {
-    const updateDoc = {
-        $push: {
-            ide: id
-        }
-    };
-    return user.updateOne(updateDoc);
-
 };
 
 /* -------- Query handling --------- */
@@ -192,6 +182,4 @@ function exeQryWErrorHdlr<T>(qryFn: (...args:any[]) => Query<T>, errHandler: (qr
 /* ------- Exporting registry operations ------- */
 
 
-export const insConvoInDB = exeQryWErrorHdlr(insertConvo, handleErrorDBQry);
-
-export const insEventInDB = exeQryWErrorHdlr(insertEvent, handleErrorDBQry);
+export const incActionInDB = exeQryWErrorHdlr(insertAction, handleErrorDBQry);

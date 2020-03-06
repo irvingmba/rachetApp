@@ -52,10 +52,7 @@ export async function getUserActions(parent: undefined, args: {id: string;}, con
   const id = args.id;
   if(!authId) throw "Code 14: Invalid token";
   const user = await findUser({idAccess:id});
-  return {
-    idConversations: user ? user.idConversations : null,
-    idEvents: user ? user.idEvents : null,
-  };
+  return user?.idActions || null;
 };
 
 /** Helpers */

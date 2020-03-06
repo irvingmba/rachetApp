@@ -1,7 +1,7 @@
 import { IntPublicFace, IntContext, InArgsAddAction } from './types';
 import { validEmail, validNickname, validInputString, validInputDate } from './validation/validation';
 import { getID, authenticate } from './Authentication/authentication';
-import { addContact as addDBContact, getContacts, addContactRegistry, contactExist, deleteContact, saveRegistry, getUserByIp, insConvoInDB, insEventInDB, findUser } from '../../DBinfo/functions';
+import { addContact as addDBContact, getContacts, addContactRegistry, contactExist, deleteContact, saveRegistry, getUserByIp, findUser, incActionInDB } from '../../DBinfo/functions';
 import { Iregistry } from '../../DBinfo/types';
 
 /* -------- Exported functions to the resolvers ------------- */
@@ -67,22 +67,14 @@ export async function addUser(parent:undefined, args:IntPublicFace , context:Int
 export async function addAction(parent: undefined, args: InArgsAddAction, context: IntContext) {
   const authId = getID(context);
   if(!authId) throw "Code 14: Invalid token";
-  const nRet = {
-    conversation: false,
-    event: false
-  };
   const userId = args.id;
-  if(!userId) return nRet;
+  if(!userId) return false;
   const user = await findUser({idAccess:userId});
-  if(!user) return nRet;
-  const convo = args.idConversation ?
-  await insConvoInDB(args.idConversation, user) : null;
-  const event = args.idEvent ?
-  await insEventInDB(args.idEvent, user) : null;
-  return {
-    conversation: convo ? true : false,
-    event: event ? true : false
-  };
+  if(!user) return false;
+  if(user.idActions) return false;
+  const action = args.id ?
+  await incActionInDB(args.id, user) : null;
+  return action ? true : false;
 };
 
 /** Internal functions */

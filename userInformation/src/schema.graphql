@@ -12,22 +12,13 @@ type User {
     email: String
 }
 
-type userActions {
-    idConversations: [String]
-    idEvents: [String]
-}
-
-type eventAdded {
-    conversation: Boolean
-    event: Boolean
-}
-
 type Query {
     info: String!
     getOwnProfile: User!
     getContacts: [publicFace!]
     getContactInfo(nickname: String!): User!
-    getUserActions(id:ID!):userActions
+
+    getUserActions(id:ID!): ID
 }
 
 type Mutation {
@@ -44,9 +35,9 @@ type Mutation {
         email: String!
         birthday: String!
     ): Boolean!
+
     addAction(
         id: ID!
-        idConversation: ID
-        idEvent: ID
-    ): eventAdded
+        idAction: ID!
+    ): Boolean
 }

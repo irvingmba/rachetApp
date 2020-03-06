@@ -42,15 +42,10 @@ export interface InUserActions {
     idEvents: string | null;
 };
 
-export interface InEventAdded {
-    conversation: boolean;
-    event: boolean
-};
 
 export interface InArgsAddAction {
     id: string;
-    idConversation?: string;
-    idEvent?: string;
+    idAction: string;
 };
 
 export interface IntConstText {

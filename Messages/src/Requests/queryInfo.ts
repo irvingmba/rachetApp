@@ -58,6 +58,8 @@ export async function getOwnId(token: string) {
   return getQryData(asyncOperation, paramQryOwnId.name);
 };
 
+// export function getOwnActions
+
 /* ---------LOCAL FUNCTIONS --------- */
 
 function getQryData(response: AxiosResponse | null, operation: string) {

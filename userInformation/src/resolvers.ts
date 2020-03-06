@@ -1,4 +1,4 @@
-import { IntUser, IntPublicFace, InUserActions, InEventAdded } from './types';
+import { IntUser, IntPublicFace } from './types';
 import { getOwnProfile, getContacts, getContactInfo, getUserActions,  } from './queries';
 import { addContact, delContact, addUser, addAction } from './mutations';
 
@@ -27,13 +27,5 @@ export const resolvers = {
     id: (parent: IntPublicFace) => parent.id,
     nickname: (parent:IntPublicFace) => parent.nickname,
     email: (parent: IntPublicFace) => parent.email,
-  },
-  userActions: {
-    idConversations: (parent: InUserActions) => parent.idConversations,
-    idEvents: (parent: InUserActions) => parent.idEvents,
-  },
-  eventAdded: {
-    conversation: (parent: InEventAdded) => parent.conversation,
-    event: (parent: InEventAdded) => parent.event,
   },
 };
