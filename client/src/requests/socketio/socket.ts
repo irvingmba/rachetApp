@@ -53,6 +53,10 @@ export function* socketSubscribe(socket:SocketIOClient.Socket) {
     socket.on("notifOnline", function(msg:unknown){
       console.log(msg);
     });
+
+    socket.on("update", function(event:string, data: unknown){
+      console.log(event, data);
+    });
     
     return function disconnect(){
       return socket.close();

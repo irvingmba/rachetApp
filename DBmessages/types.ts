@@ -26,7 +26,7 @@ type ObjectId = mongoose.Types.ObjectId;
      participants: ISmParticipants[];
      updated: number;
      kind: Ekind,
-     chatname: string
+     chatName: string
  };
 
  export enum Ekind {

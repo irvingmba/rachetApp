@@ -5,8 +5,10 @@ import fs from "fs";
 import path from "path";
 import { lazyRequest } from './Requests/toAuthServer';
 import { storeMsgNResp } from './socketFns';
-import { getOwnContacts, getOwnId } from "./Requests/queryInfo";
-import { joinRoomsOfQry, onlineMsg2All, svr2RoomOn, getIdStr, createUsrRoom} from './socketFns/rooms';
+import { getOwnContacts, getOwnId, checkOwnActions, searchActionId } from "./Requests/queryInfo";
+import { joinRoomsOfQry, onlineMsg2All, svr2RoomOn, getIdStr, createUsrRoom, join2ConvoRooms} from './socketFns/rooms';
+import { convos2Client } from './socketFns/conversations';
+import { updateSocket } from './socketFns/customFns';
 
 // Express configuration
 
@@ -55,15 +57,20 @@ io.on("connection",async function(socket){
     console.log("user connected", socket.id);
     io.emit("this", {will: "be received"});
     
+    const updSocket2Client = updateSocket(socket);
     // Joining and creating notifications room
     const idCons = await getOwnContacts(authCookie);
     joinRoomsOfQry(socket, idCons);
     const ownId = await getOwnId(authCookie);
+    const idStr = getIdStr(ownId);
     const userRoom = createUsrRoom(io, ownId);
     userRoom("notifOnline", ownId);
-
-    // get messages id
-    // join to the messages rooms
+    const action = await searchActionId(authCookie, idStr);
+    join2ConvoRooms(socket, action);
+    // send the conversations info to the client through an event
+    const convos = await convos2Client(action, idCons);
+    console.log("these are the:\n",convos,idCons);
+    if(convos) updSocket2Client("pushConvo")(convos);
 
     socket.on("message",
     async function(msg){

@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 import { mdUserActions, mdConversations, mdNotifications, mdMessages } from "./schema";
-import { ISmUserActions, ISmConversations, ISmNotifications, ISmMessages, ISmParticipants, ISmEvents } from "./types";
+import { ISmUserActions, ISmConversations, ISmNotifications, ISmMessages, ISmParticipants, ISmEvents, IMdConversations } from "./types";
 
 /*----------- LOCAL FUNCTIONS ------------- */
 
@@ -8,7 +8,7 @@ const genObjectId = mongoose.Types.ObjectId;
 
 // CREATE
 
- function createNewUserAction(obj?:ISmUserActions){
+ export function createNewUserAction(obj?:ISmUserActions){
     const action = new mdUserActions(obj);
     const doc = action.save();
     return doc;
@@ -34,11 +34,11 @@ function createNewMessage(obj: ISmMessages){
 
 // READ
 
-function getUserAction(id: string) {
+export function getUserAction(id: string) {
     return mdUserActions.findById(id);
 };
 
-export function getConversation(id: string) {
+export function getConversation(id: string):Promise<IMdConversations|null> {
     return mdConversations.findById(id)
     .catch(function(reason){return null});
 };
@@ -47,7 +47,7 @@ function getNotifications(id: string) {
     return mdNotifications.findById(id);
 };
 
-function getMessage(id: string) {
+export function getMessage(id: string) {
     return mdMessages.findById(id);
 };
 

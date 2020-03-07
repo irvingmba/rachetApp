@@ -72,8 +72,8 @@ export async function addAction(parent: undefined, args: InArgsAddAction, contex
   const user = await findUser({idAccess:userId});
   if(!user) return false;
   if(user.idActions) return false;
-  const action = args.id ?
-  await incActionInDB(args.id, user) : null;
+  const action = args.idAction ?
+  await incActionInDB(args.idAction, user) : null;
   return action ? true : false;
 };
 

@@ -1,5 +1,7 @@
 import {Socket, Server} from "socket.io";
 import { extractIds } from "./customFns";
+import { IMdUserActions } from "../../../DBmessages/types";
+import { Types } from "mongoose";
 
 // Interfaces and types
 
@@ -46,6 +48,8 @@ export function getIdStr(idObj:IfIdObj | null) {
   return idObj.id;
 };
 
+export const join2ConvoRooms = joinToAnyRoom(joinToRooms, extractConvoId)
+
 // ------- LOCAL FUNCTIONS ----------
 
 function joinToRooms(socket:Socket, rooms: string[]|null) {
@@ -73,5 +77,16 @@ function getIo(io: Server){
       };
       io.to(room).emit(event, payload, ack);
     };
+  };
+};
+
+function extractConvoId(action: IMdUserActions) {
+  const convos = action.IDconversations;
+  return convos;
+};
+
+function joinToAnyRoom(joiner: typeof joinToRooms, extractor: Function) {
+  return  function(socket: Socket, action: unknown) {
+    return joiner(socket, extractor(action))
   };
 };
