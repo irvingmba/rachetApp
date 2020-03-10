@@ -8,10 +8,12 @@ type ObjectId = mongoose.Types.ObjectId;
  export interface ISmMessages {
     IDUser: ObjectId;
     message: string;
+    createdAt: number;
  };
 
  export interface ISmParticipants {
      IDUser: ObjectId;
+     username: string;
  };
 
  export interface ISmEvents {

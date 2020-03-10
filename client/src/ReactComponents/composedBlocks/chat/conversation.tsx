@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect, useDispatch } from "react-redux";
-import { typeRootState, ICurrentChat, eKind } from "../../../StateManagement/redux/reducers";
-import { asyncSendMsg } from "../../../StateManagement/reduxSaga/asyncActions";
+import { typeRootState, ICurrentChat, eKind, Iplayers } from "../../../StateManagement/redux/reducers";
+import { asyncSendMsg, asyncNewConvo } from "../../../StateManagement/reduxSaga/asyncActions";
 import { Dispatch } from "redux";
 
 /* Handling onChange event from input */
@@ -37,7 +37,7 @@ function genMessage (data:IDataMsg<unknown>){
           message: data.message,
           currentChat: {
             ...data.currentChat,
-            kind: eKind.single
+            kind: eKind.simple
           }
         };
   };
@@ -49,10 +49,35 @@ interface IDataMsg<T> {
   currentChat: ICurrentChat;
 };
 
-function execSubmit(msg: TMessage, dispatch:Dispatch){
+interface convoUser {
+  username: string;
+  email?:string;
+};
+
+function genConvo(data: IDataMsg<convoUser>){
+  const convoObj = {
+    user: {
+      username: data.user.username,
+      email:data.user.email
+    },
+    kind: data.currentChat.kind || eKind.simple,
+    chatName: "",
+    member: data.currentChat.members || [],
+    message: data.message
+  };
+  return convoObj;
+};
+
+function execSubmit(msg: IDataMsg<unknown>|IDataMsg<convoUser>, dispatch:Dispatch){
   return function runningSubmit(event:React.FormEvent<HTMLFormElement>){
     handleSubmit(event);
+    if(!msg.currentChat.id) {
+      dispatch(asyncNewConvo(genConvo(msg as IDataMsg<convoUser>)));
+      console.log("new convo");
+      return;
+    };
     dispatch(asyncSendMsg(msg));
+    console.log("new messsage");
     return;
   };
 };
@@ -129,9 +154,17 @@ function getChatId(state:typeRootState) {
   const {id} = currentChat || {id:null};
   if(id) return {id}
   else {
+    const user = getOwnUser(state);
+    const userMember = {
+      username: user.username || "",
+      email: user.email || ""
+    };
     return {
       id,
-      members: state.conversations.toUser,
+      members: [
+        state.conversations.toUser,
+        userMember
+      ] as Iplayers[],
     };
   };
 };

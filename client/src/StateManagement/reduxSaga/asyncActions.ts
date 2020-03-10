@@ -1,5 +1,5 @@
 import { EsocketTypes } from "../../requests/socketio/socket";
-import { ICurrentChat } from "../redux/reducers";
+import { ICurrentChat, eKind, Iplayers } from "../redux/reducers";
 
 /* Constants for asynchronous action types*/
 // Contacts
@@ -10,6 +10,7 @@ export const SUB_GET_CONTACTS = "SUB_GET_CONTACTS";
 export const ASYNC_MSGS = "ASYNC_MSGS";
 export const SUB_MSGS_SEND = "SUB_MSGS_SEND";
 export const SOCKET_INIT = "SOCKET_INIT";
+export const SUB_NEW_CONVO = "SUB_NEW_CONVO";
 
 export type asyncContactAction = ReturnType<typeof asyncAddContact>;
 interface baseAction {
@@ -62,6 +63,29 @@ interface IAsyncSendMsg {
   } | unknown;
   message: string;
   currentChat: ICurrentChat;
+};
+
+export function asyncNewConvo(payload:InAsyncNewConvo) {
+  return {
+    type: ASYNC_MSGS,
+    subtype: SUB_NEW_CONVO,
+    payload: {
+      data:{...payload},
+      type: "NEW_CONVO",
+      socketType: EsocketTypes.sendMsg
+    }
+  };
+};
+
+interface InAsyncNewConvo {
+  user: {
+    username: string;
+    email?:string;
+  };
+  kind: eKind;
+  chatName: string;
+  member: Iplayers[];
+  message: string|null;
 };
 
 /* ------ LOCAL FUNCTIONS --------- */

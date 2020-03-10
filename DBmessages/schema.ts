@@ -35,9 +35,13 @@ const schemMessages:mongoose.Schema<ISmMessages> = new Schema({
     mg: {
         type: String,
         alias: "message"
+    },
+    ca: {
+        type: Date,
+        alias: "createdAt"
     }
 }, {
-    autoIndex: false
+    autoIndex: false,
 });
 
 const schemParticipants:mongoose.Schema<ISmParticipants> = new Schema({

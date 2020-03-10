@@ -15,7 +15,7 @@ function createConversation() {
 export function findConvoByUsr( user: ISelUserMsg, list?: IconversationList[]) {
   const found = list && list.filter(
     function (convo) {
-      if(convo.kind === eKind.single && convo.members[0].username === user.username) {
+      if(convo.kind === eKind.simple && convo.members[0].username === user.username) {
         return true;
       };
       return false;

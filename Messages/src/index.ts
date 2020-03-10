@@ -5,10 +5,11 @@ import fs from "fs";
 import path from "path";
 import { lazyRequest } from './Requests/toAuthServer';
 import { storeMsgNResp } from './socketFns';
-import { getOwnContacts, getOwnId, checkOwnActions, searchActionId } from "./Requests/queryInfo";
+import { getOwnId, searchActionId, memoContacts, memoConvos} from "./Requests/queryInfo";
 import { joinRoomsOfQry, onlineMsg2All, svr2RoomOn, getIdStr, createUsrRoom, join2ConvoRooms} from './socketFns/rooms';
 import { convos2Client } from './socketFns/conversations';
 import { updateSocket } from './socketFns/customFns';
+import { listenMessage, ackResponse } from './socketFns/listener';
 
 // Express configuration
 
@@ -56,27 +57,42 @@ io.use(async function(socket,next) {
 io.on("connection",async function(socket){
     console.log("user connected", socket.id);
     io.emit("this", {will: "be received"});
-    
-    const updSocket2Client = updateSocket(socket);
-    // Joining and creating notifications room
-    const idCons = await getOwnContacts(authCookie);
-    joinRoomsOfQry(socket, idCons);
+    // Initializing variables
     const ownId = await getOwnId(authCookie);
     const idStr = getIdStr(ownId);
+    const getContacts = memoContacts(authCookie);
+    const getAction = await searchActionId(authCookie, idStr);
+    const action = await getAction();
+    const getConvos = await memoConvos(getAction);
+    const initObj = {
+        ownId: idStr,
+        contacts: getContacts,
+        action: getAction,
+        convos: getConvos
+    };
+    
+    const updSocket2Client = updateSocket(socket);
+    // Initializing contacts;
+    const idCons = await getContacts();
+    console.log("contacts\n", idCons);
+    // Joining and creating notifications room
+    joinRoomsOfQry(socket, idCons);
     const userRoom = createUsrRoom(io, ownId);
     userRoom("notifOnline", ownId);
-    const action = await searchActionId(authCookie, idStr);
     join2ConvoRooms(socket, action);
     // send the conversations info to the client through an event
     const convos = await convos2Client(action, idCons);
-    console.log("these are the:\n",convos,idCons);
     if(convos) updSocket2Client("pushConvo")(convos);
 
     socket.on("message",
-    async function(msg){
-        console.log(msg);
-        const msgObj = await storeMsgNResp(msg);
-        socket.emit("newConvo",msgObj);
+    async function(payload){
+        console.log("new message\n", payload);
+        const response = await listenMessage({...payload, ...initObj});
+        if(!response || !("type" in response)) return;
+        console.log("listener return", response);
+        // if there is a response emit an ack event to the users in the room
+        const reply = ackResponse(socket, response, io);
+        console.log("ack reply returned\n",reply);
     });
 
     socket.on("print", function(msg){
@@ -86,18 +102,3 @@ io.on("connection",async function(socket){
 
 
 // Functions for local purposes
-
-function getMessage(msg:IMessage) {
-    return {
-        username: msg.user.username,
-        msg: msg.message,
-        date: new Date()
-    };
-};
-
-interface IMessage {
-    user: {
-        username: string
-    };
-    message: string
-};

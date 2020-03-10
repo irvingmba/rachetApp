@@ -1,5 +1,5 @@
 import { take, call, put, fork, takeEvery } from "redux-saga/effects";
-import { ASYNC_MSGS, SUB_MSGS_SEND, SOCKET_INIT } from "./asyncActions";
+import { ASYNC_MSGS, SUB_MSGS_SEND, SOCKET_INIT, SUB_NEW_CONVO } from "./asyncActions";
 import { socketConnect, socketEmitNAck, socketSubscribe, socketListener } from "../../requests/socketio/socket";
 
 export function* sagaConversation() {
@@ -12,6 +12,9 @@ export function* sagaConversation() {
     switch(action.subtype) {
       case SUB_MSGS_SEND:
         if(!action.payload.message) break;
+        yield call(socketEmitNAck, socket, action.payload);
+        break;
+      case SUB_NEW_CONVO:
         yield call(socketEmitNAck, socket, action.payload);
         break;
       default:

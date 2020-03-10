@@ -1,7 +1,6 @@
 import {Socket, Server} from "socket.io";
 import { extractIds } from "./customFns";
 import { IMdUserActions } from "../../../DBmessages/types";
-import { Types } from "mongoose";
 
 // Interfaces and types
 

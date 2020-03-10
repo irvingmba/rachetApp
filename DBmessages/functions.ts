@@ -14,13 +14,13 @@ const genObjectId = mongoose.Types.ObjectId;
     return doc;
 };
 
- function createNewConversation(obj?: ISmConversations){
+ export function createNewConversation(obj?: ISmConversations){
     const conversation = new mdConversations(obj);
     const doc = conversation.save();
     return doc;
 };
 
-function createNewMessage(obj: ISmMessages){
+export function createNewMessage(obj: ISmMessages){
     const messages = new mdMessages(obj);
     const doc = messages.save();
     return doc;
@@ -55,16 +55,19 @@ export function getMessage(id: string) {
 
 // Simple chat functions
 
-function pushMessage(idConversation: string, idMessage: string) {
+export function pushMessage(idConversation: string, idMessage: string) {
     const modifier = {
         $push: {
             msgs: genObjectId(idMessage)
+        },
+        $set: {
+            upd: (new Date()).getTime()
         }
     };
     return mdConversations.findByIdAndUpdate(idConversation, modifier);
 };
 
-function pushConversation(idUserAction: string, idConversation: string) {
+export function pushConversation(idUserAction: string, idConversation: string) {
     const modifier = {
         $push: {
             idc: genObjectId(idConversation)

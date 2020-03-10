@@ -42,13 +42,19 @@ export function* socketSubscribe(socket:SocketIOClient.Socket) {
 
     socket.on("this",console.log);
 
-    socket.on("response",function(resp:IMessage){
-      emit(actionPushMsg(resp));
+    socket.on("message", console.log);
+
+    socket.on("ack", function(data:{}){
+      console.log(data);
     });
 
-    socket.on("newConvo",function(obj:IconversationList){
-      if(obj) emit(actionNewConvo(obj));
-    });
+    // socket.on("response",function(resp:IMessage){
+    //   emit(actionPushMsg(resp));
+    // });
+
+    // socket.on("newConvo",function(obj:IconversationList){
+    //   if(obj) emit(actionNewConvo(obj));
+    // });
 
     socket.on("notifOnline", function(msg:unknown){
       console.log(msg);

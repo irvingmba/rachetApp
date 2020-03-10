@@ -100,12 +100,12 @@ interface IConversationState {
 
 export interface ICurrentChat {
     id: string | null;
-    members?: Iplayers;
+    members?: Iplayers[];
     kind?: eKind;
 };
 
 export enum eKind {
-    single = "single",
+    simple = "simple",
     group = "group"
 };
 
@@ -119,7 +119,7 @@ export interface IconversationList {
     chatName: string;
 };
 
-interface Iplayers {
+export interface Iplayers {
     username:string;
     email?:string;
 };

@@ -2,15 +2,16 @@ import { buildQuery, queryData, queryType } from "../utils/queryBuilder";
 import { getRequest, makeRequest } from "../utils/gralFns";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { INFO_URL } from "../globals";
-import { createNewUserAction, getUserAction } from "../../../DBmessages/functions";
+import { createNewUserAction, getUserAction, getConversation } from "../../../DBmessages/functions";
 import { pushConvo2DB } from "./mutateInfo";
+import { IMdUserActions } from "../../../DBmessages/types";
 
 /**
  * Takes the authentication cookie and asks the contacts ids
  * @token Authentication cookie
  * @returns A string array containing all the contacts ids
  */
-export async function getOwnContacts(token: string) {
+async function getOwnContacts(token: string) {
   const paramQryContacts: queryData = {
     name: "getContacts",
     type: queryType.Query,
@@ -35,6 +36,15 @@ export async function getOwnContacts(token: string) {
     return null
   });
   return getQryData(asyncOperation, paramQryContacts.name);
+};
+
+export function memoContacts(token: string){
+  let contacts = getOwnContacts(token);
+  return function reqContactsAgain(reload?: boolean){
+    if(!reload) return contacts;
+    contacts = getOwnContacts(token);
+    return contacts
+  };
 };
 
 export async function getOwnId(token: string) {
@@ -63,9 +73,29 @@ export async function getOwnId(token: string) {
 };
 
 export const searchActionId = checkOwnActions(getOwnActions);
+export async function memoConvos(getAction:(reaload?: boolean | undefined) => Promise<IMdUserActions>) {
+  let action = await getAction(true);
+  let convosDBAsync = action.IDconversations.map(
+    function getConvoInfo(convo) {
+      return getConversation(convo.toHexString());
+    }
+  );
+  let convosDB = await Promise.all(convosDBAsync);
 
-
-
+  return async function reloadConvos(reload?: boolean) {
+    if(!convosDB) throw "Something went wrong while trying to retrieve the conversations from the database";
+    if(!reload) return convosDB;
+    action = await getAction(true);
+    convosDBAsync = action.IDconversations.map(
+      function getConvoInfo(convo) {
+        return getConversation(convo.toHexString());
+      }
+    );
+    convosDB = await Promise.all(convosDBAsync);
+    if(!convosDB) throw "Something went wrong while trying to retrieve the conversations from the database";
+    return convosDB;
+  };
+};
 
 
 /* ---------LOCAL FUNCTIONS --------- */
@@ -104,20 +134,23 @@ async function getOwnActions(token: string, id: string) {
   return getQryData(asyncOperation, paramQryOwnAction.name);
 };
 
-export function checkOwnActions(getAction: typeof getOwnActions) {
+function checkOwnActions(getAction: typeof getOwnActions) {
   return async function retrnAnActionRecord(token: string, id: string | null) {
     if(!id) throw "Trying to get the action Id from a user without ID"
     const actionId = await getAction(token, id);
-    if(actionId) {
-      const action = await getUserAction(actionId);
-      if(!action) throw "Action not found in the messages database";
-      return action;
+    let action = actionId ? await getUserAction(actionId) : null;
+    if(!action){
+      action = await createNewUserAction();
+      if(!action) throw "An error ocurred while trying to retrieve the information";
+      // send the action id to the information database
+      const respPush = await pushConvo2DB(id,action.id,token);
+      if(!respPush) throw "Something went wrong while trying to push the conversation id into the information database";
     };
-    const nwAction = await createNewUserAction();
-    if(!nwAction) throw "An error ocurred while trying to retrieve the information";
-    // send the action id to the information database
-    const respPush = await pushConvo2DB(id,nwAction.id,token);
-    if(!respPush) throw "Something went wrong while trying to push the conversation id into the information database";
-    return nwAction;
+    return async function reloadAction(reload?: boolean) {
+      if(!reload && action) return action;
+      action = await getUserAction(actionId);
+      if(!action) throw "The server could not get or generate a user action";
+      return action
+    };
   };
 };
