@@ -87,7 +87,7 @@ type TMessage = ReturnType<typeof genMessage>;
 interface IMsgFromServer {
   username: string;
   msg: string;
-  date: Date;
+  date: number;
 };
 
 function printMessages(arrMessage: IMsgFromServer[]|null) {

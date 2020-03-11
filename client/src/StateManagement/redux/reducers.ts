@@ -112,7 +112,7 @@ export enum eKind {
 export interface IconversationList {
     id: string | null;
     members: Iplayers[];
-    messages: IActPushMsg[];
+    messages: IActPushMsg[] | [];
     updated: number;
     notSent: number;
     kind: eKind;

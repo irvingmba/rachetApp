@@ -14,9 +14,12 @@ export function* sagaLogin(){
       const serverResp:{data:{login:{user:boolean; password:boolean}}} = res.data;
       if(serverResp.data.login.user && serverResp.data.login.password) {
         yield put(actionLoginSuccess({user, status: Ostatus.online}));
+      }
+      else {
+        window.alert("There's a problem with your data, check them out and try again")
       };
     } catch (error) {
-      console.log(error);
+      console.error(error);
       console.log("Code 51: Something went wrong with the login saga");
     }
   };

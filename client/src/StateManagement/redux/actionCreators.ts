@@ -109,7 +109,7 @@ export function actionNewConvo(convo: IconversationList) {
 export interface IActPushMsg {
     username: string;
     msg: string;
-    date?: Date;
+    date?: number;
 };
 
 export type TActPushMsg = ReturnType<typeof actionPushMsg>;
