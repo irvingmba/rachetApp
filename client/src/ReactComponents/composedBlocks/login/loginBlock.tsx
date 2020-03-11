@@ -3,9 +3,11 @@ import { mapInputsToArray } from '../utils/utilForm';
 import { inputsLogin } from './elements';
 import { simpleFormReducer } from '../utils/FormReducers';
 import { connect, useDispatch } from "react-redux";
-import { ASC_LOGIN } from "../../../StateManagement/reduxSaga/sagaLogin";
 import { typeRootState } from '../../../StateManagement/redux/reducers';
 import { actionRegistry } from '../../../StateManagement/redux/actionCreators';
+import { loginBlockStyles } from './styles';
+
+const ASC_LOGIN = "ASC_LOGIN";
 
 const LoginBlock:React.FunctionComponent<props> = ({registry}) => {
     
@@ -13,6 +15,7 @@ const LoginBlock:React.FunctionComponent<props> = ({registry}) => {
     const inputElements = mapInputsToArray( inputsLogin, [state, update] );
     const dispatch = useDispatch();
     if(registry) dispatch(actionRegistry({registry: false}));
+    const style = loginBlockStyles();
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -22,8 +25,8 @@ const LoginBlock:React.FunctionComponent<props> = ({registry}) => {
     return (
         <form
         onSubmit={handleSubmit}
+        className={style.form}
         >
-            <h1>Login</h1>
             {inputElements}
         </form>
     );

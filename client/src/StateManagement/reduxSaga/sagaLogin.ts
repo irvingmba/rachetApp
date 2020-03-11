@@ -2,12 +2,12 @@ import { mutationLogin } from "../../requests/http/mutations";
 import { loginUser } from "../../requests/http/httpRequest";
 import { take, call, put } from "redux-saga/effects";
 import { actionLoginSuccess, Ostatus } from "../redux/actionCreators";
+import { ASYNC_LOGIN } from "./asyncActions";
 
-export const ASC_LOGIN = "ASC_LOGIN";
 
 export function* sagaLogin(){
   while(true){
-    const data = yield take(ASC_LOGIN);
+    const data = yield take(ASYNC_LOGIN);
     const {user, password}:{user:string; password: string;} = "payload" in data ? data.payload : {};
     try {
       const res = yield call(loginUser, mutationLogin({user, password}));

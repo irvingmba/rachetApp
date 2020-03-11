@@ -18,6 +18,7 @@ export function mapInputsToArray( inputs:IinputConfig[], [state, dispatch]:[{[ke
         label={iLabel}
         parentState={handlers}
         properties={input.properties}
+        style={input.styles}
         />
     );
   });

@@ -1,10 +1,12 @@
 import React, { useState, SetStateAction, useContext, useEffect } from "react";
 import { actionForm } from "../../composedBlocks/utils/FormReducers";
+import CSS from "csstype";
 
 interface Iprops {
   properties: Iproperties;
   parentState?: IparentState;
   label?: string;
+  style?:CSS.Properties;
 };
 
 export interface Iproperties {
@@ -54,9 +56,10 @@ const manageState = (local:string, parent?:string) => {
  * @param parentState An object containing the state of the form that will wrap the inputs(reducer form)
  * @param label The label of the input
  */
-const FormInput:React.FunctionComponent<Iprops> = ({properties, parentState, label}) => {
+const FormInput:React.FunctionComponent<Iprops> = ({properties, parentState, label, style}) => {
 
   const inputProps = {...properties},
+  css={...style || undefined},
   [value, setValue] = useState(""),
   {state, dispatch} = parentState || {};
   Object.assign(inputProps,handleChange(setValue, dispatch));
@@ -67,6 +70,7 @@ const FormInput:React.FunctionComponent<Iprops> = ({properties, parentState, lab
       <input
       value = {state && properties.name in state ? state[properties.name] : value}
       {...inputProps}
+      style={css}
       />
     </label>
   );

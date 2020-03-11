@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Registry from '../composedBlocks/registry/registryBlock';
+import Registry from '../../composedBlocks/registry/registryBlock';
 import { NavLink } from 'react-router-dom';
 
 const RegistryPage = () => {

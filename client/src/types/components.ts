@@ -1,4 +1,5 @@
 import {  FunctionComponent } from 'react';
+import CSS from "csstype";
 
 // Interfaces and types for input components
 export interface IinputProps {
@@ -22,6 +23,7 @@ export interface IinputConfig {
     features?:{
         label?: string;
     };
+    styles?: CSS.Properties
 };
 export interface Iformprops {
     title: string;

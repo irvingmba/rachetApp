@@ -1,4 +1,5 @@
 import { IinputConfig } from '../../../types/components';
+import CSS from "csstype";
 
 const inputsLogin:IinputConfig[] = [
     {
@@ -11,6 +12,8 @@ const inputsLogin:IinputConfig[] = [
             required: true,
             autoFocus: true
         },
+        styles:{
+        }
     },
     {
         features: {

@@ -2,6 +2,8 @@ import { EsocketTypes } from "../../requests/socketio/socket";
 import { ICurrentChat, eKind, Iplayers } from "../redux/reducers";
 
 /* Constants for asynchronous action types*/
+// Login
+export const ASYNC_LOGIN = "ASYNC_LOGIN";
 // Contacts
 export const ASYNC_CONTACTS = "ASYNC_CONTACTS";
 export const SUB_ADD_CONTACT = "SUB_ADD_CONTACT";
@@ -18,6 +20,15 @@ interface baseAction {
 };
 
 /* ----- ASYNC ACTIONS ------ */
+
+// Login
+
+export function asyncLogin(payload: {}) {
+  return {
+    type: ASYNC_LOGIN,
+    payload: {...payload}
+  };
+};
 
 // Contacts
 

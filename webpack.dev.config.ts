@@ -6,7 +6,10 @@ import 'webpack-dev-server';
 
 const config:webpack.Configuration = {
     mode: "development",
-    entry: './client/src/index.tsx',
+    // entry: './client/src/index.tsx',
+    entry: {
+        app: './client/src/index.tsx'
+    },
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
