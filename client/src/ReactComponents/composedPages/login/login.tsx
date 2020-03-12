@@ -5,8 +5,13 @@ import { NavLink } from 'react-router-dom';
 import { loginStyles } from "./styles";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { Avatar, Typography, Grid } from '@material-ui/core';
-import {  } from "@material-ui/core/Icon"
+import { Avatar, Typography, Grid, Button } from '@material-ui/core';
+import Handlebars from "handlebars";
+import { template } from "../../../international/handlebars";
+import {polyglot} from "../../../international/main";
+
+
+/* -------- REACT COMPONENT --------- */ 
 
 const LoginPage:React.FunctionComponent = () => {
     const styles = loginStyles();
@@ -18,18 +23,13 @@ const LoginPage:React.FunctionComponent = () => {
             <Avatar className={styles.avatar}>
             </Avatar>
             <Typography component="h1" variant="h5">
-            Sign in
+            {template("login.title")}
             </Typography>
             <LoginBlock />
             <Grid container>
-            {/* <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid> */}
             <Grid item>
             <NavLink to="/registry">
-                {"Don't you have an account? Sign up"}
+                {template("login.toRegister")}
             </NavLink>
             </Grid>
           </Grid>

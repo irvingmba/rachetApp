@@ -6,6 +6,7 @@ import { actionRegistry } from '../../../StateManagement/redux/actionCreators';
 import { loginBlockStyles } from './styles';
 import { asyncLogin } from '../../../StateManagement/reduxSaga/asyncActions';
 import { TextField, FormControlLabel, Checkbox, Button } from '@material-ui/core';
+import { template } from "../../../international/handlebars";
 
 const initState={
   user: "",
@@ -55,7 +56,7 @@ const LoginBlock:React.FunctionComponent<props> = ({registry}) => {
             required
             fullWidth
             id="user"
-            label="User name"
+            label={`${template("login.fUser")}`}
             name="user"
             autoComplete="user"
             autoFocus
@@ -68,17 +69,13 @@ const LoginBlock:React.FunctionComponent<props> = ({registry}) => {
             required
             fullWidth
             name="password"
-            label="Password"
+            label={`${template("login.fPassword")}`}
             type="password"
             id="password"
             autoComplete="current-password"
             value={state.password}
             onChange={handleChange}
           />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
           <Button
             type="submit"
             fullWidth
@@ -86,7 +83,7 @@ const LoginBlock:React.FunctionComponent<props> = ({registry}) => {
             color="primary"
             className={style.submit}
           >
-            Sign In
+            {template("login.submit")}
           </Button>
         </form>
     );
