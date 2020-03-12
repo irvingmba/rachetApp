@@ -14,7 +14,11 @@ export function extractIds<T>(qryArray:{id:T;}[]|null) {
 export function updateSocket(socket:Socket) {
   return function event2Socket(event: string) {
     return function data2Socket(data: unknown){
-      socket.emit("update",event, data);
+      const modifiedData = {
+        type: event,
+        data
+      };
+      socket.send(modifiedData);
     };
   };
 };

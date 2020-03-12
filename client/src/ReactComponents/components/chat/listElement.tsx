@@ -1,14 +1,12 @@
 import React from "react";
+import { InOwnData } from "../../composedBlocks/chat/conversationList"
 
-function ConvListElem(data: IConvListElem, user: string) {
-  const name = data.chatName ? data.chatName : data.participants.reduce(
-    function(acc, val) {
-      if(val.username === user){
-        return acc;
-      };
-      return val.username;
-    }, ""
-  );
+function ConvListElem(data: IConvListElem) {
+  console.log("inside comp\n", data);
+  const name = data.chatName ? data.chatName : data.participants
+  .find(function(member){
+    return member.username != data.ownData.username;
+  });
 
   return (
     <>
@@ -24,7 +22,8 @@ interface IConvListElem {
   participants: {
     username: string;
   }[];
-  update: number
+  update: number;
+  ownData: InOwnData;
 };
 
 export type TConvListElem = ReturnType<typeof ConvListElem>;

@@ -16,6 +16,7 @@ interface InLtnrParams {
   contacts: (reload?: boolean | undefined) => Promise<any>;
   action: (reload?: boolean | undefined) => Promise<IMdUserActions>;
   convos: (reload?: boolean | undefined) => Promise<(IMdConversations | null)[]>;
+  actionGetter: (id: string | null) => Promise<(reload?: boolean | undefined) => Promise<IMdUserActions>>
 };
 
 interface InPushMessages {
@@ -127,7 +128,28 @@ async function eventNewConvo(payload: InLtnrPayload & InLtnrParams){
   };
   const pushedMsg = await eventPushMsg({...payload,data:{...payload.data, ...msgObj}});
   const action = await payload.action();
-  const pushedConvo = await pushConversation(action.id, pushedMsg?.chatId);
+  // const pushedConvo = await pushConversation(action.id, pushedMsg?.chatId);
+  const actionGetters = convo2DB.participants.reduce(
+    function(acc:Promise<(reload?: boolean | undefined) => Promise<IMdUserActions>>[], participant){
+      const convo = payload.actionGetter(participant.IDUser.toHexString());
+      return acc.concat(convo);
+    }, []
+  );
+  const actionAsync = await Promise.all(actionGetters);
+  const actionCall = actionAsync.map(
+    function(action){
+      const resp = action();
+      return resp;
+    }
+  );
+  const actions = await Promise.all(actionCall);
+  const pushingConvos = actions.map(
+    function(action){
+      const pushed = pushConversation(action.id, pushedMsg?.chatId);
+      return pushed;
+    }
+  );
+  const pushedConvos = await Promise.all(pushingConvos);
   const convos = await payload.convos(true);
   const genedConvo = convos.find(
     function(convo) {
@@ -157,6 +179,8 @@ async function eventNewConvo(payload: InLtnrPayload & InLtnrParams){
     chatName: genedConvo?.chatName
   };
 };
+
+function findMemberAction(id: string){};
 
 function clientMsg2DBObj(message: InPushMessages, ownId: string) {
   const dbObj:ISmMessages = {

@@ -47,12 +47,16 @@ export function memoContacts(token: string){
   };
 };
 
-export async function getOwnId(token: string) {
+export async function getOwnInfo(token: string) {
   const paramQryOwnId: queryData = {
     name: "getOwnProfile",
     type: queryType.Query,
     params: [
-      "id"
+      "id",
+      "name",
+      "nickname",
+      "birthday",
+      "email"
     ]
   };
   const qryConfig:AxiosRequestConfig = {
@@ -98,6 +102,7 @@ export async function memoConvos(getAction:(reaload?: boolean | undefined) => Pr
 };
 
 
+
 /* ---------LOCAL FUNCTIONS --------- */
 
 function getQryData(response: AxiosResponse | null, operation: string) {
@@ -135,22 +140,24 @@ async function getOwnActions(token: string, id: string) {
 };
 
 function checkOwnActions(getAction: typeof getOwnActions) {
-  return async function retrnAnActionRecord(token: string, id: string | null) {
-    if(!id) throw "Trying to get the action Id from a user without ID"
-    const actionId = await getAction(token, id);
-    let action = actionId ? await getUserAction(actionId) : null;
-    if(!action){
-      action = await createNewUserAction();
-      if(!action) throw "An error ocurred while trying to retrieve the information";
-      // send the action id to the information database
-      const respPush = await pushConvo2DB(id,action.id,token);
-      if(!respPush) throw "Something went wrong while trying to push the conversation id into the information database";
-    };
-    return async function reloadAction(reload?: boolean) {
-      if(!reload && action) return action;
-      action = await getUserAction(actionId);
-      if(!action) throw "The server could not get or generate a user action";
-      return action
+  return function prepareToken(token: string){
+    return async function retrnAnActionRecord(id: string | null) {
+      if(!id) throw "Trying to get the action Id from a user without ID"
+      const actionId = await getAction(token, id);
+      let action = actionId ? await getUserAction(actionId) : null;
+      if(!action){
+        action = await createNewUserAction();
+        if(!action) throw "An error ocurred while trying to retrieve the information";
+        // send the action id to the information database
+        const respPush = await pushConvo2DB(id,action.id,token);
+        if(!respPush) throw "Something went wrong while trying to push the conversation id into the information database";
+      };
+      return async function reloadAction(reload?: boolean) {
+        if(!reload && action) return action;
+        action = await getUserAction(actionId);
+        if(!action) throw "The server could not get or generate a user action";
+        return action
+      };
     };
   };
 };

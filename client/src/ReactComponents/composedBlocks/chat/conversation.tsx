@@ -91,6 +91,7 @@ interface IMsgFromServer {
 };
 
 function printMessages(arrMessage: IMsgFromServer[]|null) {
+  if(!arrMessage) return (<p>{"No messages"}</p>);
   const arrElements = arrMessage && arrMessage.reduce(
     function print(acc:JSX.Element[], val, index) {
       const liElem = <li
@@ -103,6 +104,7 @@ function printMessages(arrMessage: IMsgFromServer[]|null) {
       return [liElem].concat(acc);
     }, []
   );
+  console.log("inside print messages\n", arrElements);
   return arrElements;
 };
 
@@ -114,6 +116,7 @@ function ConversationWindow({user, chatID, messages}:props){
   const handleChange = updInput(updState);
   const msg = genMessage({user, message:state, currentChat: chatID});
   const submitMsg = execSubmit(msg, dispatch);
+  console.log(messages);
   const renderMsgs = printMessages(messages as IMsgFromServer[]);
 
   return (
@@ -173,12 +176,11 @@ function getMessages(state: typeRootState) {
   const { id } = getChatId(state);
   if(!id) return null;
   const convos = state.conversations.conversationList;
-  const theConvo = convos && convos.filter(
+  const theConvo = convos && convos.find(
     function(convo){
       return convo.id === id;
     }
-  )
-  .shift();
+  );
   const messages = theConvo && theConvo.messages;
   return messages ? messages : null;
 };

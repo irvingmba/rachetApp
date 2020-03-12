@@ -45,7 +45,9 @@ export function* socketSubscribe(socket:SocketIOClient.Socket) {
 
     socket.on("this",console.log);
 
-    socket.on("message", console.log);
+    socket.on("message", function(data:{}){
+      emit(data);
+    });
 
     socket.on("ack", function(data:{}){
       emit(data);
@@ -99,7 +101,6 @@ const event2Action = {
 
 export function* socketListener(action:ISocketAction){
   yield call(console.log, action);
-  yield put(event2Action[action.type]["action"](event2Action[action.type]["payload"](action)))
-  // yield put(actionNewConvo(action));
-  // yield put(action);
+  yield put(event2Action[action.type]["action"](event2Action[action.type]["payload"](action.data)))
+
 };

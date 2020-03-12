@@ -76,17 +76,32 @@ function redConversations(state:IConversationState = {}, action: TActionConversa
                 ...state,
             };
         case NEW_CONVO:
-            const newConvo = {...action.payload as IconversationList};
-            const update = typeof newConvo.updated;
-            console.log(update);
-            const convoList = "conversationList" in state ? state["conversationList"] : [];
-            const resConvo = {
-                ...state,
-                conversationList: convoList?.concat(newConvo),
-                currentChat: {id: newConvo.id}
+            {
+                console.log("before selection\n", action);
+                const isConvoArray = Array.isArray(action.payload);
+                if(isConvoArray){
+                    console.log("inside reducer\n", action.payload);
+                    const convosArray = action.payload as IconversationList[];
+                    let newState = {...state};
+                    const convoList = state.conversationList ? state.conversationList : [];
+                    for(let convo of convosArray){
+                        newState = {
+                            ...state,
+                            conversationList: convoList.concat(convo),
+                        };
+                    };
+                    return newState;
+                };
+                const newConvo = {...action.payload as IconversationList};
+                const convoList = "conversationList" in state ? state["conversationList"] : [];
+                const resConvo = {
+                    ...state,
+                    conversationList: convoList?.concat(newConvo),
+                    currentChat: {id: newConvo.id}
+                };
+                console.log(resConvo);
+                return resConvo;
             };
-            console.log(resConvo);
-            return resConvo;
         default:
             return state;
     };

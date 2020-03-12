@@ -30,3 +30,11 @@ export interface InDBMessages {
   IDUser: string;
   message: string;
 };
+
+export interface InOwnInfo {
+  id: string;
+  name?: string;
+  nickname?: string;
+  birthday?: string;
+  email?: string;
+};

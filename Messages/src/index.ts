@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 import { lazyRequest } from './Requests/toAuthServer';
 import { storeMsgNResp } from './socketFns';
-import { getOwnId, searchActionId, memoContacts, memoConvos} from "./Requests/queryInfo";
+import { getOwnInfo, searchActionId, memoContacts, memoConvos} from "./Requests/queryInfo";
 import { joinRoomsOfQry, onlineMsg2All, svr2RoomOn, getIdStr, createUsrRoom, join2ConvoRooms} from './socketFns/rooms';
 import { convos2Client } from './socketFns/conversations';
 import { updateSocket } from './socketFns/customFns';
@@ -58,17 +58,19 @@ io.on("connection",async function(socket){
     console.log("user connected", socket.id);
     io.emit("this", {will: "be received"});
     // Initializing variables
-    const ownId = await getOwnId(authCookie);
-    const idStr = getIdStr(ownId);
+    const ownInfo = await getOwnInfo(authCookie);
+    const idStr = getIdStr(ownInfo);
     const getContacts = memoContacts(authCookie);
-    const getAction = await searchActionId(authCookie, idStr);
+    const getId4Action = searchActionId(authCookie)
+    const getAction = await getId4Action(idStr);
     const action = await getAction();
     const getConvos = await memoConvos(getAction);
     const initObj = {
         ownId: idStr,
         contacts: getContacts,
         action: getAction,
-        convos: getConvos
+        convos: getConvos,
+        actionGetter: getId4Action
     };
     
     const updSocket2Client = updateSocket(socket);
@@ -77,12 +79,13 @@ io.on("connection",async function(socket){
     console.log("contacts\n", idCons);
     // Joining and creating notifications room
     joinRoomsOfQry(socket, idCons);
-    const userRoom = createUsrRoom(io, ownId);
-    userRoom("notifOnline", ownId);
+    const userRoom = createUsrRoom(io, ownInfo);
+    userRoom("notifOnline", ownInfo);
     join2ConvoRooms(socket, action);
     // send the conversations info to the client through an event
-    const convos = await convos2Client(action, idCons);
-    if(convos) updSocket2Client("pushConvo")(convos);
+    const convos = await convos2Client(action, idCons, ownInfo);
+    if(convos) updSocket2Client("NEW_CONVO")(convos);
+    console.log("User conversations\n",convos);
 
     socket.on("message",
     async function(payload){

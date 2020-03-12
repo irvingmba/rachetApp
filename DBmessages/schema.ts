@@ -37,7 +37,7 @@ const schemMessages:mongoose.Schema<ISmMessages> = new Schema({
         alias: "message"
     },
     ca: {
-        type: Date,
+        type: Number,
         alias: "createdAt"
     }
 }, {

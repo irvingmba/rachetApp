@@ -1,20 +1,47 @@
 import React from "react";
 import { connect } from "react-redux";
 import { typeRootState } from "../../../StateManagement/redux/reducers";
-import ConvListElem, { TConvListElem } from "../../components/chat/listElement";
 
 /* ------------- FUNCTIONS ------------ */
 
+export interface InOwnData {
+  username?: string;
+  email?: string;
+};
+
+function list2Comp(list: IConvList[]|null, ownData: InOwnData) {
+  if(!list){
+    return (
+    <p>{"List empty"}</p>
+    );
+  };
+  const compList = list
+  .reduce(
+    function(acc:JSX.Element[], contact, index){
+      const name = contact.chatName || contact.participants.find(
+        function(user){return user.username != ownData.username}
+      )?.username;
+      const comp = <li
+      key={index.toString()}
+      >
+        {name}
+      </li>
+      return [...acc,comp];
+    }, []
+  );
+    return compList
+};
 
 /* ------------ REACT COMPONENT --------------- */
 function ConversationList(data: Tprops){
-  const {conversationList} = data;
+  const {conversationList, ownData} = data;
+  const conversations = list2Comp(conversationList, ownData);
 
   return (
     <>
     <h5>Conversations</h5>
     <ul>
-    {conversationList ? conversationList : <p>There is not conversations yet</p>}
+    {conversations}
     </ul>
     </>
   );
@@ -26,9 +53,17 @@ type Tprops = ReturnType<typeof mapStateToProps>;
 
 function mapStateToProps(state: typeRootState) {
   return {
-    conversationList: getConversationList(state)
-
+    conversationList: getConversationList(state),
+    ownData: getOwnData(state)
   };
+};
+
+function getOwnData(state: typeRootState) {
+  const ownData = {
+    username: state.login.user,
+    email: state.login.email
+  };
+  return ownData;
 };
 
 function getConversationList(state: typeRootState) {
@@ -50,15 +85,15 @@ function getConversationList(state: typeRootState) {
     .sort(function(val1, val2){
       return val1.update - val2.update;
     })
-    .reduce(function (acc: TConvListElem[], val, index){
-      const listElement = <ConvListElem 
-      key={index.toString()}
-      chatName={val.chatName}
-      participants={val.participants}
-      update={val.update}
-      />;
-      return acc.concat(listElement);
-    }, []);
+    // .reduce(function (acc: TConvListElem[], val, index){
+    //   const listElement = <ConvListElem 
+    //   key={index.toString()}
+    //   chatName={val.chatName}
+    //   participants={val.participants}
+    //   update={val.update}
+    //   />;
+    //   return acc.concat(listElement);
+    // }, []);
     return list;
   };
   return null;

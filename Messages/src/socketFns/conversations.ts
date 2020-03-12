@@ -1,8 +1,8 @@
 import { IMdUserActions, IMdConversations } from "../../../DBmessages/types";
 import { getConversation, getMessage } from "../../../DBmessages/functions";
-import { InDBContacts } from "../types";
+import { InDBContacts, InOwnInfo } from "../types";
 
-export async function convos2Client(action: IMdUserActions, contacts:InDBContacts[]) {
+export async function convos2Client(action: IMdUserActions, contacts:InDBContacts[], ownInfo:InOwnInfo) {
   const convoIds = extractConvoId(action);
   const convoArrayAsync = convoIds.reduce(
     function reqAllConvos(acc:Promise<IMdConversations|null>[], convo) {
@@ -15,13 +15,20 @@ export async function convos2Client(action: IMdUserActions, contacts:InDBContact
     return null;
   });
   if(!convoArray?.length) return null;
+  const messagesAsync = convoArray.map(
+    function(DBConvo){
+      if(!DBConvo) return null;
+      return findMsgsById(DBConvo, contacts, ownInfo);
+    }
+  );
+  const gottenMsgs = await Promise.all(messagesAsync);
   const convos2ClientAsync = convoArray.map(
     function(DBConvo) {
       if(!DBConvo) return null;
       const convo2Client = {
         id: DBConvo.id,
-        members: findUsrnmsById(contacts, DBConvo),
-        messages: findMsgsById(DBConvo,contacts),
+        members: findUsrnmsById(contacts, DBConvo, ownInfo),
+        messages: gottenMsgs ? [...gottenMsgs] : null,
         updated: DBConvo.updated,
         kind: DBConvo.kind,
         chatName: DBConvo.chatName
@@ -44,26 +51,28 @@ function extractNotifId(action: IMdUserActions) {
   return notifications;
 };
 
-function findUsrnmsById(DBContacts:InDBContacts[], ConvoInfo:IMdConversations) {
+function findUsrnmsById(DBContacts:InDBContacts[], ConvoInfo:IMdConversations, ownInfo: InOwnInfo) {
   const contacts = ConvoInfo.participants.map(
     function (participant){
       const username = DBContacts.find((DBContact) => DBContact.id===participant.IDUser.toHexString());
-      if(!username){
+      if(username){
         return {
-          username: "unknown",
-          email: "unknown"
+          username: username.nickname,
+          email: username.email
         };
       };
-      return {
-        username: username.nickname,
-        email: username.email
+      if(!username && participant.IDUser.toHexString()===ownInfo.id){
+        return {
+          username: ownInfo.nickname || "unknown",
+          email: ownInfo.email || "unknown"
+        };
       };
     }
   );
   return contacts;
 };
 
-async function findMsgsById(ConvoInfo: IMdConversations, contacts: InDBContacts[]) {
+async function findMsgsById(ConvoInfo: IMdConversations, contacts: InDBContacts[], ownInfo: InOwnInfo) {
   const messageIds = ConvoInfo.messages;
   const messagesAsync = messageIds.map(
     function(id){
@@ -84,10 +93,17 @@ async function findMsgsById(ConvoInfo: IMdConversations, contacts: InDBContacts[
   }
   const msgs2Client = messages.map(
     function(msg){
+      const user = contacts.find(
+        function(contact){
+          return contact.id===msg?.IDUser.toHexString()
+        }
+      );
+      const ownUser = msg?.IDUser.toHexString() === ownInfo.id ? ownInfo.nickname : "...";
+      const msgDate = msg?.createdAt;
       const msg2Client = {
-        username: contacts.find((contact)=>contact.id===msg?.IDUser.toHexString())?.nickname || "...",
+        username: user?.nickname || ownUser,
         msg: msg?.message || "...",
-        date: Date.parse(msg?._id.getTimestamp()) || 0
+        date: msgDate || 0
       };
       return msg2Client;
     }

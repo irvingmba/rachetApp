@@ -98,11 +98,11 @@ export function actionPushMsg(msg: IActPushMsg) {
     };
 };
 
-export function actionNewConvo(convo: IconversationList) {
+export function actionNewConvo(convo: IconversationList|IconversationList[]) {
     console.log(convo);
     return {
         type: NEW_CONVO,
-        payload: {...convo}
+        payload: Array.isArray(convo) ? [...convo] : {...convo}
     };
 };
 
