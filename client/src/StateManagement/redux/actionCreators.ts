@@ -14,6 +14,8 @@ export const SELECT_CONTACT = "SELECT_CONTACT";
 export const SEL_USER_MSG = "SEL_USER_MSG";
 export const PUSH_MSG = "PUSH_MSG";
 export const NEW_CONVO = "NEW_CONVO";
+// PROFILE
+export const OWN_PROFILE = "OWN_PROFILE";
 
 /* ---------------- ACTIONS --------------- */
 
@@ -115,3 +117,21 @@ export interface IActPushMsg {
 export type TActPushMsg = ReturnType<typeof actionPushMsg>;
 export type TActSelUserMsg = ReturnType<typeof actionSelUserMsg>;
 export type TActNewConvo = ReturnType<typeof actionNewConvo>;
+
+// Profile section
+
+export function actionOwnProfile(profile: InProfile) {
+    return {
+        type: OWN_PROFILE,
+        payload: {...profile}
+    };
+};
+
+interface InProfile {
+    name: string;
+    nickname: string;
+    birthday: string;
+    email: string;
+};
+
+export type TActOwnProf = ReturnType<typeof actionOwnProfile>;

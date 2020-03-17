@@ -25,19 +25,24 @@ export async function convos2Client(action: IMdUserActions, contacts:InDBContact
   const convos2ClientAsync = convoArray.map(
     function(DBConvo) {
       if(!DBConvo) return null;
-      const convo2Client = {
-        id: DBConvo.id,
-        members: findUsrnmsById(contacts, DBConvo, ownInfo),
-        messages: gottenMsgs ? [...gottenMsgs] : null,
-        updated: DBConvo.updated,
-        kind: DBConvo.kind,
-        chatName: DBConvo.chatName
-      };
-      return convo2Client;
+      const promConvo = new Promise(function(res,rej){
+      res(findMsgsById(DBConvo, contacts, ownInfo));
+      })
+      .then(function(msgs){
+        const convo2Client = {
+          id: DBConvo.id,
+          members: findUsrnmsById(contacts, DBConvo, ownInfo),
+          messages: msgs ? msgs : null,
+          updated: DBConvo.updated,
+          kind: DBConvo.kind,
+          chatName: DBConvo.chatName
+        };
+        return convo2Client;
+      });
+      return promConvo;
     }
     );
-    const convos2Client = Promise.all(convos2ClientAsync);
-
+    const convos2Client = await Promise.all(convos2ClientAsync)
   return convos2Client;
 };
 

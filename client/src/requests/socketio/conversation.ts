@@ -19,7 +19,6 @@ interface InSvrConvo {
 };
 
 export function changeConvo(svrConvo:any) {
-  console.log(svrConvo);
   if(Array.isArray(svrConvo)){
     const convoArray = svrConvo.map(
       function(convo) {
@@ -34,7 +33,8 @@ export function changeConvo(svrConvo:any) {
         };
         return newConvo;
       }
-    );
+      );
+      console.log("Convo from server",svrConvo, convoArray);
     return convoArray;
   };
   const convo2St:IconversationList = {

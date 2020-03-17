@@ -2,15 +2,21 @@ import React from 'react';
 import AddContact from '../contacts/addContact';
 import ContactList from '../contacts/contacts';
 import ConversationList from '../chat/conversationList';
+import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 
 const DashOptions:React.FunctionComponent = () => {
+  const {url, path} = useRouteMatch();
 
   return (
     <>
-    <h3>Options</h3>
-    <AddContact />
-    <ContactList />
-    <ConversationList />
+    <Switch>
+      <Route exact path={`${path}/`}>
+        <ConversationList />
+      </Route>
+      <Route path={`${path}/contacts`}>
+        <ContactList />
+      </Route>
+    </Switch>
     </>
   );
 };

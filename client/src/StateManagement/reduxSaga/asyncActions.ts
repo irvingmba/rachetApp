@@ -13,6 +13,8 @@ export const ASYNC_MSGS = "ASYNC_MSGS";
 export const SUB_MSGS_SEND = "SUB_MSGS_SEND";
 export const SOCKET_INIT = "SOCKET_INIT";
 export const SUB_NEW_CONVO = "SUB_NEW_CONVO";
+// Own profile
+export const ASYNC_PROFILE = "ASYNC_PROFILE";
 
 export type asyncContactAction = ReturnType<typeof asyncAddContact>;
 interface baseAction {
@@ -61,7 +63,8 @@ export function asyncSendMsg(payload: IAsyncSendMsg) {
     type: ASYNC_MSGS,
     subtype: SUB_MSGS_SEND,
     payload: {
-      ...payload,
+      data:{...payload},
+      type: "PUSH_MESSAGE",
       socketType: EsocketTypes.sendMsg
     }
   };
@@ -97,6 +100,15 @@ interface InAsyncNewConvo {
   chatName: string;
   member: Iplayers[];
   message: string|null;
+};
+
+// Basic information
+
+export function asyncOwnProfile(payload:{}) {
+  return {
+    type: ASYNC_PROFILE,
+    payload: {...payload}
+  };
 };
 
 /* ------ LOCAL FUNCTIONS --------- */

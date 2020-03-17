@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { LOGIN_SUCCESS, UPDATE_CONTACTS, SELECT_CONTACT, TActSelectContact, TActUpdateContactList, ISelectContact, Ostatus, TActLoginSuccess, TActPushMsg, PUSH_MSG, IActPushMsg, TActRegistry, REGISTRY, SEL_USER_MSG, ISelUserMsg, TActSelUserMsg, NEW_CONVO, TActNewConvo } from './actionCreators';
+import { LOGIN_SUCCESS, UPDATE_CONTACTS, SELECT_CONTACT, TActSelectContact, TActUpdateContactList, ISelectContact, Ostatus, TActLoginSuccess, TActPushMsg, PUSH_MSG, IActPushMsg, TActRegistry, REGISTRY, SEL_USER_MSG, ISelUserMsg, TActSelUserMsg, NEW_CONVO, TActNewConvo, TActOwnProf, OWN_PROFILE } from './actionCreators';
 import { findConvoByUsr } from './helpers';
 
 
@@ -141,13 +141,37 @@ export interface Iplayers {
 
 type TActionConversations = TActSelUserMsg | TActPushMsg | TActNewConvo;
 
+// Profile reducer
+
+const initProfile = {
+    name: "",
+    nickname: "",
+    birthday: "",
+    email: "",
+};
+
+type TpActionProfile = TActOwnProf;
+
+function redProfile(state = initProfile , action: TpActionProfile) {
+    console.log("PROFILE", state);
+    switch (action.type) {
+        case OWN_PROFILE:
+            return {
+                ...state,
+                ...action.payload
+            };
+        default:
+            return state;
+    };
+};
 
 // ROOT REDUCER
 
 const combinedReducer = combineReducers({
     login: redUserLogin,
     contacts: redUserContacts,
-    conversations: redConversations
+    conversations: redConversations,
+    profile: redProfile,
 });
 
 export default combinedReducer;

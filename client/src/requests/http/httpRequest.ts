@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { IdataRegistry } from "./mutations";
 
 // Subpaths for the request from the client to the server side
-import { URL_LOGIN, URL_REGISTER, URL_CONTACT } from "../../globalConfig";
+import { URL_LOGIN, URL_REGISTER, URL_CONTACT, URL_INFO } from "../../globalConfig";
 
 
 /**
@@ -67,6 +67,26 @@ const getContactsConfig:AxiosRequestConfig = {
     url: URL_CONTACT
 };
 
+export function getOwnProfile(query: {}){
+    const request = getRequest(query)(getProfileConfig);
+    const requesting =  axios(request).catch(reason => {
+        alert("Something is wrong with your connection, verify it and try again");
+        console.error(reason);
+        return null;
+    });
+    return requesting;
+};
+
+export function ownProfileData(resp: AxiosResponse|null) {
+    const data = getQryData(resp, "getOwnProfile")
+    return data;
+};
+
+const getProfileConfig:AxiosRequestConfig = {
+    method: "POST",
+    url: URL_INFO
+};
+
 
 function getRequest(query: {}){
     return function getObjConfig(config: AxiosRequestConfig){
@@ -77,3 +97,10 @@ function getRequest(query: {}){
     };
 };
 
+function getQryData(response: AxiosResponse | null, operation: string) {
+    if(!response) return null;
+    const dataProp = response.data;
+    console.log(dataProp);
+    if("data" in dataProp && operation in dataProp["data"]) return dataProp["data"][operation];
+    return null;
+  };

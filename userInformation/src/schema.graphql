@@ -14,7 +14,7 @@ type User {
 
 type Query {
     info: String!
-    getOwnProfile: User!
+    getOwnProfile: User
     getContacts: [publicFace!]
     getContactInfo(nickname: String!): User!
     getUserActions(id:ID!): ID

@@ -3,15 +3,26 @@ import ConversationWindow from '../chat/conversation';
 import { connect } from 'react-redux';
 import { typeRootState } from '../../../StateManagement/redux/reducers';
 import ContactOptions from '../../components/contact/contactOption';
+import AddContact from '../contacts/addContact';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import { PATH_CONTACTS_V } from '../../../globalConfig';
 
 const DashDisplay:React.FunctionComponent<TdisplayProps> = ({currentContact,  convoId}) => {
+  const {path} = useRouteMatch();
 
   return (
     <>
-    <p>The information is going to be displayed here</p>
+    <Switch>
+      <Route exact path={path}>
+        {convoId ? <ConversationWindow /> : <p>"Select a conversation"</p>}
+      </Route>
+      <Route path={path+PATH_CONTACTS_V}>
+        <AddContact />
+        {currentContact?.username ? <ContactOptions /> : <p>"Select a contact"</p>}
+      </Route>
+    </Switch>
     
-    {currentContact?.username ? <ContactOptions /> : <p>"Select a contact"</p>}
-    {convoId ? <ConversationWindow /> : <p>"Select a conversation"</p>}
+    
     </>
   );
 };

@@ -73,11 +73,9 @@ function execSubmit(msg: IDataMsg<unknown>|IDataMsg<convoUser>, dispatch:Dispatc
     handleSubmit(event);
     if(!msg.currentChat.id) {
       dispatch(asyncNewConvo(genConvo(msg as IDataMsg<convoUser>)));
-      console.log("new convo");
       return;
     };
     dispatch(asyncSendMsg(msg));
-    console.log("new messsage");
     return;
   };
 };
@@ -101,10 +99,9 @@ function printMessages(arrMessage: IMsgFromServer[]|null) {
         <p>{val.msg}</p>
         <p>{val.date}</p>
       </li>;
-      return [liElem].concat(acc);
+      return acc.concat(liElem);
     }, []
   );
-  console.log("inside print messages\n", arrElements);
   return arrElements;
 };
 
@@ -116,7 +113,6 @@ function ConversationWindow({user, chatID, messages}:props){
   const handleChange = updInput(updState);
   const msg = genMessage({user, message:state, currentChat: chatID});
   const submitMsg = execSubmit(msg, dispatch);
-  console.log(messages);
   const renderMsgs = printMessages(messages as IMsgFromServer[]);
 
   return (
@@ -176,11 +172,11 @@ function getMessages(state: typeRootState) {
   const { id } = getChatId(state);
   if(!id) return null;
   const convos = state.conversations.conversationList;
-  const theConvo = convos && convos.find(
+  const theConvo = convos?.length ? convos.find(
     function(convo){
       return convo.id === id;
     }
-  );
+  ) : null;
   const messages = theConvo && theConvo.messages;
   return messages ? messages : null;
 };

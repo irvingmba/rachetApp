@@ -16,7 +16,7 @@ export function* sagaLogin(){
         yield put(actionLoginSuccess({user, status: Ostatus.online}));
       }
       else {
-        window.alert("There's a problem with your data, check them out and try again")
+        yield call(window.alert, "There's a problem with your data, check them out and try again");
       };
     } catch (error) {
       console.error(error);

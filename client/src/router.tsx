@@ -4,23 +4,39 @@ import RegistryPage from './ReactComponents/composedPages/registry/registry';
 import LoginPage from './ReactComponents/composedPages/login/login';
 import DashboardPage from './ReactComponents/composedPages/dashboard/dashboard';
 import { PATH_REGISTER_VIEW, PATH_LOGIN_VIEW, PATH_DASHBOARD_VIEW } from './globalConfig';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { typeRootState } from './StateManagement/redux/reducers';
 import { Ostatus } from './StateManagement/redux/actionCreators';
+import { asyncOwnProfile } from './StateManagement/reduxSaga/asyncActions';
+
+
+/* ---- LOCAL FUNCTIONS ----- */
+
+function loggedIn(user: {status: Ostatus}) {
+  if(user.status === Ostatus.online) return;
+  const dispatch = useDispatch();
+  dispatch(asyncOwnProfile({}));
+  return;
+};
+
+/* ----- REACT COMPONENT -------- */
 
 const RoutedApp:React.FunctionComponent<props> = ({status, registry}) => {
+  loggedIn({status});
+
   return (
     <BrowserRouter>
     <div>
-      <Route exact path={PATH_REGISTER_VIEW} >
+      <Route exact path={PATH_LOGIN_VIEW}>
+        {status === Ostatus.online ? <Redirect to={PATH_DASHBOARD_VIEW} /> : <LoginPage />}
+      </Route>
+      <Route path={PATH_REGISTER_VIEW} >
         {registry === false ? <RegistryPage /> : <Redirect to={PATH_LOGIN_VIEW}/>}
       </Route> 
       <Route path={PATH_DASHBOARD_VIEW}>
         {status === Ostatus.offline ? <Redirect to={PATH_LOGIN_VIEW} /> : <DashboardPage />}
       </Route>
-      <Route exact path={PATH_LOGIN_VIEW}>
-        {status === Ostatus.online ? <Redirect to={PATH_DASHBOARD_VIEW} /> : <LoginPage />}
-      </Route>
+      <Redirect to={PATH_LOGIN_VIEW}/>
     </div>
     </BrowserRouter>
   );

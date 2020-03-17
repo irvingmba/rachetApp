@@ -5,6 +5,7 @@ const drawerWidth = 240;
 const dashbStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    flexGrow: 1,
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -67,8 +68,8 @@ const dashbStyles = makeStyles(theme => ({
     overflow: 'auto',
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
   },
   paper: {
     padding: theme.spacing(2),

@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { typeRootState } from "../../../StateManagement/redux/reducers";
+import { dispatch } from "../../../reduxSaga";
+import { actionSelUserMsg } from "../../../StateManagement/redux/actionCreators";
 
 /* ------------- FUNCTIONS ------------ */
 
@@ -23,6 +25,7 @@ function list2Comp(list: IConvList[]|null, ownData: InOwnData) {
       )?.username;
       const comp = <li
       key={index.toString()}
+      data-username={name}
       >
         {name}
       </li>
@@ -32,6 +35,16 @@ function list2Comp(list: IConvList[]|null, ownData: InOwnData) {
     return compList
 };
 
+function handleClick(event:React.MouseEvent<HTMLUListElement, MouseEvent>) {
+  const target = event.target;
+  if("dataset" in target){
+    const username = target["dataset"]["username"];
+    dispatch(actionSelUserMsg({username}))
+    return username || null;
+  };
+  return null;
+};
+
 /* ------------ REACT COMPONENT --------------- */
 function ConversationList(data: Tprops){
   const {conversationList, ownData} = data;
@@ -39,8 +52,8 @@ function ConversationList(data: Tprops){
 
   return (
     <>
-    <h5>Conversations</h5>
-    <ul>
+    <h1>Conversations</h1>
+    <ul onClick={handleClick}>
     {conversations}
     </ul>
     </>
@@ -85,15 +98,6 @@ function getConversationList(state: typeRootState) {
     .sort(function(val1, val2){
       return val1.update - val2.update;
     })
-    // .reduce(function (acc: TConvListElem[], val, index){
-    //   const listElement = <ConvListElem 
-    //   key={index.toString()}
-    //   chatName={val.chatName}
-    //   participants={val.participants}
-    //   update={val.update}
-    //   />;
-    //   return acc.concat(listElement);
-    // }, []);
     return list;
   };
   return null;

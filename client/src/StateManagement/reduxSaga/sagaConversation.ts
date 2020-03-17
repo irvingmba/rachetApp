@@ -10,9 +10,9 @@ export function* sagaConversation() {
     yield takeEvery(channel,socketListener);
     while(true){
       const action = yield take(ASYNC_MSGS);
+      console.log(action);
       switch(action.subtype) {
         case SUB_MSGS_SEND:
-          if(!action.payload.message) break;
           yield call(socketEmitNAck, socket, action.payload);
           break;
         case SUB_NEW_CONVO:

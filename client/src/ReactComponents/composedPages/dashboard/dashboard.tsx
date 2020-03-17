@@ -7,7 +7,7 @@ import DashOptions from '../../composedBlocks/dashboard/dashOptions';
 import { connect, useDispatch } from 'react-redux';
 import { asyncGetContacts, asyncSocketInit } from "../../../StateManagement/reduxSaga/asyncActions";
 import { dashbStyles } from "./styles";
-import { CssBaseline, AppBar, Toolbar, IconButton, Typography, Badge, Drawer, Divider, List } from '@material-ui/core';
+import { CssBaseline, AppBar, Toolbar, IconButton, Typography, Badge, Drawer, Divider, List, Container, Grid, Paper, Box } from '@material-ui/core';
 import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -15,14 +15,13 @@ import clsx from "clsx";
 
 const DashboardPage = () => {
   const styles = dashbStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(styles.paper, styles.fixedHeight);
 
   // Call an asynchronous method to restore the state of the application
   const dispatch = useDispatch();
@@ -68,13 +67,19 @@ const DashboardPage = () => {
         <Divider />
         <List><DashboardMenu /></List>
         <Divider />
-        {/* <List>{secondaryListItems}</List> */}
       </Drawer>
-  </div>
-    <h3>Menu</h3>
-    {/* <DashboardMenu /> */}
-    <DashOptions />
-    <DashDisplay />
+  <main className={styles.content}>
+    <div className={styles.appBarSpacer} />
+      <Grid container spacing={0}>
+        <Grid item xs={12} md={4} lg={4}>
+          <DashOptions />
+        </Grid>
+        <Grid item xs={12} md={4} lg={8}>
+          <DashDisplay />
+        </Grid>
+      </Grid>
+    </main>
+    </div>
     </>
   );
 };
