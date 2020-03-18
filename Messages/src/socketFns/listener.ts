@@ -206,6 +206,7 @@ function respPushMsg(socket:Socket, eventObj:ThenArg<ReturnType<typeof eventPush
   const room = "chatId" in eventObj ? eventObj["chatId"] : null;
   if(!room) return false;
   socket.to(room).emit("ack", eventObj);
+  socket.emit("ack", eventObj);
   return true;
 };
 

@@ -72,8 +72,30 @@ function redConversations(state:IConversationState = {}, action: TActionConversa
                 }
             };
         case PUSH_MSG:
-            return {
-                ...state,
+            {
+                if(!action.payload) return state;
+                const id = "id" in action.payload ? action.payload.id : null;
+                const convos = state.conversationList || null;
+                if (!convos || !id) return state;
+                const message = {
+                    username: "username" in action.payload ? action.payload.username : "Fail",
+                    msg: "msg" in action.payload ? action.payload.msg : "Fail",
+                    date: "date" in action.payload ? action.payload.date ? action.payload.date : Date.now() : Date.now()
+                };
+                const uptConvos = convos.map(
+                    function matchConvoId(elem) {
+                        if(elem.id === id){
+                            const modMessage = elem.messages.concat(message);
+                            const newConvo = {...elem, messages:modMessage};
+                            return newConvo;
+                        };
+                        return elem;
+                    }
+                );
+                return {
+                    ...state,
+                    conversationList: uptConvos
+                };
             };
         case NEW_CONVO:
             {
@@ -127,7 +149,7 @@ export enum eKind {
 export interface IconversationList {
     id: string | null;
     members: Iplayers[];
-    messages: IActPushMsg[] | [];
+    messages: IActPushMsg[];
     updated: number;
     notSent: number;
     kind: eKind;

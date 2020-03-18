@@ -3,7 +3,7 @@ import { put, call } from "redux-saga/effects";
 import io from "socket.io-client";
 import { actionPushMsg, actionNewConvo } from "../../StateManagement/redux/actionCreators";
 import { IconversationList } from "../../StateManagement/redux/reducers";
-import { changeConvo } from "./conversation";
+import { changeConvo, changeMessage } from "./conversation";
 
 /* ----- Interfaces ------- */
 
@@ -50,6 +50,7 @@ export function* socketSubscribe(socket:SocketIOClient.Socket) {
     });
 
     socket.on("ack", function(data:{}){
+      console.log("channel event ack",data);
       emit(data);
     });
 
@@ -92,7 +93,10 @@ interface ISocketAction {
 export type TpEvt2Act = keyof typeof event2Action;
 
 const event2Action = {
-  // PUSH_MESSAGE: actionPushMsg,
+  PUSH_MESSAGE: {
+    action: actionPushMsg,
+    payload: changeMessage
+  },
   NEW_CONVO: {
     action: actionNewConvo,
     payload: changeConvo
@@ -100,7 +104,16 @@ const event2Action = {
 };
 
 export function* socketListener(action:ISocketAction){
-  yield call(console.log, action);
-  yield put(event2Action[action.type]["action"](event2Action[action.type]["payload"](action.data)))
+  yield call(console.log,"In the channel receptor", action);
+  const _action = event2Action[action.type]["action"];
+  const _data = event2Action[action.type]["payload"];
+  switch (action.type){
+    case "NEW_CONVO":
+      yield put(event2Action.NEW_CONVO.action(event2Action.NEW_CONVO.payload(action.data)))
+      break;
+    case "PUSH_MESSAGE":
+      yield put(event2Action.PUSH_MESSAGE.action(event2Action.PUSH_MESSAGE.payload(action)));
+      break;
+  };
 
 };

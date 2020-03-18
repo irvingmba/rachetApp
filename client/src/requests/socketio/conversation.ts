@@ -49,3 +49,21 @@ export function changeConvo(svrConvo:any) {
   return convo2St;
 };
 
+export function changeMessage(action:any) {
+  const values = Object.values(action).indexOf((x:unknown)=>x===(undefined || null));
+  if(values != -1) return null;
+  return {
+    id: action.chatId,
+    username: action.username,
+    msg: action.message,
+    date: action.date
+  };
+};
+
+interface InPushMsg {
+  chatId: string;
+  date: number;
+  message: string;
+  type: string;
+  username: string;
+};

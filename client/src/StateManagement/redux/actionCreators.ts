@@ -93,7 +93,8 @@ export interface ISelUserMsg {
     email?: string;
 };
 
-export function actionPushMsg(msg: IActPushMsg) {
+export function actionPushMsg(msg: IActPushMsg | null) {
+    if(!msg) return {type:""};
     return {
         type: PUSH_MSG,
         payload: {...msg}
@@ -112,6 +113,7 @@ export interface IActPushMsg {
     username: string;
     msg: string;
     date?: number;
+    id?: string;
 };
 
 export type TActPushMsg = ReturnType<typeof actionPushMsg>;
