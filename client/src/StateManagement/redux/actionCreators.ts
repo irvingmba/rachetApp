@@ -11,6 +11,8 @@ export const REGISTRY = "REGISTRY";
 export const UPDATE_CONTACTS = "UPDATE_CONTACTS";
 export const SELECT_CONTACT = "SELECT_CONTACT";
 // CONVERSATIONS
+export const INIT_USER = "INIT_USER";
+export const GOT_UNK = "GOT_UNK";
 export const SEL_USER_MSG = "SEL_USER_MSG";
 export const PUSH_MSG = "PUSH_MSG";
 export const NEW_CONVO = "NEW_CONVO";
@@ -81,6 +83,20 @@ export type TActSelectContact = ReturnType<typeof actionSelectContact>;
 
 // Messages section
 
+export function actionInitUsr(data:{}){
+    return {
+        type: INIT_USER,
+        payload: {...data}
+    };
+};
+
+export function actionUnkActv(data:{}){
+    return {
+        type: GOT_UNK,
+        payload: {...data}
+    };
+};
+
 export function actionSelUserMsg(user: ISelUserMsg) {
     return {
         type: SEL_USER_MSG,
@@ -116,6 +132,8 @@ export interface IActPushMsg {
     id?: string;
 };
 
+export type TActInitUser = ReturnType<typeof actionInitUsr>;
+export type TActUnkActv = ReturnType<typeof actionUnkActv>;
 export type TActPushMsg = ReturnType<typeof actionPushMsg>;
 export type TActSelUserMsg = ReturnType<typeof actionSelUserMsg>;
 export type TActNewConvo = ReturnType<typeof actionNewConvo>;

@@ -1,22 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { typeRootState } from "../../../StateManagement/redux/reducers";
 import { Dispatch } from "redux";
-import { actionSelUserMsg } from "../../../StateManagement/redux/actionCreators";
+import { actionSelUserMsg, ISelUserMsg } from "../../../StateManagement/redux/actionCreators";
+import { Redirect } from "react-router-dom";
+import { PATH_MSGS_V } from "../../../globalConfig";
 
 /* -------- REACT COMPONENT -------- */
 
-const ContactOptions:React.FunctionComponent<props> = ({user}) => {
+const ContactOptions:React.FunctionComponent<props> = ({user, active}) => {
   const elements = optionsToComp(options);
   const dispatch = useDispatch();
   const handleClick = user ? getData(user, dispatch) : undefined;
+  console.log("Option\n", active);
 
   return (
     <>
-    <h5>What do you want to do?</h5>
-    <ul onClick={handleClick}>
-      {elements}
-    </ul>
+    {
+      active ?
+      <Redirect to={PATH_MSGS_V}/>
+      :
+      <>
+      <h5>What do you want to do?</h5>
+      <ul onClick={handleClick}>
+        {elements}
+      </ul>
+      </>
+    }
     </>
   );
 };
@@ -55,14 +65,30 @@ function optionsToComp(arrData: Ioptions[]){
   return components;
 };
 
+const optActions = {
+  // info:,
+  msg: select4Msg
+};
+
+type TpOptActions = keyof typeof optActions;
+
 function getData(data:{username: string}, dispatch: Dispatch) {
   return function handleClick(event: React.MouseEvent<HTMLUListElement, MouseEvent>) {
     const target = event.target as HTMLLIElement;
-    if(target.tagName.toUpperCase() !== "LI") return;
-    dispatch(actionSelUserMsg(data));
-    console.log(target.dataset["id"]);
+    const dataElement = target.dataset["id"];
+    console.log(dataElement);
+    if(target.tagName.toUpperCase() !== "LI" || !dataElement ||!(dataElement in optActions)) return;
+    switch(dataElement) {
+      case "msg":
+        dispatch(optActions[dataElement as TpOptActions](data));
+        return;
+    };
     return;
   };
+};
+
+function select4Msg(data: ISelUserMsg) {
+  return actionSelUserMsg(data);
 };
 
 /* ------- REDUX FUNCTIONS ------- */
@@ -71,9 +97,16 @@ function getUser(state: typeRootState) {
   return state.contacts.currentContact;
 };
 
+function getUnkActive(state: typeRootState) {
+  const active = state.conversations.unkActive;
+  if(active) return active;
+  return false;
+};
+
 function mapStateToProps(state: typeRootState) {
   return {
-    user: getUser(state)
+    user: getUser(state),
+    active: getUnkActive(state)
   };
 };
 

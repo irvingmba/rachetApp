@@ -13,15 +13,16 @@ function createConversation() {
 };
 
 export function findConvoByUsr( user: ISelUserMsg, list?: IconversationList[]) {
-  const found = list && list.find(
+  console.log("In the helper\n",list);
+  const found = list?.length && list.find(
     function (convo) {
-      const member = convo.members.find((member)=>member.username===user.username);
+      const member = convo.members.find((selUser)=>selUser.username===user.username);
+      console.log("in the loop\n", member, user.username,convo.kind);
       if(convo.kind === eKind.simple && member) {
         return true;
       };
       return false;
     }
   );
-  if(!found) throw "Found a conflict while searching in the conversation list";
   return found ? found : null;
 };

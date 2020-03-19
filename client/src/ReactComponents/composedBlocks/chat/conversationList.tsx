@@ -13,9 +13,7 @@ export interface InOwnData {
 
 function list2Comp(list: IConvList[]|null, ownData: InOwnData) {
   if(!list){
-    return (
-    <p>{"List empty"}</p>
-    );
+    return null;
   };
   const compList = list
   .reduce(
@@ -53,9 +51,14 @@ function ConversationList(data: Tprops){
   return (
     <>
     <h1>Conversations</h1>
+    {
+    conversations ? 
     <ul onClick={handleClick}>
-    {conversations}
+      {conversations}
     </ul>
+    : 
+    <p>Empty list</p>
+    }
     </>
   );
 };

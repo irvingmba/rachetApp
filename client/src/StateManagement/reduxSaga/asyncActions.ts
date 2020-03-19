@@ -13,6 +13,7 @@ export const ASYNC_MSGS = "ASYNC_MSGS";
 export const SUB_MSGS_SEND = "SUB_MSGS_SEND";
 export const SOCKET_INIT = "SOCKET_INIT";
 export const SUB_NEW_CONVO = "SUB_NEW_CONVO";
+export const SUB_JOIN2ROOM = "SUB_JOIN2ROOM";
 // Own profile
 export const ASYNC_PROFILE = "ASYNC_PROFILE";
 
@@ -85,7 +86,7 @@ export function asyncNewConvo(payload:InAsyncNewConvo) {
     subtype: SUB_NEW_CONVO,
     payload: {
       data:{...payload},
-      type: "NEW_CONVO",
+      type: "ADD_CONVO",
       socketType: EsocketTypes.sendMsg
     }
   };
@@ -100,6 +101,24 @@ interface InAsyncNewConvo {
   chatName: string;
   member: Iplayers[];
   message: string|null;
+};
+
+export function asyncJoinRoom(payload: InAsyncJ2Room) {
+  return {
+    type: ASYNC_MSGS,
+    subtype: SUB_JOIN2ROOM,
+    payload:{
+      type: "JOIN_ROOM",
+      socketType: EsocketTypes.sendMsg,
+      data: {
+        ...payload
+      },
+    }
+  };
+};
+
+interface InAsyncJ2Room {
+  room: string;
 };
 
 // Basic information

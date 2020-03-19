@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { typeRootState, ICurrentChat, eKind, Iplayers } from "../../../StateManagement/redux/reducers";
 import { asyncSendMsg, asyncNewConvo } from "../../../StateManagement/reduxSaga/asyncActions";
 import { Dispatch } from "redux";
+import { actionUnkActv } from "../../../StateManagement/redux/actionCreators";
 
 /* Handling onChange event from input */
 function updInput(handler: React.Dispatch<React.SetStateAction<string>>){
@@ -106,7 +107,7 @@ function printMessages(arrMessage: IMsgFromServer[]|null) {
 };
 
 /* --------------- REACT COMPONENT ----------------------- */
-function ConversationWindow({user, chatID, messages}:props){
+function ConversationWindow({user, chatID, messages, toUser}:props){
 
   const [state, updState] = useState("");
   const dispatch=useDispatch();
@@ -114,17 +115,26 @@ function ConversationWindow({user, chatID, messages}:props){
   const msg = genMessage({user, message:state, currentChat: chatID});
   const submitMsg = execSubmit(msg, dispatch);
   const renderMsgs = printMessages(messages as IMsgFromServer[]);
+  dispatch(actionUnkActv({}));
+  console.log("in the conversation comp", user, chatID, messages);
 
   return (
     <>
-    <h5>Chat conversation</h5>
-      <ul>
-      {messages ? renderMsgs :  "The conversation is empty"}
-      </ul>
-    <form onSubmit={submitMsg}>
-      <input type="text" onChange={handleChange} value={state}/>
-      <input type="submit" value="Send"/>
-    </form>
+    {
+      toUser?.username ?
+      <>
+      <h5>Chat conversation</h5>
+        <ul>
+        {messages ? renderMsgs :  "The conversation is empty"}
+        </ul>
+      <form onSubmit={submitMsg}>
+        <input type="text" onChange={handleChange} value={state}/>
+        <input type="submit" value="Send"/>
+      </form>
+      </>
+      :
+      <p>{"Select a conversation"}</p>
+    }
     </>
   );
 };
@@ -135,7 +145,8 @@ function mapStateToProps(state: typeRootState) {
   return {
     user: getOwnUser(state),
     chatID: getChatId(state),
-    messages: getMessages(state)
+    messages: getMessages(state),
+    toUser: getNonConvo(state)
   };
 };
 
@@ -179,6 +190,12 @@ function getMessages(state: typeRootState) {
   ) : null;
   const messages = theConvo && theConvo.messages;
   return messages ? messages : null;
+};
+
+function getNonConvo(state: typeRootState) {
+  const toUser = state.conversations.toUser;
+  if(toUser) return toUser;
+  return null;
 };
 
 const ConnConversationWindow = connect(mapStateToProps)(ConversationWindow);

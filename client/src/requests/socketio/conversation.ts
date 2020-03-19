@@ -67,3 +67,9 @@ interface InPushMsg {
   type: string;
   username: string;
 };
+
+export function getConvoId(convo: IconversationList){
+  const _id = convo.id;
+  if(!_id) return null;
+  return _id;
+};

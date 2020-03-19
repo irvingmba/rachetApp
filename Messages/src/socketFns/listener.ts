@@ -8,7 +8,7 @@ import { Children } from "react";
 
 interface InLtnrPayload {
   type: TpPayloadType;
-  data: InPushMessages | InNewConvo;
+  data: InPushMessages | InNewConvo | InRequest2Join;
 };
 
 interface InLtnrParams {
@@ -31,6 +31,10 @@ interface InNewConvo {
   chatName: string;
   member: InClientUser[];
   message: string|null;
+};
+
+interface InRequest2Join {
+  room:string;
 };
 
 interface  InClientUser{
@@ -64,7 +68,8 @@ interface InDBContact {
 
 const eventFnTypes = {
   PUSH_MESSAGE: eventPushMsg,
-  NEW_CONVO: eventNewConvo
+  ADD_CONVO: eventNewConvo,
+  JOIN_ROOM: request2Join
 };
 
 export function listenMessage(payload: InLtnrPayload & InLtnrParams) {
@@ -180,8 +185,6 @@ async function eventNewConvo(payload: InLtnrPayload & InLtnrParams){
   };
 };
 
-function findMemberAction(id: string){};
-
 function clientMsg2DBObj(message: InPushMessages, ownId: string) {
   const dbObj:ISmMessages = {
     IDUser: Types.ObjectId(ownId),
@@ -191,9 +194,24 @@ function clientMsg2DBObj(message: InPushMessages, ownId: string) {
   return dbObj;
 };
 
+function request2Join(payload:InLtnrPayload & InLtnrParams) {
+  const data = payload.data as InRequest2Join;
+  const room = data.room;
+  const response = {
+    type: payload.type,
+    data: {
+      room
+    },
+  };
+  return response;
+};
+
+/* ---- RESPONDERS ------- */
+
 const respFnTypes = {
   PUSH_MESSAGE: respPushMsg,
-  NEW_CONVO: respNewConvo
+  ADD_CONVO: respNewConvo,
+  JOIN_ROOM: join2Room
 };
 
 export function ackResponse(socket:Socket, eventObj: any, io: Server) {
@@ -223,18 +241,20 @@ function respNewConvo(socket:Socket, eventObj: ThenArg<ReturnType<typeof eventNe
   if(!createdRoom || !members) return false;
   const depuredObj = {
     type: eventObj.type,
-    id: eventObj.id,
-    members: eventObj.members?.map(
-      function(member){
-        return {
-          username: member.username
-        };
-      }
-    ),
-    messages: eventObj.messages,
-    updated: eventObj.updated,
-    kind: eventObj.kind,
-    chatName: eventObj.chatName
+    data: {
+      id: eventObj.id,
+      members: eventObj.members?.map(
+        function(member){
+          return {
+            username: member.username
+          };
+        }
+      ),
+      messages: eventObj.messages,
+      updated: eventObj.updated,
+      kind: eventObj.kind,
+      chatName: eventObj.chatName
+    },
   };
   socket.join(createdRoom);
   for(const member of members){
@@ -242,4 +262,12 @@ function respNewConvo(socket:Socket, eventObj: ThenArg<ReturnType<typeof eventNe
     socket.to(member).emit("ack",depuredObj);
   };
   return true;
+};
+
+function join2Room(socket:Socket, eventObj: InLtnrPayload, io: Server) {
+  const _data = eventObj.data as InRequest2Join;
+  const _room = _data.room;
+  if(!_room) return false;
+  socket.join(_room);
+  return true
 };

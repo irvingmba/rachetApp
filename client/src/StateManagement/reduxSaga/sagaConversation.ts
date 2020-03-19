@@ -1,5 +1,5 @@
 import { take, call, put, fork, takeEvery } from "redux-saga/effects";
-import { ASYNC_MSGS, SUB_MSGS_SEND, SOCKET_INIT, SUB_NEW_CONVO } from "./asyncActions";
+import { ASYNC_MSGS, SUB_MSGS_SEND, SOCKET_INIT, SUB_NEW_CONVO, SUB_JOIN2ROOM } from "./asyncActions";
 import { socketConnect, socketEmitNAck, socketSubscribe, socketListener } from "../../requests/socketio/socket";
 
 export function* sagaConversation() {
@@ -10,12 +10,14 @@ export function* sagaConversation() {
     yield takeEvery(channel,socketListener);
     while(true){
       const action = yield take(ASYNC_MSGS);
-      console.log(action);
       switch(action.subtype) {
         case SUB_MSGS_SEND:
           yield call(socketEmitNAck, socket, action.payload);
           break;
         case SUB_NEW_CONVO:
+          yield call(socketEmitNAck, socket, action.payload);
+          break;
+        case SUB_JOIN2ROOM:
           yield call(socketEmitNAck, socket, action.payload);
           break;
         default:

@@ -2,10 +2,10 @@ import React from 'react';
 import AddContact from '../contacts/addContact';
 import ContactList from '../contacts/contacts';
 import ConversationList from '../chat/conversationList';
-import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
 const DashOptions:React.FunctionComponent = () => {
-  const {url, path} = useRouteMatch();
+  const {path} = useRouteMatch();
 
   return (
     <>

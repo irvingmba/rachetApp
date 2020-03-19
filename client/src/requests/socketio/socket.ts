@@ -3,7 +3,8 @@ import { put, call } from "redux-saga/effects";
 import io from "socket.io-client";
 import { actionPushMsg, actionNewConvo } from "../../StateManagement/redux/actionCreators";
 import { IconversationList } from "../../StateManagement/redux/reducers";
-import { changeConvo, changeMessage } from "./conversation";
+import { changeConvo, changeMessage, getConvoId } from "./conversation";
+import { asyncJoinRoom } from "../../StateManagement/reduxSaga/asyncActions";
 
 /* ----- Interfaces ------- */
 
@@ -43,8 +44,6 @@ export function socketEmitNAck(socket: SocketIOClient.Socket, payload:IpayloadSo
 export function* socketSubscribe(socket:SocketIOClient.Socket) {
   return eventChannel(function channel(emit) {
 
-    socket.on("this",console.log);
-
     socket.on("message", function(data:{}){
       emit(data);
     });
@@ -53,14 +52,6 @@ export function* socketSubscribe(socket:SocketIOClient.Socket) {
       console.log("channel event ack",data);
       emit(data);
     });
-
-    // socket.on("response",function(resp:IMessage){
-    //   emit(actionPushMsg(resp));
-    // });
-
-    // socket.on("newConvo",function(obj:IconversationList){
-    //   if(obj) emit(actionNewConvo(obj));
-    // });
 
     socket.on("notifOnline", function(msg:unknown){
       console.log(msg);
@@ -100,20 +91,26 @@ const event2Action = {
   NEW_CONVO: {
     action: actionNewConvo,
     payload: changeConvo
-  }
+  },
+  ADD_CONVO: {
+    action: actionNewConvo,
+    payload: changeConvo
+  },
 };
 
 export function* socketListener(action:ISocketAction){
-  yield call(console.log,"In the channel receptor", action);
-  const _action = event2Action[action.type]["action"];
-  const _data = event2Action[action.type]["payload"];
   switch (action.type){
     case "NEW_CONVO":
-      yield put(event2Action.NEW_CONVO.action(event2Action.NEW_CONVO.payload(action.data)))
+      yield put(event2Action.NEW_CONVO.action(event2Action.NEW_CONVO.payload(action.data)));
       break;
     case "PUSH_MESSAGE":
       yield put(event2Action.PUSH_MESSAGE.action(event2Action.PUSH_MESSAGE.payload(action)));
       break;
+    case "ADD_CONVO":
+      const changedConvo = yield call(event2Action.ADD_CONVO.payload, action.data)
+      yield put(event2Action.ADD_CONVO.action(changedConvo));
+      const roomId = yield call(getConvoId, changedConvo);
+      yield put(asyncJoinRoom({room: roomId}))
+      break;
   };
-
 };

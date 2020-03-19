@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { LOGIN_SUCCESS, UPDATE_CONTACTS, SELECT_CONTACT, TActSelectContact, TActUpdateContactList, ISelectContact, Ostatus, TActLoginSuccess, TActPushMsg, PUSH_MSG, IActPushMsg, TActRegistry, REGISTRY, SEL_USER_MSG, ISelUserMsg, TActSelUserMsg, NEW_CONVO, TActNewConvo, TActOwnProf, OWN_PROFILE } from './actionCreators';
+import { LOGIN_SUCCESS, UPDATE_CONTACTS, SELECT_CONTACT, TActSelectContact, TActUpdateContactList, ISelectContact, Ostatus, TActLoginSuccess, TActPushMsg, PUSH_MSG, IActPushMsg, TActRegistry, REGISTRY, SEL_USER_MSG, ISelUserMsg, TActSelUserMsg, NEW_CONVO, TActNewConvo, TActOwnProf, OWN_PROFILE, TActInitUser, INIT_USER, GOT_UNK, TActUnkActv } from './actionCreators';
 import { findConvoByUsr } from './helpers';
 
 
@@ -61,15 +61,31 @@ type IActionContacts = TActSelectContact | TActUpdateContactList;
 function redConversations(state:IConversationState = {}, action: TActionConversations){
     console.log("Conversation",state);
     switch(action.type){
+        case INIT_USER:
+            return {
+                ...state,
+                toUser: undefined
+            };
+        case GOT_UNK:
+            {
+                const got = state.unkActive;
+                if(!got) return state;
+                return {
+                    ...state,
+                    unkActive: false
+                };
+            };
         case SEL_USER_MSG:
             const selUserMsg = action.payload as ISelUserMsg;
             const selPayload = findConvoByUsr(selUserMsg,state.conversationList);
+            console.log("in the reducer", selUserMsg, selPayload);
             return {
                 ...state,
                 toUser: {...selUserMsg},
                 currentChat: {
                     id: selPayload?.id || null
-                }
+                },
+                unkActive: true
             };
         case PUSH_MSG:
             {
@@ -133,6 +149,7 @@ interface IConversationState {
     conversationList?: IconversationList[];
     toUser?: ISelUserMsg;
     currentChat?: ICurrentChat;
+    unkActive?: boolean;
 };
 
 export interface ICurrentChat {
@@ -161,7 +178,7 @@ export interface Iplayers {
     email?:string;
 };
 
-type TActionConversations = TActSelUserMsg | TActPushMsg | TActNewConvo;
+type TActionConversations = TActSelUserMsg | TActPushMsg | TActNewConvo | TActInitUser |TActUnkActv;
 
 // Profile reducer
 
