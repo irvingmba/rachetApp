@@ -1,8 +1,8 @@
 import { IntPublicFace, IntContext, InArgsAddAction } from './types';
 import { validEmail, validNickname, validInputString, validInputDate } from './validation/validation';
 import { getID, authenticate } from './Authentication/authentication';
-import { addContact as addDBContact, getContacts, addContactRegistry, contactExist, deleteContact, saveRegistry, getUserByIp, findUser, incActionInDB } from '../../DBinfo/functions';
-import { Iregistry } from '../../DBinfo/types';
+import { addContact as addDBContact, getContacts, addContactRegistry, contactExist, deleteContact, saveRegistry, getUserByIp, findUser, incActionInDB } from '../DBinfo/functions';
+import { Iregistry } from '../DBinfo/types';
 
 /* -------- Exported functions to the resolvers ------------- */
 

@@ -1,5 +1,5 @@
-import { IMdUserActions, IMdConversations } from "../../../DBmessages/types";
-import { getConversation, getMessage } from "../../../DBmessages/functions";
+import { IMdUserActions, IMdConversations } from "../../DBmessages/types";
+import { getConversation, getMessage } from "../../DBmessages/functions";
 import { InDBContacts, InOwnInfo } from "../types";
 
 export async function convos2Client(action: IMdUserActions, contacts:InDBContacts[], ownInfo:InOwnInfo) {

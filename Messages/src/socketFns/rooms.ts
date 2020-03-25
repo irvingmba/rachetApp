@@ -1,6 +1,6 @@
 import {Socket, Server} from "socket.io";
 import { extractIds } from "./customFns";
-import { IMdUserActions } from "../../../DBmessages/types";
+import { IMdUserActions } from "../../DBmessages/types";
 
 // Interfaces and types
 

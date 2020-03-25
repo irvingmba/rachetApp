@@ -1,17 +1,20 @@
 import React from 'react';
 
 import Registry from '../../composedBlocks/registry/stdRegistryBlock';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import { Container, CssBaseline, Avatar, Typography, Grid } from '@material-ui/core';
 import { registryStyles } from "./styles";
 import { template } from "../../../international/handlebars";
+import { PATH_LOGIN_VIEW } from '../../../globalConfig';
 
-const RegistryPage = () => {
-const styles = registryStyles();
+const RegistryPage:React.FunctionComponent<{registry:boolean}> = ({registry}) => {
+    console.log("registry comoponent\n",registry);
+    const styles = registryStyles();
 
 
     return (
         <>
+        {registry ? <Redirect to={PATH_LOGIN_VIEW}/> : ""}
         <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={styles.paper}>

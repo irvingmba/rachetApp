@@ -2,9 +2,9 @@ import { buildQuery, queryData, queryType } from "../utils/queryBuilder";
 import { getRequest, makeRequest } from "../utils/gralFns";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { INFO_URL } from "../globals";
-import { createNewUserAction, getUserAction, getConversation } from "../../../DBmessages/functions";
+import { createNewUserAction, getUserAction, getConversation } from "../../DBmessages/functions";
 import { pushConvo2DB } from "./mutateInfo";
-import { IMdUserActions } from "../../../DBmessages/types";
+import { IMdUserActions } from "../../DBmessages/types";
 
 /**
  * Takes the authentication cookie and asks the contacts ids

@@ -1,6 +1,6 @@
 import React from 'react';
 import DashboardMenu from "../../composedBlocks/dashboard/dashMenu";
-import { Route, Switch, NavLink } from "react-router-dom";
+import { Route, Switch, NavLink, Redirect } from "react-router-dom";
 import AddContact from "../../composedBlocks/contacts/addContact";
 import DashDisplay from '../../composedBlocks/dashboard/dashDisplay';
 import DashOptions from '../../composedBlocks/dashboard/dashOptions';
@@ -12,8 +12,10 @@ import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import clsx from "clsx";
+import { Ostatus } from '../../../StateManagement/redux/actionCreators';
+import { PATH_LOGIN_VIEW } from '../../../globalConfig';
 
-const DashboardPage = () => {
+const DashboardPage:React.FunctionComponent<{status:Ostatus}> = ({status}) => {
   const styles = dashbStyles();
   const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
@@ -29,6 +31,7 @@ const DashboardPage = () => {
   dispatch(asyncSocketInit());
 
   return (<>
+  {status === Ostatus.offline  ? <Redirect to={PATH_LOGIN_VIEW} /> : ""}
   <div className={styles.root}>
   <CssBaseline />
       <AppBar position="absolute" className={clsx(styles.appBar, open && styles.appBarShift)}>

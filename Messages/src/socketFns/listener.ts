@@ -1,5 +1,5 @@
-import { createNewMessage, pushMessage, createNewConversation, pushConversation } from "../../../DBmessages/functions";
-import { ISmMessages, IMdConversations, IMdUserActions, ISmConversations, Ekind, ISmParticipants } from "../../../DBmessages/types";
+import { createNewMessage, pushMessage, createNewConversation, pushConversation } from "../../DBmessages/functions";
+import { ISmMessages, IMdConversations, IMdUserActions, ISmConversations, Ekind, ISmParticipants } from "../../DBmessages/types";
 import { Types } from "mongoose";
 import { Socket, Server } from "socket.io";
 import { Children } from "react";

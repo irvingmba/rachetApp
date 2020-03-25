@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import RegistryPage from './ReactComponents/composedPages/registry/registry';
 import LoginPage from './ReactComponents/composedPages/login/login';
 import DashboardPage from './ReactComponents/composedPages/dashboard/dashboard';
@@ -27,16 +27,18 @@ const RoutedApp:React.FunctionComponent<props> = ({status, registry}) => {
   return (
     <BrowserRouter>
     <div>
-      <Route exact path={PATH_LOGIN_VIEW}>
-        {status === Ostatus.online ? <Redirect to={PATH_DASHBOARD_VIEW} /> : <LoginPage />}
-      </Route>
+      <Switch>
       <Route path={PATH_REGISTER_VIEW} >
-        {registry === false ? <RegistryPage /> : <Redirect to={PATH_LOGIN_VIEW}/>}
+        <RegistryPage registry={registry}/>
       </Route> 
       <Route path={PATH_DASHBOARD_VIEW}>
-        {status === Ostatus.offline ? <Redirect to={PATH_LOGIN_VIEW} /> : <DashboardPage />}
+        <DashboardPage status={status} />
+      </Route>
+      <Route exact path={PATH_LOGIN_VIEW}>
+        <LoginPage status={status}/>
       </Route>
       <Redirect to={PATH_LOGIN_VIEW}/>
+      </Switch>
     </div>
     </BrowserRouter>
   );

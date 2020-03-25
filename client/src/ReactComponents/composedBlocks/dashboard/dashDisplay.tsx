@@ -19,6 +19,7 @@ const DashDisplay:React.FunctionComponent<TdisplayProps> = ({currentContact,  co
       <Route path={path+PATH_CONTACTS_V}>
         <AddContact />
         {currentContact?.username ? <ContactOptions /> : <p>"Select a contact"</p>}
+        <ContactOptions />
       </Route>
     </Switch>
     

@@ -1,6 +1,6 @@
 import { IntContext } from './types';
 import { getID } from './Authentication/authentication';
-import { findUser, getContacts as getDBcontacts, contactPublicData, contactExist, getUserByIp } from  '../../DBinfo/functions';
+import { findUser, getContacts as getDBcontacts, contactPublicData, contactExist, getUserByIp } from  '../DBinfo/functions';
 import { validNickname } from './validation/validation';
 
 /* --------- Interfaces ------------ */
