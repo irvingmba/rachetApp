@@ -5,8 +5,11 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import { ContextParameters, Props } from 'graphql-yoga/dist/types';
 import { authenticate } from './Authentication/authentication';
+import nodeParams from "./environment";
 
 // process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+const params = process.env.NODE_ENV === "development" ? nodeParams.development : nodeParams.production;
+const typeDefs = params.USER_SCHEMA;
 
 const context = (params:ContextParameters) => {
   params.request.cookies
@@ -17,7 +20,7 @@ const context = (params:ContextParameters) => {
 };
 
 export const props:Props = {
-  typeDefs: './userInformation/src/schema.graphql',
+  typeDefs,
   resolvers,
   context,
 };

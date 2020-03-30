@@ -13,7 +13,7 @@ const reqValidation = (data:string) => {
 };
 
 export const authenticate = async( data:string ) => {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+    // process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     const valid:any = await axios({
         url: "https://localhost:4000/gql/",
         method: "POST",

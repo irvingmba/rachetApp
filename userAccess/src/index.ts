@@ -3,8 +3,14 @@ import { resolvers } from './resolvers';
 import fs from 'fs';
 import path from 'path';
 import { ContextParameters } from 'graphql-yoga/dist/types';
+import nodeParam from "./environment";
 
-export const DEVELOPMENT_MODE = true;
+// Configuration of environment variables
+const svrMode = process.env.NODE_ENV || "production";
+const params = svrMode === "production" ? nodeParam.production : nodeParam.development;
+const typeDefs = params.AUTH_SCHEMA;
+
+export const DEVELOPMENT_MODE = params.DEVELOPMENT_MODE;
 export const pathUserInfo = "https://localhost:4010/info";
 
 const context = ( req:ContextParameters ) => {
@@ -15,7 +21,7 @@ const context = ( req:ContextParameters ) => {
 };
 
 const server = new GraphQLServer({
-  typeDefs: './userAccess/src/schema.graphql',
+  typeDefs,
   resolvers,
   context,
 })

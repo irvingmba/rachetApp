@@ -1,4 +1,4 @@
-import { getConversation } from "../DBmessages/functions"
+import { getConversation } from "./DBmessages/functions"
 
 export async function storeMsgNResp(reqClient:IReqClient) {
   const id = reqClient.currentChat.id;

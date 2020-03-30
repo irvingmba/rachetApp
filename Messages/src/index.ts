@@ -1,12 +1,11 @@
-import socket, { Server } from 'socket.io';
+import socket from 'socket.io';
 import express from 'express';
 import https from 'https';
 import fs from "fs";
 import path from "path";
 import { lazyRequest } from './Requests/toAuthServer';
-import { storeMsgNResp } from './socketFns';
 import { getOwnInfo, searchActionId, memoContacts, memoConvos} from "./Requests/queryInfo";
-import { joinRoomsOfQry, onlineMsg2All, svr2RoomOn, getIdStr, createUsrRoom, join2ConvoRooms} from './socketFns/rooms';
+import { joinRoomsOfQry, getIdStr, createUsrRoom, join2ConvoRooms} from './socketFns/rooms';
 import { convos2Client } from './socketFns/conversations';
 import { updateSocket } from './socketFns/customFns';
 import { listenMessage, ackResponse } from './socketFns/listener';

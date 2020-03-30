@@ -1,5 +1,5 @@
 import mongoose, { ConnectionOptions } from 'mongoose';
-import { IsmUserInfo, ImdUserInfo, IsmContacts, ImdContacts, IsmCont } from './types';
+import { IsmUserInfo, ImdUserInfo, IsmContacts, ImdContacts, IsmCont } from "./types";
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId;

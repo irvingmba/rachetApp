@@ -3,8 +3,8 @@ import { validInputString, validInputDate, validInputEmail, validInputNickname, 
 import { encryptPswd,comparePswd } from './Authentication/encryption';
 import { sign } from './Authentication/authentication';
 import { confCookieToken } from './Authentication/cookieConfig';
-import { getRecordByNickname, getRecordByEmail, createRecord, updateLastLogin } from '../DBaccess/functions';
-import { IsmUserAccess } from '../DBaccess/types';
+import { getRecordByNickname, getRecordByEmail, createRecord, updateLastLogin } from './DBaccess/functions';
+import { IsmUserAccess } from './DBaccess/types';
 import axios, {AxiosRequestConfig} from "axios";
 import { DEVELOPMENT_MODE, pathUserInfo } from "./index";
 
