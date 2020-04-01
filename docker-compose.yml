@@ -1,0 +1,33 @@
+version: "3.7"
+services: 
+  authentication:
+    build:
+      context: ./userAccess
+      dockerfile: Dockerfile
+    ports: 
+      - "4000:4000"
+  user:
+    build: 
+      context: ./userInformation
+      dockerfile: Dockerfile
+    ports: 
+      - "4010:4010"
+  messages:
+    build: 
+      context: ./Messages
+      dockerfile: Dockerfile
+    ports: 
+      - "4020:4020"
+  client:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+    ports: 
+      - "3000:3000"
+  mongodb:
+    build: 
+      context: ./Database
+      dockerfile: Dockerfile
+    volumes: 
+      - type: volume
+        source: 
